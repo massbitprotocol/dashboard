@@ -5,7 +5,7 @@
       <template slot="links">
         <sidebar-item
           :link="{
-            name: 'Dashboards',
+            name: 'Dashboard',
             icon: 'ni ni-shop text-primary',
             path: '/dashboard'
           }"
@@ -154,10 +154,10 @@
             <a
               v-if="account"
               v-show="accountDropdownShow"
-              :class="['border-btn', { open: accountDropdownShow }]"
+              :class="['border-btn-logout']"
               @click="logoutAction"
             >
-              <span>Logout</span>
+              <span style="color:white">Logout</span>
               <!-- <img src="@/assets/img/icon/downward.png" width="16" /> -->
             </a>
             <a
@@ -165,8 +165,14 @@
               :class="['border-btn', { open: accountDropdownShow }]"
               @click="accountDropdownShow = !accountDropdownShow"
             >
-              <span>{{ webUtil.formatStrByDot(account.address) }}</span>
-              <img src="@/assets/img/icon/downward.png" width="16" />
+              <span style="color:white">{{
+                webUtil.formatStrByDot(account.address)
+              }}</span>
+              <img
+                style="color:white"
+                src="@/assets/img/icon/downward_white.png"
+                width="16"
+              />
             </a>
           </div>
         </div>
@@ -275,10 +281,10 @@ export default {
 .sidebar-container {
   width: 320px;
   float: left;
-  color: blue;
+  color: #5e72e4;
 }
 .sidebar-container a {
-  color: blue;
+  color: #5e72e4;
 }
 nav {
   position: fixed;
@@ -341,7 +347,7 @@ nav {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: blue;
+  background: #5e72e4;
 }
 
 /*滚动条样式*/
@@ -357,7 +363,7 @@ nav {
 
 .fixed-bottom {
   position: absolute;
-  left: 0px;
+  left: 35px;
   right: 0;
   bottom: 10px;
   padding: 24px;
@@ -367,12 +373,25 @@ nav {
 }
 .border-btn {
   /* font: bold 16px/16px var(--familyMedium); */
-  color: blue;
-  border: 2px solid blue;
+  color: white;
+  background: #5e72e4;
+  border: 2px solid #5e72e4;
   border-radius: 16px;
-  padding: 8px 16px;
+  padding: 12px;
   cursor: pointer;
-  width: 100%;
+  min-width: 100px;
+  /* width: 100%; */
+  text-align: center;
+  margin: 5px;
+}
+.border-btn-logout {
+  /* font: bold 16px/16px var(--familyMedium); */
+  background: #f5365c;
+  border: 2px solid #f5365c;
+  border-radius: 16px;
+  padding: 12px;
+  cursor: pointer;
+  /* width: 100%; */
   text-align: right;
   margin: 5px;
 }
@@ -400,7 +419,7 @@ nav {
   left: 0;
   right: 0;
   bottom: 246px;
-  background: blue;
+  background: #5e72e4;
   color: #000;
   border-radius: 16px;
   padding: 8px 0;
@@ -473,10 +492,10 @@ nav {
     padding: 24px 16px 12px;
     border: none;
     position: relative;
-    color: blue;
+    color: #5e72e4;
   }
   .category-title a {
-    color: blue;
+    color: #5e72e4;
   }
   .tabs li {
     padding: 12px 16px;
@@ -492,7 +511,7 @@ nav {
     padding: 12px 16px 34px;
   }
   .fixed-bottom a {
-    color: blue;
+    color: #5e72e4;
   }
 }
 </style>

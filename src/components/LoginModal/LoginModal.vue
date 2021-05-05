@@ -1,12 +1,14 @@
 <template>
-<article
+  <article
     class="login-container"
     v-if="loginModalShow"
     @click.self="loginModalShow = false"
   >
     <div class="account-list" v-if="accounts && accounts.length > 0">
-      <img src="@/assets/img/banner/polka.jpg" width="100%" />
-      <h4>{{$t('SelectAccount')}}</h4>
+      <!-- <img src="@/assets/img/banner/polka.jpg" width="100%" /> -->
+
+      <img src="@//assets/img/logo/logo.svg" width="100%" style="padding:20px" />
+      <h4>{{ $t("SelectAccount") }}</h4>
       <ul>
         <li
           v-for="(account, i) in accounts"
@@ -14,7 +16,7 @@
           :class="{ active: account.isActive }"
           @click="selectAction(account)"
         >
-          {{ account.address }} ({{account.meta.name}})
+          {{ account.address }} ({{ account.meta.name }})
         </li>
       </ul>
     </div>
@@ -25,8 +27,8 @@
         class="modal-close"
         @click="loginModalShow = false"
       />
-      <h2>{{$t('Login')}}</h2>
-      <p>{{$t('SelectLoginAccount')}}</p>
+      <h2>{{ $t("Login") }}</h2>
+      <p>{{ $t("SelectLoginAccount") }}</p>
       <a
         href="https://polkadot.js.org/extension/"
         target="_blank"
@@ -34,7 +36,7 @@
         class="btn bg-orange"
         @click="loginModalShow = false"
         ><img src="@/assets/img/logo/polka.png" width="24" />
-        <span>{{$t('LogInPolkadotJS')}}</span></a
+        <span>{{ $t("LogInPolkadotJS") }}</span></a
       >
       <a
         href="https://mathwallet.org"
@@ -43,20 +45,20 @@
         class="btn"
         @click="loginModalShow = false"
         ><img src="@/assets/img/logo/math.png" width="24" />
-        <span>{{$t('LogInMathWallet')}}</span>
+        <span>{{ $t("LogInMathWallet") }}</span>
       </a>
     </div>
   </article>
 </template>
 <script>
 export default {
-  data(){
-    return{
-      accounts:[],
-      loginModalShow: false, //登录弹窗是否显示
-    }
-  },
-}
+  data() {
+    return {
+      accounts: [],
+      loginModalShow: false //登录弹窗是否显示
+    };
+  }
+};
 </script>
 <style scoped>
 .login-container {
@@ -65,7 +67,7 @@ export default {
   bottom: 0;
   left: 320px;
   right: 0;
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3); */
   text-align: center;
   z-index: 9999;
   display: flex;
@@ -109,7 +111,7 @@ export default {
   background: #000;
   font: bold 16px/24px var(--familyMedium);
   padding: 12px 28px;
-  color:#fff;
+  color: #fff;
 }
 .btn img {
   margin-right: 12px;
@@ -117,8 +119,10 @@ export default {
 .account-list {
   background: #fff;
   text-align: left;
-  max-width: 480px;
+  max-width: 600px;
   overflow: hidden;
+  border-radius: 15px;
+  padding: 20px;
 }
 .account-list h4 {
   font: bold 16px/1.5 var(--familyMedium);
@@ -134,8 +138,8 @@ export default {
   margin-top: 16px;
   border-radius: 8px;
   padding: 16px 42px 16px 16px;
-  background: #efeff4 url("../../assets/img/icon/checkbox_off.png") no-repeat right
-    16px center/20px;
+  background: #efeff4 url("../../assets/img/icon/checkbox_off.png") no-repeat
+    right 16px center/20px;
   color: #000;
   font-size: 14px;
   line-height: 20px;
@@ -145,7 +149,7 @@ export default {
 .account-list li.active {
   background-image: url("../../assets/img/icon/selected.png");
 }
-@media(max-width:768px){
+@media (max-width: 768px) {
   .login-container {
     left: 0;
     padding: 16px;
