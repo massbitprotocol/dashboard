@@ -1,0 +1,498 @@
+<template>
+  <div class="wrapper">
+    <notifications></notifications>
+    <side-bar>
+      <template slot="links">
+        <sidebar-item
+          :link="{
+            name: 'Dashboards',
+            icon: 'ni ni-shop text-primary',
+            path: '/dashboard'
+          }"
+        >
+          <!-- <sidebar-item
+            :link="{ name: 'Dashboard', path: '/dashboard' }"
+          ></sidebar-item>
+          <sidebar-item
+            :link="{ name: 'Alternative', path: '/alternative' }"
+          ></sidebar-item> -->
+        </sidebar-item>
+
+        <!-- <sidebar-item :link="{
+                  name: 'Examples',
+                  icon: 'ni ni-ungroup text-orange'
+                  }">
+          <sidebar-item :link="{ name: 'Pricing', path: '/pricing' }"/>
+          <sidebar-item :link="{ name: 'Login', path: '/login' }"/>
+          <sidebar-item :link="{ name: 'Register', path: '/register' }"/>
+          <sidebar-item :link="{ name: 'Lock', path: '/lock' }"/>
+          <sidebar-item :link="{ name: 'Timeline', path: '/pages/timeline' }"/>
+          <sidebar-item :link="{ name: 'Profile', path: '/pages/user' }"/>
+
+
+        </sidebar-item> -->
+
+        <sidebar-item
+          :link="{
+            name: 'Providers',
+            icon: 'ni ni-ui-04 text-info'
+          }"
+        >
+          <!-- <sidebar-item
+            :link="{ name: 'Buttons', path: '/components/buttons' }"
+          />
+          <sidebar-item :link="{ name: 'Cards', path: '/components/cards' }" /> -->
+          <sidebar-item
+            :link="{ name: 'ETH Provider', path: '/components/grid-system' }"
+          />
+          <sidebar-item
+            :link="{ name: 'BSC Provider', path: '/components/notifications' }"
+          />
+          <sidebar-item
+            :link="{ name: 'SOL Provider', path: '/components/icons' }"
+          />
+          <!-- <sidebar-item
+            :link="{ name: 'Typography', path: '/components/typography' }"
+          /> -->
+
+          <!-- <sidebar-item :link="{ name: 'Multi Level' }">
+            <sidebar-item :link="{ name: 'Third level menu', path: '#!' }" />
+            <sidebar-item :link="{ name: 'Just another link', path: '#a' }" />
+            <sidebar-item :link="{ name: 'One last link', path: '#b' }" />
+          </sidebar-item> -->
+        </sidebar-item>
+        <!-- <sidebar-item
+          :link="{
+            name: 'Forms',
+            icon: 'ni ni-single-copy-04 text-pink'
+          }"
+        >
+          <sidebar-item :link="{ name: 'Elements', path: '/forms/elements' }" />
+          <sidebar-item
+            :link="{ name: 'Components', path: '/forms/components' }"
+          />
+          <sidebar-item
+            :link="{ name: 'Validation', path: '/forms/validation' }"
+          />
+        </sidebar-item> -->
+
+        <sidebar-item
+          :link="{
+            name: 'Indexers',
+            icon: 'ni ni-chart-pie-35 text-info',
+            path: '/indexers'
+          }"
+        >
+          <!-- <sidebar-item :link="{ name: 'Tables', path: '/tables/regular' }" />
+          <sidebar-item
+            :link="{ name: 'Sortable', path: '/tables/sortable' }"
+          />
+          <sidebar-item
+            :link="{ name: 'Paginated Tables', path: '/tables/paginated' }"
+          /> -->
+        </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Delegators',
+            icon: 'ni ni-map-big text-primary',
+            path: '/delegators'
+          }"
+        >
+          <!-- <sidebar-item :link="{ name: 'Tables', path: '/tables/regular' }" />
+          <sidebar-item
+            :link="{ name: 'Sortable', path: '/tables/sortable' }"
+          />
+          <sidebar-item
+            :link="{ name: 'Paginated Tables', path: '/tables/paginated' }"
+          /> -->
+        </sidebar-item>
+        <!-- 
+        <sidebar-item
+          :link="{
+            name: 'Maps',
+            icon: 'ni ni-map-big text-primary'
+          }"
+        >
+          <sidebar-item :link="{ name: 'Google', path: '/maps/google' }" />
+          <sidebar-item :link="{ name: 'Vector', path: '/maps/vector' }" />
+        </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Widgets',
+            icon: 'ni ni-archive-2 text-green',
+            path: '/widgets'
+          }"
+        >
+        </sidebar-item>
+        <sidebar-item
+          :link="{
+            name: 'Charts',
+            icon: 'ni ni-chart-pie-35 text-info',
+            path: '/charts'
+          }"
+        >
+        </sidebar-item>
+
+        <sidebar-item
+          :link="{
+            name: 'Calendar',
+            icon: 'ni ni-calendar-grid-58 text-red',
+            path: '/calendar'
+          }"
+        >
+        </sidebar-item> -->
+      </template>
+
+      <template slot="links-after">
+        <hr class="my-3" />
+
+        <div class="fixed-bottom">
+          <div class="dropdown">
+            <button v-if="!account" class="border-btn" @click="login">
+              {{ $t("Login") }}
+            </button>
+            <a
+              v-if="account"
+              v-show="accountDropdownShow"
+              :class="['border-btn', { open: accountDropdownShow }]"
+              @click="logoutAction"
+            >
+              <span>Logout</span>
+              <!-- <img src="@/assets/img/icon/downward.png" width="16" /> -->
+            </a>
+            <a
+              v-if="account"
+              :class="['border-btn', { open: accountDropdownShow }]"
+              @click="accountDropdownShow = !accountDropdownShow"
+            >
+              <span>{{ webUtil.formatStrByDot(account.address) }}</span>
+              <img src="@/assets/img/icon/downward.png" width="16" />
+            </a>
+          </div>
+        </div>
+
+        <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
+
+        <!-- <b-nav class="navbar-nav mb-md-3">
+          <b-nav-item
+            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/quick-start/argon-dashboard"
+          >
+            <i class="ni ni-spaceship"></i>
+            <b-nav-text class="p-0">Getting started</b-nav-text>
+          </b-nav-item>
+          <b-nav-item
+            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/colors/argon-dashboard"
+          >
+            <i class="ni ni-palette"></i>
+            <b-nav-text class="p-0">Foundation</b-nav-text>
+          </b-nav-item>
+          <b-nav-item
+            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/avatar/argon-dashboard"
+          >
+            <i class="ni ni-ui-04"></i>
+            <b-nav-text class="p-0">Components</b-nav-text>
+          </b-nav-item>
+          <b-nav-item
+            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/charts/argon-dashboard"
+          >
+            <i class="ni ni-chart-pie-35"></i>
+            <b-nav-text class="p-0">Plugins</b-nav-text>
+          </b-nav-item>
+        </b-nav> -->
+      </template>
+    </side-bar>
+    <div class="main-content">
+      <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
+
+      <div @click="$sidebar.displaySidebar(false)">
+        <fade-transition :duration="200" origin="center top" mode="out-in">
+          <!-- your content here -->
+          <router-view></router-view>
+        </fade-transition>
+      </div>
+      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+    </div>
+  </div>
+</template>
+<script>
+/* eslint-disable no-new */
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
+
+import { mapActions } from "vuex";
+function hasElement(className) {
+  return document.getElementsByClassName(className).length > 0;
+}
+
+function initScrollbar(className) {
+  if (hasElement(className)) {
+    new PerfectScrollbar(`.${className}`);
+  } else {
+    // try to init it later in case this component is loaded async
+    setTimeout(() => {
+      initScrollbar(className);
+    }, 100);
+  }
+}
+
+import DashboardNavbar from "./DashboardNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
+import DashboardContent from "./Content.vue";
+import { FadeTransition } from "vue2-transitions";
+
+export default {
+  components: {
+    DashboardNavbar,
+    ContentFooter,
+    DashboardContent,
+    FadeTransition
+  },
+  data() {
+    return {
+      accountDropdownShow: false
+    };
+  },
+  methods: {
+    ...mapActions(["setCategory", "logout", "setScreenWidth"]),
+    logoutAction() {
+      this.logout();
+      this.accountDropdownShow = false;
+    },
+    initScrollbar() {
+      let isWindows = navigator.platform.startsWith("Win");
+      if (isWindows) {
+        initScrollbar("sidenav");
+      }
+    }
+  },
+  mounted() {
+    this.initScrollbar();
+  }
+};
+</script>
+<style scoped>
+/*侧边导航*/
+.sidebar-container {
+  width: 320px;
+  float: left;
+  color: blue;
+}
+.sidebar-container a {
+  color: blue;
+}
+nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 48px;
+  padding: 12px 16px;
+  font: bold 16px/24px var(--familyMedium);
+  background: var(--mainColor);
+  z-index: 1100;
+  display: none;
+}
+.sidebar {
+  background: var(--mainColor);
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1010;
+}
+.sidebar .logo {
+  padding: 17px 24px;
+}
+.scroll-content {
+  height: calc(100% - 186px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.scroll-content li {
+  padding: 12px 24px;
+  font: bold 18px/24px var(--familyMedium);
+  cursor: pointer;
+}
+.scroll-content li img {
+  margin-right: 12px;
+}
+.scroll-content li.active {
+  background: var(--blackOp);
+  position: relative;
+}
+.category-title {
+  font: bold 14px/16px var(--familyMedium);
+  padding: 36px 24px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 24px;
+}
+.blockchain li {
+  padding: 12px 24px 12px 60px;
+}
+.blockchain li span {
+  font-size: 14px;
+  margin-left: 4px;
+  vertical-align: baseline;
+}
+.blockchain li.active:before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 20px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: blue;
+}
+
+/*滚动条样式*/
+
+.scroll-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: var(--whiteOp);
+}
+
+.fixed-bottom {
+  position: absolute;
+  left: 0px;
+  right: 0;
+  bottom: 10px;
+  padding: 24px;
+}
+.fixed-bottom a {
+  display: inline-block;
+}
+.border-btn {
+  /* font: bold 16px/16px var(--familyMedium); */
+  color: blue;
+  border: 2px solid blue;
+  border-radius: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  margin: 5px;
+}
+.fixed-bottom img {
+  /* margin-right: 16px; */
+}
+.dropdown {
+  position: relative;
+  margin-bottom: 24px;
+  display: inline-block;
+}
+.dropdown img {
+  margin: 0 0 0 4px;
+}
+.language {
+  margin-bottom: 0;
+  font: 700 16px/1 var(--familyMedium);
+}
+.open img {
+  transform: rotate(180deg);
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 246px;
+  background: blue;
+  color: #000;
+  border-radius: 16px;
+  padding: 8px 0;
+  z-index: 200;
+  text-align: center;
+  max-width: 204px;
+  font: 700 16px/1.5 var(--familyMedium);
+}
+.language .dropdown-menu {
+  width: 200px;
+  left: auto;
+  bottom: 32px;
+}
+.language li {
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+}
+.foot-contact a {
+  position: relative;
+}
+.foot-contact .qrcode {
+  position: absolute;
+  left: 0;
+  bottom: 24px;
+  display: none;
+  opacity: 1;
+}
+.foot-contact a:hover .qrcode {
+  display: block;
+}
+@media (max-width: 768px) {
+  nav {
+    display: block;
+  }
+  nav:after,
+  .category-title:after {
+    content: "";
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
+  }
+  .category-title:after {
+    top: 0;
+    bottom: auto;
+  }
+  .sidebar-container {
+    width: 100vw;
+  }
+  .scroll-content {
+    height: calc(100% - 130px);
+    overflow: auto;
+  }
+  .scroll-content li {
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .sidebar,
+  .sidebar a {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .scroll-content li img {
+    opacity: 0.7;
+  }
+  .category-title {
+    padding: 24px 16px 12px;
+    border: none;
+    position: relative;
+    color: blue;
+  }
+  .category-title a {
+    color: blue;
+  }
+  .tabs li {
+    padding: 12px 16px;
+  }
+  .blockchain li {
+    padding-left: 52px;
+  }
+  .login-container {
+    left: 0;
+    padding: 16px;
+  }
+  .fixed-bottom {
+    padding: 12px 16px 34px;
+  }
+  .fixed-bottom a {
+    color: blue;
+  }
+}
+</style>
