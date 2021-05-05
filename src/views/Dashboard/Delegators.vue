@@ -3,7 +3,7 @@
     <base-header class="pb-6">
       <b-row align-v="center" class="py-4">
         <b-col lg="6" cols="7">
-          <h6 class="h2 text-white d-inline-block mb-0">Indexer tables</h6>
+          <h6 class="h2 text-white d-inline-block mb-0">Delegators tables</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <route-bread-crumb></route-bread-crumb>
           </nav>
@@ -17,7 +17,7 @@
     <b-container fluid class="mt--6">
       <b-card no-body class="bg-default shadow">
         <b-card-header class="bg-transparent border-0">
-          <h3 class="mb-0 text-white">Indexer table</h3>
+          <h3 class="mb-0 text-white">Delegator table</h3>
         </b-card-header>
 
         <el-table

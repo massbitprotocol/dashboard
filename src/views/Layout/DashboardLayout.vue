@@ -6,14 +6,16 @@
         <sidebar-item
           :link="{
             name: 'Dashboard',
-            icon: 'ni ni-shop text-primary',
-            path: '/dashboard'
+            icon: 'ni ni-shop text-primary'
           }"
         >
-          <!-- <sidebar-item
-            :link="{ name: 'Dashboard', path: '/dashboard' }"
+          <sidebar-item
+            :link="{ name: 'Activity Dashboard', path: '/activityDashboard' }"
           ></sidebar-item>
           <sidebar-item
+            :link="{ name: 'Epochs Dashboard', path: '/epochsDashboard' }"
+          ></sidebar-item>
+          <!-- <sidebar-item
             :link="{ name: 'Alternative', path: '/alternative' }"
           ></sidebar-item> -->
         </sidebar-item>
@@ -216,7 +218,7 @@
           <router-view></router-view>
         </fade-transition>
       </div>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+      <!-- <content-footer v-if="!$route.meta.hideFooter"></content-footer> -->
     </div>
   </div>
 </template>
@@ -365,8 +367,8 @@ nav {
   position: absolute;
   left: 35px;
   right: 0;
-  bottom: 10px;
-  padding: 24px;
+  bottom: 0px;
+  padding: 12px 24px; 
 }
 .fixed-bottom a {
   display: inline-block;
@@ -400,7 +402,7 @@ nav {
 }
 .dropdown {
   position: relative;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   display: inline-block;
 }
 .dropdown img {

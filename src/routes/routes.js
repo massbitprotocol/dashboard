@@ -33,6 +33,10 @@ const Typography = () =>
 // Dashboard pages
 const Dashboard = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/Dashboard.vue");
+const ActivityDashboard = () =>
+  import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/ActivityDashboard.vue");
+const EpochsDashboard = () =>
+  import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/EpochsDashboard.vue");
 const AlternativeDashboard = () =>
   import(
     /* webpackChunkName: "dashboard" */ "@/views/Dashboard/AlternativeDashboard.vue"
@@ -245,7 +249,7 @@ let authPages = {
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/activityDashboard",
     name: "Dashboard"
   },
   componentsMenu,
@@ -263,6 +267,16 @@ const routes = [
         path: "dashboard",
         name: "Dashboard",
         component: Dashboard
+      },
+      {
+        path: "activityDashboard",
+        name: "Activity Dashboard",
+        component: ActivityDashboard
+      },
+      {
+        path: "epochsDashboard",
+        name: "Epochs Dashboard",
+        component: EpochsDashboard
       },
       {
         path: "alternative",
