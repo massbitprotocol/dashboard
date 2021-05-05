@@ -7,12 +7,11 @@
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <div class="sidenav-header d-flex align-items-center">
         <b-navbar-brand href="#">
-          <img :src="logo" class="navbar-brand-img" alt="Sidebar logo">
+          <img src="../../assets/img/logo/logo.svg"  alt="Sidebar logo">
         </b-navbar-brand>
         <div class="ml-auto">
           <!-- Sidenav toggler -->
-          <!-- Always show Sidenav -->
-          <!-- <div class="sidenav-toggler d-none d-xl-block"
+          <div class="sidenav-toggler d-none d-xl-block"
                :class="{'active': !$sidebar.isMinimized }"
                @click="minimizeSidebar"
                >
@@ -21,7 +20,7 @@
               <i class="sidenav-toggler-line"></i>
               <i class="sidenav-toggler-line"></i>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
       <slot></slot>
