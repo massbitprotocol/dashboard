@@ -3210,7 +3210,7 @@ core-js-compat@^3.6.5, core-js-compat@^3.9.0, core-js-compat@^3.9.1:
     browserslist "^4.16.6"
     semver "7.0.0"
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.6.5:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
@@ -9722,6 +9722,14 @@ vue-chartjs@^3.5.0:
   dependencies:
     "@types/chart.js" "^2.7.55"
 
+vue-circular-count-down-timer@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-circular-count-down-timer/-/vue-circular-count-down-timer-1.0.4.tgz#8886633e6020b74be576e59310d8e6e847aa5fef"
+  integrity sha512-qOk89O9SyYO3xaXcPEbZ1HhSZcLHkn2U97axlJyLh4alfc5dDYQrfXIJ77s45Z8d6vF4NVslJIpGO3Wln5RB2Q==
+  dependencies:
+    core-js "^2.6.5"
+    vue "^2.6.10"
+
 vue-clipboard2@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/vue-clipboard2/-/vue-clipboard2-0.3.1.tgz#6e551fb7bd384889b28b0da3b12289ed6bca4894"
@@ -9821,7 +9829,7 @@ vue2-transitions@^0.2.3:
   resolved "https://registry.yarnpkg.com/vue2-transitions/-/vue2-transitions-0.2.3.tgz#69c9d75b1db05f231b80980c03459d68490ba27d"
   integrity sha512-Ou5x74AOQbM8JjZV8pIssFFqavvj53QzrEEUr5QnElUYb1ZizPwaUJo0ZqmLPqjwPae7ON4SG8U2cSTI4tHKLg==
 
-vue@^2.2.1, vue@^2.3.3, vue@^2.6.11:
+vue@^2.2.1, vue@^2.3.3, vue@^2.6.10, vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

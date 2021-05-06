@@ -15,8 +15,32 @@
                     <b-col xl="12">
                       <span class="h1 text-white">139 </span>
                     </b-col>
-                    <b-col xl="12">
-                      <span class="h1 text-white"> </span>
+                    <b-col xl="12" class="mb-3">
+                      <span class="h1 text-white"
+                        ><circular-count-down-timer
+                          :initial-value="86400"
+                          :stroke-width="3"
+                          :seconds-stroke-color="'#f00'"
+                          :minutes-stroke-color="'#0ff'"
+                          :hours-stroke-color="'#0f0'"
+                          :underneath-stroke-color="'lightgrey'"
+                          :seconds-fill-color="'#00ffff66'"
+                          :minutes-fill-color="'#00ff0066'"
+                          :hours-fill-color="'#ff000066'"
+                          :size="150"
+                          :padding="5"
+                          :hour-label="'hours'"
+                          :minute-label="'minutes'"
+                          :second-label="'seconds'"
+                          :show-second="false"
+                          :show-minute="false"
+                          :show-hour="true"
+                          :show-negatives="true"
+                        ></circular-count-down-timer>
+                        
+                          <!-- :paused="some_variable"
+                          :notify-every="'minute'" -->
+                      </span>
                     </b-col>
                     <b-col xl="6">
                       <b-row class="mb-2">
