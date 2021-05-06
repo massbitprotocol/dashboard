@@ -24,6 +24,7 @@
           class="table-responsive table-dark"
           header-row-class-name="thead-dark"
           :data="projects"
+          @row-click="fn_rowClick"
         >
           <el-table-column
             label="INDEXER"
@@ -191,6 +192,11 @@ export default {
       users,
       currentPage: 1
     };
+  },
+  methods: {
+    fn_rowClick: function(row) {
+      this.$router.push("/indexerDetail/" + row.indexer);
+    }
   }
 };
 </script>

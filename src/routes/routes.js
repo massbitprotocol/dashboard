@@ -49,6 +49,10 @@ const Widgets = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Widgets.vue");
 const Indexers = () =>
   import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
+const IndexerDetail = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/IndexerDetail.vue");
+const Provider = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Provider.vue");
 const Delegators = () =>
   import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Delegators.vue");
 
@@ -257,10 +261,10 @@ const routes = [
     name: "Dashboard"
   },
   componentsMenu,
-  formsMenu,
-  tablesMenu,
-  mapsMenu,
-  pagesMenu,
+  // formsMenu,
+  // tablesMenu,
+  // mapsMenu,
+  // pagesMenu,
   {
     path: "/",
     component: DashboardLayout,
@@ -282,33 +286,43 @@ const routes = [
         name: "Epochs Dashboard",
         component: EpochsDashboard
       },
-      {
-        path: "alternative",
-        name: "Alternative",
-        component: AlternativeDashboard,
-        meta: {
-          navbarType: "light"
-        }
-      },
-      {
-        path: "calendar",
-        name: "Calendar",
-        component: Calendar
-      },
-      {
-        path: "charts",
-        name: "Charts",
-        component: Charts
-      },
-      {
-        path: "widgets",
-        name: "Widgets",
-        component: Widgets
-      },
+      // {
+      //   path: "alternative",
+      //   name: "Alternative",
+      //   component: AlternativeDashboard,
+      //   meta: {
+      //     navbarType: "light"
+      //   }
+      // },
+      // {
+      //   path: "calendar",
+      //   name: "Calendar",
+      //   component: Calendar
+      // },
+      // {
+      //   path: "charts",
+      //   name: "Charts",
+      //   component: Charts
+      // },
+      // {
+      //   path: "widgets",
+      //   name: "Widgets",
+      //   component: Widgets
+      // },
       {
         path: "/indexers",
         name: "Indexers",
         component: Indexers
+      },
+      {
+        path: "/provider/:id",
+        name: "Provider",
+        component: Provider
+      },
+      {
+        path: "/indexerDetail/:id",
+        name: "IndexerDetail",
+        component: IndexerDetail
       },
       {
         path: "/delegators",
@@ -316,8 +330,8 @@ const routes = [
         component: Delegators
       }
     ]
-  },
-  authPages
+  }
+  // authPages
 ];
 
 export default routes;

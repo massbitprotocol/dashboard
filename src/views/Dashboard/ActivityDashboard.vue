@@ -14,21 +14,21 @@
                         <sup class="text-white">STAKE • TOTAL</sup>
                       </b-col>
                       <b-col xl="12">
-                        <span class="h1 text-white">2.6BGRT </span>
+                        <span class="h1 text-white">2.6B MBT </span>
                       </b-col>
 
                       <b-col xl="8">
                         <span class=" text-white">Indexer Stake </span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 705.8MGRT </span>
+                        <span class=" text-white"> 705.8M MBT </span>
                       </b-col>
 
                       <b-col xl="8">
                         <span class=" text-white">Delegated Stake</span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 1.9BGRT </span>
+                        <span class=" text-white"> 1.9B MBT </span>
                       </b-col>
                     </b-row>
                     <hr class="my-1" style="background: white;" />
@@ -37,14 +37,14 @@
                         <span class=" text-white">Allocated Stake </span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 2.7BGRT </span>
+                        <span class=" text-white"> 2.7B MBT </span>
                       </b-col>
 
                       <b-col xl="8">
                         <span class=" text-white">Delegated Stake</span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> -47.5MGRT </span>
+                        <span class=" text-white"> -47.5M MBT </span>
                       </b-col>
                     </b-row>
                   </div>
@@ -59,21 +59,21 @@
                         <sup class="text-white">INDEXING REWARDS • TOTAL</sup>
                       </b-col>
                       <b-col xl="12">
-                        <span class="h1 text-white">106.5MGRT </span>
+                        <span class="h1 text-white">106.5M MBT </span>
                       </b-col>
 
                       <b-col xl="8">
                         <span class=" text-white">Indexers </span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 39.0MGRT</span>
+                        <span class=" text-white"> 39.0M MBT</span>
                       </b-col>
 
                       <b-col xl="8">
                         <span class=" text-white">Delegators</span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 67.4MGRT </span>
+                        <span class=" text-white"> 67.4M MBT </span>
                       </b-col>
                     </b-row>
                   </div>
@@ -91,21 +91,21 @@
                         <sup class="text-white">TOKEN SUPPLY</sup>
                       </b-col>
                       <b-col xl="12">
-                        <span class="h1 text-white">10.0935B GRT </span>
+                        <span class="h1 text-white">10.0935B MBT </span>
                       </b-col>
 
                       <b-col xl="8">
-                        <span class=" text-white">Minted GRT </span>
+                        <span class=" text-white">Minted MBT </span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 10.1BGRT </span>
+                        <span class=" text-white"> 10.1B MBT </span>
                       </b-col>
 
                       <b-col xl="8">
-                        <span class=" text-white">Burned GRT</span>
+                        <span class=" text-white">Burned MBT</span>
                       </b-col>
                       <b-col xl="4">
-                        <span class=" text-white"> 13.0MGRT </span>
+                        <span class=" text-white"> 13.0M MBT </span>
                       </b-col>
                     </b-row>
                   </div>
@@ -188,10 +188,10 @@
                       <sup class="text-white">INDEXING REWARDS</sup>
                     </b-col>
                     <b-col xl="4">
-                      <span class="h1 text-white">26.1 GRT </span>
+                      <span class="h1 text-white">26.1 MBT </span>
                     </b-col>
                     <b-col xl="8" style="align-self: center;">
-                      <span class="h1 text-white">~ 0GRT </span>
+                      <span class="h1 text-white">~ 0 MBT </span>
                     </b-col>
                   </b-row>
                   <div class="text-light mt-2 text-sm">

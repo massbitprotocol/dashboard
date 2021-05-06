@@ -3,7 +3,7 @@
     <base-header class="pb-6">
       <b-row align-v="center" class="py-4">
         <b-col lg="6" cols="7">
-          <h6 class="h2 text-white d-inline-block mb-0">Delegators tables</h6>
+          <h6 class="h2 text-white d-inline-block mb-0">Provider tables</h6>
           <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <route-bread-crumb></route-bread-crumb>
           </nav>
@@ -17,7 +17,7 @@
     <b-container fluid class="mt--6">
       <b-card no-body class="bg-default shadow">
         <b-card-header class="bg-transparent border-0">
-          <h3 class="mb-0 text-white">Delegator table</h3>
+          <h3 class="mb-0 text-white">{{ providerId }} table</h3>
         </b-card-header>
 
         <el-table
@@ -27,7 +27,7 @@
           @row-click="fn_rowClick"
         >
           <el-table-column
-            label="DELEGATOR"
+            label="Provider"
             min-width="310px"
             prop="name"
             sortable
@@ -50,84 +50,94 @@
               </b-media>
             </template>
           </el-table-column>
+
           <el-table-column
-            label="INDEXERS DELEGATING"
+            label="QUERY FEE CUT"
             prop="budget"
+            min-width="160px"
             sortable
-            min-width="190px"
           >
-            <div class="avatar-group">
-              <a
-                href="#"
-                class="avatar avatar-sm rounded-circle"
-                data-toggle="tooltip"
-                data-original-title="Ryan Tompson"
-              >
-                <img alt="Image placeholder" src="img/theme/bootstrap.jpg" />
-              </a>
-              <a
-                href="#"
-                class="avatar avatar-sm rounded-circle"
-                data-toggle="tooltip"
-                data-original-title="Romina Hadid"
-              >
-                <img alt="Image placeholder" src="img/theme/angular.jpg" />
-              </a>
-              <a
-                href="#"
-                class="avatar avatar-sm rounded-circle"
-                data-toggle="tooltip"
-                data-original-title="Alexander Smith"
-              >
-                <img alt="Image placeholder" src="img/theme/sketch.jpg" />
-              </a>
-              <a
-                href="#"
-                class="avatar avatar-sm rounded-circle"
-                data-toggle="tooltip"
-                data-original-title="Jessica Doe"
-              >
-                <img alt="Image placeholder" src="img/theme/react.jpg" />
-              </a>
-            </div>
+          </el-table-column>
+          <el-table-column
+            label="EFFECTIVE REWARD CUT"
+            prop="budget"
+            min-width="200px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="COOLDOWN REMAINING"
+            prop="budget"
+            min-width="220px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="OWNED"
+            prop="budget"
+            min-width="160px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="DELEGATED"
+            prop="budget"
+            min-width="160px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="DELEGATED"
+            prop="budget"
+            min-width="160px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="ALLOCATED"
+            prop="budget"
+            min-width="160px"
+            sortable
+          >
+          </el-table-column>
+          <el-table-column
+            label="AVAILABILE"
+            prop="budget"
+            min-width="220px"
+            sortable
+          >
           </el-table-column>
 
           <el-table-column
-            label="ORIGINAL DELEGATION"
+            label="AVAILABILE"
+            prop="budget"
+            min-width="220px"
+            sortable
+          >
+          </el-table-column>
+
+          <el-table-column
+            label="MAX CAPACITY"
             prop="budget"
             min-width="220px"
             sortable
           >
           </el-table-column>
           <el-table-column
-            label="TOTAL UNREALIZED REWARDS"
-            prop="budget"
-            min-width="250px"
-            sortable
-          >
-          </el-table-column>
-          <el-table-column
-            label="TOTAL REALIZED REWARDS"
+            label="QUERY FEES"
             prop="budget"
             min-width="220px"
             sortable
           >
           </el-table-column>
           <el-table-column
-            label="TOTAL DELEGATION"
+            label="Provider REWARDS"
             prop="budget"
             min-width="220px"
             sortable
           >
           </el-table-column>
-          <el-table-column
-            label="LAST DELEGATED AT"
-            prop="createdAt"
-            min-width="220px"
-            sortable
-          >
-          </el-table-column>
-          <!-- 
+
           <el-table-column min-width="180px">
             <template v-slot="{ row }">
               <el-dropdown trigger="click" class="dropdown">
@@ -143,7 +153,7 @@
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
-          </el-table-column> -->
+          </el-table-column>
         </el-table>
       </b-card>
     </b-container>
@@ -175,6 +185,12 @@ export default {
     [Dropdown.name]: Dropdown,
     [DropdownItem.name]: DropdownItem,
     [DropdownMenu.name]: DropdownMenu
+  },
+
+  computed: {
+    providerId() {
+      return this.$route.params.id;
+    }
   },
   data() {
     return {

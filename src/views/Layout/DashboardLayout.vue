@@ -45,13 +45,13 @@
           />
           <sidebar-item :link="{ name: 'Cards', path: '/components/cards' }" /> -->
           <sidebar-item
-            :link="{ name: 'ETH Provider', path: '/components/grid-system' }"
+            :link="{ name: 'ETH Provider', path: '/provider/ETHProvider' }"
           />
           <sidebar-item
-            :link="{ name: 'BSC Provider', path: '/components/notifications' }"
+            :link="{ name: 'BSC Provider', path: '/provider/BSCProvider' }"
           />
           <sidebar-item
-            :link="{ name: 'SOL Provider', path: '/components/icons' }"
+            :link="{ name: 'SOL Provider', path: '/provider/SOLProvider' }"
           />
           <!-- <sidebar-item
             :link="{ name: 'Typography', path: '/components/typography' }"
