@@ -33,23 +33,24 @@ const Typography = () =>
 // Dashboard pages
 const Dashboard = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/Dashboard.vue");
-<<<<<<< HEAD
-=======
 const ActivityDashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/ActivityDashboard.vue");
+  import(
+    /* webpackChunkName: "dashboard" */ "@/views/Dashboard/ActivityDashboard.vue"
+  );
 const EpochsDashboard = () =>
-  import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/EpochsDashboard.vue");
->>>>>>> Init_project
+  import(
+    /* webpackChunkName: "dashboard" */ "@/views/Dashboard/EpochsDashboard.vue"
+  );
 const AlternativeDashboard = () =>
   import(
     /* webpackChunkName: "dashboard" */ "@/views/Dashboard/AlternativeDashboard.vue"
   );
 const Widgets = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Widgets.vue");
-  const Indexers = () =>
-    import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
-  const Delegators = () =>
-    import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Delegators.vue");
+const Indexers = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
+const Delegators = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Delegators.vue");
 
 // Forms pages
 const FormElements = () =>
@@ -252,11 +253,7 @@ let authPages = {
 const routes = [
   {
     path: "/",
-<<<<<<< HEAD
-    redirect: "/dashboard",
-=======
     redirect: "/activityDashboard",
->>>>>>> Init_project
     name: "Dashboard"
   },
   componentsMenu,
@@ -276,8 +273,6 @@ const routes = [
         component: Dashboard
       },
       {
-<<<<<<< HEAD
-=======
         path: "activityDashboard",
         name: "Activity Dashboard",
         component: ActivityDashboard
@@ -288,7 +283,6 @@ const routes = [
         component: EpochsDashboard
       },
       {
->>>>>>> Init_project
         path: "alternative",
         name: "Alternative",
         component: AlternativeDashboard,
