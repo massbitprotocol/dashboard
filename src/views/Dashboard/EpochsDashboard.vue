@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container fluid class="mt-3">
+    <b-container fluid class="mt-6">
       <!--Widgets-->
       <b-row>
         <b-col xl="4">
@@ -8,48 +8,49 @@
             <card gradient="default" no-body="">
               <b-card-body>
                 <div class="mb-2">
-                  <sup class="text-white">$</sup>
-                  <span class="h2 text-white">3,300</span>
-                  <div class="text-light mt-2 text-sm">
-                    Your current balance
-                  </div>
-                  <div>
-                    <span class="text-success font-weight-600">+ 15%</span>
-                    <span class="text-light">($250)</span>
-                  </div>
-                </div>
-                <div class="mb-2">
-                  <sup class="text-white">$</sup>
-                  <span class="h2 text-white">3,300</span>
-                  <div class="text-light mt-2 text-sm">
-                    Your current balance
-                  </div>
-                  <div>
-                    <span class="text-success font-weight-600">+ 15%</span>
-                    <span class="text-light">($250)</span>
-                  </div>
-                </div>
-                <div class="mb-2">
-                  <sup class="text-white">$</sup>
-                  <span class="h2 text-white">3,300</span>
-                  <div class="text-light mt-2 text-sm">
-                    Your current balance
-                  </div>
-                  <div>
-                    <span class="text-success font-weight-600">+ 15%</span>
-                    <span class="text-light">($250)</span>
-                  </div>
-                </div>
-                <div class="mb-2">
-                  <sup class="text-white">$</sup>
-                  <span class="h2 text-white">3,300</span>
-                  <div class="text-light mt-2 text-sm">
-                    Your current balance
-                  </div>
-                  <div>
-                    <span class="text-success font-weight-600">+ 15%</span>
-                    <span class="text-light">($250)</span>
-                  </div>
+                  <b-row class="mb-2" style="text-align-last: center;">
+                    <b-col xl="12">
+                      <sup class="text-white">SETTLING</sup>
+                    </b-col>
+                    <b-col xl="12">
+                      <span class="h1 text-white">139 </span>
+                    </b-col>
+                    <b-col xl="12">
+                      <span class="h1 text-white"> </span>
+                    </b-col>
+                    <b-col xl="6">
+                      <b-row class="mb-2">
+                        <b-col xl="12">
+                          <sup class="text-white">START BLOCK</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class=" h1 text-white">#12377208</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class="text-white">QUERY FEES</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class=" h1 text-white">26.1GRT</sup>
+                        </b-col>
+                      </b-row>
+                    </b-col>
+                    <b-col xl="6">
+                      <b-row class="mb-2">
+                        <b-col xl="12">
+                          <sup class="text-white">END BLOCK</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class="h1 text-white">#12383854</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class="text-white">INDEXING REWARDS</sup>
+                        </b-col>
+                        <b-col xl="12">
+                          <sup class="h1 text-white">49.3KGRT</sup>
+                        </b-col>
+                      </b-row>
+                    </b-col>
+                  </b-row>
                 </div>
               </b-card-body>
             </card>
@@ -61,40 +62,99 @@
               <card gradient="default" no-body="">
                 <b-card-body>
                   <div class="mb-2">
-                    <sup class="text-white">$</sup>
-                    <span class="h2 text-white">3,300</span>
-                    <div class="text-light mt-2 text-sm">
-                      Your current balance
-                    </div>
-                    <div>
-                      <span class="text-success font-weight-600">+ 15%</span>
-                      <span class="text-light">($250)</span>
-                    </div>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">SETTLING</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">QUERY FEES</sup>
+                      </b-col>
+                      <b-col xl="4">
+                        <span class="h1 text-white">139 </span>
+                      </b-col>
+                      <b-col xl="8">
+                        <span class="h1 text-white">196.6GRT </span>
+                      </b-col>
+                    </b-row>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">5 hours ago</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">INDEXING REWARDS</sup>
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h1 text-white"> 10.1BGRT </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class=" text-white"> BLOCK RANGE </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h5 text-white">
+                            #12370562 ➔ #12377208
+                          </span></sup
+                        >
+                      </b-col>
+                    </b-row>
                   </div>
-                  <b-button size="sm" variant="neutral" block
-                    >Add credit</b-button
-                  >
                 </b-card-body>
               </card>
 
-              <card gradient="danger">
-                <b-row align-v="center" class="justify-content-between">
-                  <b-col>
-                    <img
-                      src="img/icons/cards/bitcoin.png"
-                      alt="Image placeholder"
-                    />
-                  </b-col>
-                  <b-col md="auto">
-                    <b-badge size="lg" variant="success">Active</b-badge>
-                  </b-col>
-                </b-row>
-                <div class="my-4">
-                  <span class="h6 surtitle text-light">
-                    Username
-                  </span>
-                  <div class="h1 text-white">@johnsnow</div>
-                </div>
+              <card gradient="default" no-body="">
+                <b-card-body>
+                  <div class="mb-2">
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">SETTLING</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">QUERY FEES</sup>
+                      </b-col>
+                      <b-col xl="4">
+                        <span class="h1 text-white">138 </span>
+                      </b-col>
+                      <b-col xl="8">
+                        <span class="h1 text-white">548.9GRT </span>
+                      </b-col>
+                    </b-row>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">a day ago</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">INDEXING REWARDS</sup>
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h1 text-white"> 368.3KGRT </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class=" text-white"> BLOCK RANGE </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h5 text-white">
+                            #12363916 ➔ #12370562
+                          </span></sup
+                        >
+                      </b-col>
+                    </b-row>
+                  </div>
+                </b-card-body>
               </card>
             </b-card-group>
           </b-col>
@@ -103,43 +163,106 @@
               <card gradient="default" no-body="">
                 <b-card-body>
                   <div class="mb-2">
-                    <sup class="text-white">$</sup>
-                    <span class="h2 text-white">3,300</span>
-                    <div class="text-light mt-2 text-sm">
-                      Your current balance
-                    </div>
-                    <div>
-                      <span class="text-success font-weight-600">+ 15%</span>
-                      <span class="text-light">($250)</span>
-                    </div>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">SETTLING</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">QUERY FEES</sup>
+                      </b-col>
+                      <b-col xl="4">
+                        <span class="h1 text-white">137 </span>
+                      </b-col>
+                      <b-col xl="8">
+                        <span class="h1 text-white">853.5GRT </span>
+                      </b-col>
+                    </b-row>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">2 days ago</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">INDEXING REWARDS</sup>
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h1 text-white"> 1.4MGRT </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class=" text-white"> BLOCK RANGE </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h5 text-white">
+                            #12357270 ➔ #12363916
+                          </span></sup
+                        >
+                      </b-col>
+                    </b-row>
                   </div>
-                  <b-button size="sm" variant="neutral" block
-                    >Add credit</b-button
-                  >
                 </b-card-body>
               </card>
 
-              <card gradient="danger">
-                <b-row align-v="center" class="justify-content-between">
-                  <b-col>
-                    <img
-                      src="img/icons/cards/bitcoin.png"
-                      alt="Image placeholder"
-                    />
-                  </b-col>
-                  <b-col md="auto">
-                    <b-badge size="lg" variant="success">Active</b-badge>
-                  </b-col>
-                </b-row>
-                <div class="my-4">
-                  <span class="h6 surtitle text-light">
-                    Username
-                  </span>
-                  <div class="h1 text-white">@johnsnow</div>
-                </div>
+              <card gradient="default" no-body="">
+                <b-card-body>
+                  <div class="mb-2">
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">SETTLING</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">QUERY FEES</sup>
+                      </b-col>
+                      <b-col xl="4">
+                        <span class="h1 text-white">136 </span>
+                      </b-col>
+                      <b-col xl="8">
+                        <span class="h1 text-white">196.6GRT </span>
+                      </b-col>
+                    </b-row>
+                    <b-row class="mb-2">
+                      <b-col xl="4">
+                        <sup class="text-white">3 days ago</sup>
+                      </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">INDEXING REWARDS</sup>
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h1 text-white"> 10.1BGRT </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class=" text-white"> BLOCK RANGE </span></sup
+                        >
+                      </b-col>
+                      <b-col xl="4"> </b-col>
+                      <b-col xl="8">
+                        <sup class="text-white">
+                          <span class="h5 text-white">
+                            #12370562 ➔ #12377208
+                          </span></sup
+                        >
+                      </b-col>
+                    </b-row>
+                  </div>
+                </b-card-body>
               </card>
             </b-card-group>
           </b-col>
+        </b-col>
+
+        <b-col xl="12">
+          <EpochsTable></EpochsTable>
         </b-col>
       </b-row>
       <!--End Widgets-->
@@ -151,11 +274,13 @@
 import BaseProgress from "@/components/BaseProgress";
 import RouteBreadCrumb from "@/components/Breadcrumb/RouteBreadcrumb";
 import StatsCard from "@/components/Cards/StatsCard";
+import EpochsTable from "./EpochsTable";
 
 export default {
   components: {
     BaseProgress,
     RouteBreadCrumb,
+    EpochsTable,
     StatsCard
   },
   data() {
