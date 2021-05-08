@@ -13,7 +13,6 @@ class User {
   async getAccounts() {
     if (isWeb3Injected) {
       return await web3Accounts({ ss58Format: 0 }).then((accounts) => {
-        console.log(accounts);
         accounts.map((account) => {
           account.isActive = false;
         });
@@ -32,7 +31,6 @@ class User {
       data: "0x" + Buffer(str).toString("hex"),
       type: "bytes",
     });
-    console.log(signRes);
 
     return signRes ? signRes.signature : null;
   }

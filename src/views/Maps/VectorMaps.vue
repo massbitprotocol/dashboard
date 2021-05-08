@@ -20,10 +20,10 @@
         <b-col>
           <b-card no-body>
             <b-card-body class="pt-0">
-              <async-world-map class="map map-big"
+              <!-- <async-world-map class="map map-big"
                                :map-data="mapData"
                                :points="points">
-              </async-world-map>
+              </async-world-map> -->
             </b-card-body>
           </b-card>
         </b-col>

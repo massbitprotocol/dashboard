@@ -212,7 +212,7 @@
 import BaseProgress from "@/components/BaseProgress";
 import RouteBreadCrumb from "@/components/Breadcrumb/RouteBreadcrumb";
 import StatsCard from "@/components/Cards/StatsCard";
-import EpochsTable from "./EpochsTable";
+import EpochsTable from "./DashboardTable/EpochsTable";
 
 export default {
   components: {

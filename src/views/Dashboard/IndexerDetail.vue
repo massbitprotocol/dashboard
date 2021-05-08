@@ -1,215 +1,33 @@
 <template>
   <div>
     <b-container fluid class="mt-6">
-      <h1>Indexer: {{indexerId}}</h1>
+      <b-row>
+        <b-col xl="2">
+          <base-button icon type="primary" @click="goBack()">
+            <span class="btn-inner--icon"><i class="ni ni-bold-left"></i></span>
+            <span class="btn-inner--text">Back</span>
+          </base-button>
+        </b-col>
+        <b-col class="text-center" xl="8">
+          <h1>Indexer: {{ indexerId }}</h1>
+        </b-col>
+      </b-row>
       <b-row>
         <b-col xl="12">
-          <b-col xl="12">
-            <b-card-group deck>
-              <card gradient="default" no-body="">
-                <b-card-body>
-                  <div class="mb-2">
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">SETTLING</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">QUERY FEES</sup>
-                      </b-col>
-                      <b-col xl="4">
-                        <span class="h1 text-white">139 </span>
-                      </b-col>
-                      <b-col xl="8">
-                        <span class="h1 text-white">196.6 MBT </span>
-                      </b-col>
-                    </b-row>
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">5 hours ago</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">INDEXING REWARDS</sup>
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h1 text-white"> 10.1B MBT </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class=" text-white"> BLOCK RANGE </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h5 text-white">
-                            #12370562 ➔ #12377208
-                          </span></sup
-                        >
-                      </b-col>
-                    </b-row>
-                  </div>
-                </b-card-body>
-              </card>
-
-              <card gradient="default" no-body="">
-                <b-card-body>
-                  <div class="mb-2">
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">SETTLING</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">QUERY FEES</sup>
-                      </b-col>
-                      <b-col xl="4">
-                        <span class="h1 text-white">138 </span>
-                      </b-col>
-                      <b-col xl="8">
-                        <span class="h1 text-white">548.9MBT </span>
-                      </b-col>
-                    </b-row>
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">a day ago</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">INDEXING REWARDS</sup>
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h1 text-white"> 368.3K MBT </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class=" text-white"> BLOCK RANGE </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h5 text-white">
-                            #12363916 ➔ #12370562
-                          </span></sup
-                        >
-                      </b-col>
-                    </b-row>
-                  </div>
-                </b-card-body>
-              </card>
-            </b-card-group>
-          </b-col>
-          <b-col xl="12">
-            <b-card-group deck>
-              <card gradient="default" no-body="">
-                <b-card-body>
-                  <div class="mb-2">
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">SETTLING</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">QUERY FEES</sup>
-                      </b-col>
-                      <b-col xl="4">
-                        <span class="h1 text-white">137 </span>
-                      </b-col>
-                      <b-col xl="8">
-                        <span class="h1 text-white">853.5MBT </span>
-                      </b-col>
-                    </b-row>
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">2 days ago</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">INDEXING REWARDS</sup>
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h1 text-white"> 1.4M MBT </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class=" text-white"> BLOCK RANGE </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h5 text-white">
-                            #12357270 ➔ #12363916
-                          </span></sup
-                        >
-                      </b-col>
-                    </b-row>
-                  </div>
-                </b-card-body>
-              </card>
-
-              <card gradient="default" no-body="">
-                <b-card-body>
-                  <div class="mb-2">
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">SETTLING</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">QUERY FEES</sup>
-                      </b-col>
-                      <b-col xl="4">
-                        <span class="h1 text-white">136 </span>
-                      </b-col>
-                      <b-col xl="8">
-                        <span class="h1 text-white">196.6MBT </span>
-                      </b-col>
-                    </b-row>
-                    <b-row class="mb-2">
-                      <b-col xl="4">
-                        <sup class="text-white">3 days ago</sup>
-                      </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">INDEXING REWARDS</sup>
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h1 text-white"> 10.1B MBT </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class=" text-white"> BLOCK RANGE </span></sup
-                        >
-                      </b-col>
-                      <b-col xl="4"> </b-col>
-                      <b-col xl="8">
-                        <sup class="text-white">
-                          <span class="h5 text-white">
-                            #12370562 ➔ #12377208
-                          </span></sup
-                        >
-                      </b-col>
-                    </b-row>
-                  </div>
-                </b-card-body>
-              </card>
-            </b-card-group>
-          </b-col>
-        </b-col>
-
-        <b-col xl="12">
-          <EpochsTable></EpochsTable>
+          <Tabs :centered="true" @tab-click="handleClick">
+            <Tab ref="tabOverview" label="Overview" title="Overview">
+              <overview-tab
+                @goToIndexing="goToIndexing"
+                @goToDelegating="goToDelegating"
+              />
+            </Tab>
+            <Tab ref="tabIndexing" title="Indexing">
+              <index-tab />
+            </Tab>
+            <Tab ref="tabDelegating" title="Delegating">
+              <delegating-tab />
+            </Tab>
+          </Tabs>
         </b-col>
       </b-row>
       <!--End Widgets-->
@@ -221,14 +39,24 @@
 import BaseProgress from "@/components/BaseProgress";
 import RouteBreadCrumb from "@/components/Breadcrumb/RouteBreadcrumb";
 import StatsCard from "@/components/Cards/StatsCard";
-import EpochsTable from "./EpochsTable";
+import EpochsTable from "./DashboardTable/EpochsTable";
+import Tab from "@/components/Tabs/Tab.vue";
+import Tabs from "@/components/Tabs/Tabs.vue";
+import IndexTab from "./IndexerTab/IndexTab.vue";
+import OverviewTab from "./IndexerTab/OverviewTab.vue";
+import DelegatingTab from "./IndexerTab/DelegatingTab.vue";
 
 export default {
   components: {
     BaseProgress,
     RouteBreadCrumb,
     EpochsTable,
-    StatsCard
+    Tabs,
+    Tab,
+    StatsCard,
+    IndexTab,
+    OverviewTab,
+    DelegatingTab
   },
   data() {
     return {};
@@ -239,8 +67,27 @@ export default {
       return this.$route.params.id;
     }
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    handleClick(tab, event) {},
+    goToIndexing: function() {
+      this.$refs.tabOverview.active = false;
+      this.$refs.tabDelegating.active = false;
+      this.$refs.tabIndexing.active = true;
+    },
+    goToDelegating: function() {
+      this.$refs.tabOverview.active = false;
+      this.$refs.tabIndexing.active = false;
+      this.$refs.tabDelegating.active = true;
+    },
+    goBack: function() {
+      window.history.go(-1);
+    }
+  },
+  updated() {
+    this.$refs.tabOverview.active = true;
+    this.$refs.tabIndexing.active = false;
+    this.$refs.tabDelegating.active = false;
+  }
 };
 </script>
 <style></style>

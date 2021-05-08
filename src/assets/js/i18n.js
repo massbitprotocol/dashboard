@@ -49,7 +49,6 @@ function isJSON(str) {
       return false;
     }
   }
-  console.log('It is not a string!')
 }
 
 i18n.setUserLanguage = function(lang) {
