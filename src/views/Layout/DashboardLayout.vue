@@ -28,7 +28,7 @@
             :key="index"
             :link="{
               name: item.name,
-              path: '/provider/' + item.name + ''
+              path: '/provider/' + item.proposal_id
             }"
           />
           <!-- <sidebar-item
@@ -110,7 +110,6 @@
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import { mapActions } from "vuex";
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
 }
@@ -132,6 +131,7 @@ import DashboardContent from "./Content.vue";
 import { FadeTransition } from "vue2-transitions";
 
 import { AuthRequest, handleError, Request } from "../../util/Request";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -142,12 +142,16 @@ export default {
   },
   data() {
     return {
-      accountDropdownShow: false,
-      proposalList: []
+      accountDropdownShow: false
     };
   },
+  computed: {
+    ...mapGetters({
+      proposalList: "proposalList"
+    })
+  },
   methods: {
-    ...mapActions(["setCategory", "logout", "setScreenWidth"]),
+    ...mapActions(["setCategory", "logout", "setScreenWidth", "setProposals"]),
     logoutAction() {
       this.logout();
       this.accountDropdownShow = false;
@@ -174,7 +178,8 @@ export default {
       .then(res => {
         var result = res.data.result;
         if (result && result.length > 0) {
-          this.proposalList = [];
+          // this.proposalList = [];
+          let tmp = [];
           for (let index = 0; index < result.length; index++) {
             const element = result[index];
             if (element.length > 0) {
@@ -184,18 +189,19 @@ export default {
               //   }
               // }
               let proposal = {};
-              proposal.proposer_account_id = element[0];
-              proposal.proposal_id = element[1];
+              proposal.proposer_account_id = element[1];
+              proposal.proposal_id = element[0];
               proposal.name = String.fromCharCode(...element[2]);
               proposal.stake = element[3];
               proposal.description = String.fromCharCode(...element[4]);
               proposal.call_url = String.fromCharCode(...element[5]);
-              this.proposalList.push(proposal);
+              tmp.push(proposal);
+              // this.proposalList.push(proposal);
             }
           }
-        }
 
-        // console.log(this.proposalList);
+          this.setProposals(tmp);
+        }
       })
       .catch(handleError);
 

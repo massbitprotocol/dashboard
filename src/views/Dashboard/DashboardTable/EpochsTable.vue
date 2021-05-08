@@ -13,9 +13,9 @@
 
     <el-table
       class="table-responsive table"
-      :data="tableData"
       header-row-class-name="thead-light"
     >
+      <!-- :data="tableData" -->
       <el-table-column label="EPOCH" min-width="115px" prop="name">
         <template v-slot="{ row }">
           <div class="font-weight-600">{{ row.name }}</div>

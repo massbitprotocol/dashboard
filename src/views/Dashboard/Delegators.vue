@@ -4,9 +4,9 @@
       <b-row align-v="center" class="py-4">
         <b-col lg="6" cols="7">
           <h6 class="h2 text-white d-inline-block mb-0">Delegators tables</h6>
-          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+          <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
             <route-bread-crumb></route-bread-crumb>
-          </nav>
+          </nav> -->
         </b-col>
         <b-col lg="6" cols="5" class="text-right">
           <base-button size="sm" type="neutral">New</base-button>
@@ -15,7 +15,7 @@
       </b-row>
     </base-header>
     <b-container fluid class="mt--6">
-      <delegate-table />
+      <!-- <delegate-table /> -->
     </b-container>
   </div>
 </template>
@@ -44,15 +44,12 @@ export default {
         method: "massbit_getWorkers",
         params: []
       })
-      .then(res => {
-        // console.log(res);
-      })
+      .then(res => {})
       .catch(handleError);
-    // console.log(data);
   },
   methods: {
     fn_rowClick: function(row) {
-      this.$router.push("/indexerDetail/" + row.indexer);
+      this.$router.push("/indexerDetail/" + row.account_id);
     }
   }
 };

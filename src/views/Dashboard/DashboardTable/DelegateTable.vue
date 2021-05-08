@@ -162,7 +162,7 @@ export default {
   },
   methods: {
     fn_rowClick: function(row) {
-      this.$router.push("/indexerDetail/" + row.indexer);
+      this.$router.push("/indexerDetail/" + row.account_id);
     }
   }
 };
