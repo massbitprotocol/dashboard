@@ -5,6 +5,7 @@
     </b-card-header>
 
     <el-table
+      v-loading="tbl_loading"
       class="table-responsive table-dark"
       header-row-class-name="thead-dark"
       :data="indexersList"
@@ -91,14 +92,6 @@
       </el-table-column>
 
       <el-table-column
-        label="AVAILABILE"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
-      </el-table-column>
-
-      <el-table-column
         label="MAX CAPACITY"
         prop="budget"
         min-width="220px"
@@ -173,12 +166,13 @@ export default {
       projects,
       users,
       currentPage: 1,
-      indexersList: []
+      indexersList: [],
+      tbl_loading: true
     };
   },
   methods: {
     fn_rowClick: function(row) {
-      this.$router.push("/indexerDetail/" + row.indexer);
+      this.$router.push("/indexerDetail/" + row.account_id);
     }
   },
   async mounted() {
@@ -193,6 +187,7 @@ export default {
         var result = res.data.result;
 
         if (result && result.length > 0) {
+          this.tbl_loading = true;
           this.indexersList = [];
           for (let index = 0; index < result.length; index++) {
             const element = result[index];
@@ -208,12 +203,9 @@ export default {
             }
           }
         }
-
-        // console.log(result);
-        // console.log(this.indexersList);
+        this.tbl_loading = false;
       })
       .catch(handleError);
-    // console.log(data);
   }
 };
 </script>

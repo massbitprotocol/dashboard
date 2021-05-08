@@ -98,7 +98,8 @@ Vue.mixin({
       accountList: "accountList",
       category: "category",
       selectedCategory: "selectedCategory",
-      screenWidth: "screenWidth"
+      screenWidth: "screenWidth",
+      proposalList: "proposalList",
     })
   },
   methods: {
