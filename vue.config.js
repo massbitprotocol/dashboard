@@ -1,7 +1,7 @@
 module.exports = {
   publicPath: process.env.NODE_ENV === "production" ? "./" : "/",
   assetsDir: 'static',
-  outputDir:'../boka-network/polkaproject',
+  outputDir:'dist',
   configureWebpack: {
     resolve: {
       // .mjs needed for https://github.com/graphql/graphql-js/issues/1272

@@ -6,75 +6,38 @@
         <sidebar-item
           :link="{
             name: 'Dashboard',
-            icon: 'ni ni-shop text-primary',
-            path: '/dashboard'
+            icon: 'ni ni-shop text-primary'
           }"
         >
-          <!-- <sidebar-item
-            :link="{ name: 'Dashboard', path: '/dashboard' }"
+          <sidebar-item
+            :link="{ name: 'Activity Dashboard', path: '/activityDashboard' }"
           ></sidebar-item>
           <sidebar-item
-            :link="{ name: 'Alternative', path: '/alternative' }"
-          ></sidebar-item> -->
+            :link="{ name: 'Epochs Dashboard', path: '/epochsDashboard' }"
+          ></sidebar-item>
         </sidebar-item>
-
-        <!-- <sidebar-item :link="{
-                  name: 'Examples',
-                  icon: 'ni ni-ungroup text-orange'
-                  }">
-          <sidebar-item :link="{ name: 'Pricing', path: '/pricing' }"/>
-          <sidebar-item :link="{ name: 'Login', path: '/login' }"/>
-          <sidebar-item :link="{ name: 'Register', path: '/register' }"/>
-          <sidebar-item :link="{ name: 'Lock', path: '/lock' }"/>
-          <sidebar-item :link="{ name: 'Timeline', path: '/pages/timeline' }"/>
-          <sidebar-item :link="{ name: 'Profile', path: '/pages/user' }"/>
-
-
-        </sidebar-item> -->
-
         <sidebar-item
+          v-if="proposalList.length > 0"
           :link="{
             name: 'Providers',
             icon: 'ni ni-ui-04 text-info'
           }"
         >
-          <!-- <sidebar-item
-            :link="{ name: 'Buttons', path: '/components/buttons' }"
-          />
-          <sidebar-item :link="{ name: 'Cards', path: '/components/cards' }" /> -->
           <sidebar-item
-            :link="{ name: 'ETH Provider', path: '/components/grid-system' }"
-          />
-          <sidebar-item
-            :link="{ name: 'BSC Provider', path: '/components/notifications' }"
-          />
-          <sidebar-item
-            :link="{ name: 'SOL Provider', path: '/components/icons' }"
+            v-for="(item, index) in proposalList"
+            :key="index"
+            :link="{
+              name: item.name,
+              path: '/provider/' + item.name + ''
+            }"
           />
           <!-- <sidebar-item
-            :link="{ name: 'Typography', path: '/components/typography' }"
+            :link="{ name: 'BSC Provider', path: '/provider/BSCProvider' }"
+          />
+          <sidebar-item
+            :link="{ name: 'SOL Provider', path: '/provider/SOLProvider' }"
           /> -->
-
-          <!-- <sidebar-item :link="{ name: 'Multi Level' }">
-            <sidebar-item :link="{ name: 'Third level menu', path: '#!' }" />
-            <sidebar-item :link="{ name: 'Just another link', path: '#a' }" />
-            <sidebar-item :link="{ name: 'One last link', path: '#b' }" />
-          </sidebar-item> -->
         </sidebar-item>
-        <!-- <sidebar-item
-          :link="{
-            name: 'Forms',
-            icon: 'ni ni-single-copy-04 text-pink'
-          }"
-        >
-          <sidebar-item :link="{ name: 'Elements', path: '/forms/elements' }" />
-          <sidebar-item
-            :link="{ name: 'Components', path: '/forms/components' }"
-          />
-          <sidebar-item
-            :link="{ name: 'Validation', path: '/forms/validation' }"
-          />
-        </sidebar-item> -->
 
         <sidebar-item
           :link="{
@@ -83,13 +46,6 @@
             path: '/indexers'
           }"
         >
-          <!-- <sidebar-item :link="{ name: 'Tables', path: '/tables/regular' }" />
-          <sidebar-item
-            :link="{ name: 'Sortable', path: '/tables/sortable' }"
-          />
-          <sidebar-item
-            :link="{ name: 'Paginated Tables', path: '/tables/paginated' }"
-          /> -->
         </sidebar-item>
         <sidebar-item
           :link="{
@@ -98,49 +54,7 @@
             path: '/delegators'
           }"
         >
-          <!-- <sidebar-item :link="{ name: 'Tables', path: '/tables/regular' }" />
-          <sidebar-item
-            :link="{ name: 'Sortable', path: '/tables/sortable' }"
-          />
-          <sidebar-item
-            :link="{ name: 'Paginated Tables', path: '/tables/paginated' }"
-          /> -->
         </sidebar-item>
-        <!-- 
-        <sidebar-item
-          :link="{
-            name: 'Maps',
-            icon: 'ni ni-map-big text-primary'
-          }"
-        >
-          <sidebar-item :link="{ name: 'Google', path: '/maps/google' }" />
-          <sidebar-item :link="{ name: 'Vector', path: '/maps/vector' }" />
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: 'Widgets',
-            icon: 'ni ni-archive-2 text-green',
-            path: '/widgets'
-          }"
-        >
-        </sidebar-item>
-        <sidebar-item
-          :link="{
-            name: 'Charts',
-            icon: 'ni ni-chart-pie-35 text-info',
-            path: '/charts'
-          }"
-        >
-        </sidebar-item>
-
-        <sidebar-item
-          :link="{
-            name: 'Calendar',
-            icon: 'ni ni-calendar-grid-58 text-red',
-            path: '/calendar'
-          }"
-        >
-        </sidebar-item> -->
       </template>
 
       <template slot="links-after">
@@ -176,35 +90,6 @@
             </a>
           </div>
         </div>
-
-        <!-- <h6 class="navbar-heading p-0 text-muted">Documentation</h6> -->
-
-        <!-- <b-nav class="navbar-nav mb-md-3">
-          <b-nav-item
-            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/quick-start/argon-dashboard"
-          >
-            <i class="ni ni-spaceship"></i>
-            <b-nav-text class="p-0">Getting started</b-nav-text>
-          </b-nav-item>
-          <b-nav-item
-            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/colors/argon-dashboard"
-          >
-            <i class="ni ni-palette"></i>
-            <b-nav-text class="p-0">Foundation</b-nav-text>
-          </b-nav-item>
-          <b-nav-item
-            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/avatar/argon-dashboard"
-          >
-            <i class="ni ni-ui-04"></i>
-            <b-nav-text class="p-0">Components</b-nav-text>
-          </b-nav-item>
-          <b-nav-item
-            href="https://www.creative-tim.com/learning-lab/bootstrap-vue/charts/argon-dashboard"
-          >
-            <i class="ni ni-chart-pie-35"></i>
-            <b-nav-text class="p-0">Plugins</b-nav-text>
-          </b-nav-item>
-        </b-nav> -->
       </template>
     </side-bar>
     <div class="main-content">
@@ -216,7 +101,7 @@
           <router-view></router-view>
         </fade-transition>
       </div>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
+      <!-- <content-footer v-if="!$route.meta.hideFooter"></content-footer> -->
     </div>
   </div>
 </template>
@@ -246,6 +131,8 @@ import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import { FadeTransition } from "vue2-transitions";
 
+import { AuthRequest, handleError, Request } from "../../util/Request";
+
 export default {
   components: {
     DashboardNavbar,
@@ -255,7 +142,8 @@ export default {
   },
   data() {
     return {
-      accountDropdownShow: false
+      accountDropdownShow: false,
+      proposalList: []
     };
   },
   methods: {
@@ -269,9 +157,48 @@ export default {
       if (isWindows) {
         initScrollbar("sidenav");
       }
+    },
+    isByteArray(array) {
+      if (array && array.GetType().Name == "Byte[]") return true;
+      return false;
     }
   },
-  mounted() {
+  async mounted() {
+    var data = await Request()
+      .post("", {
+        jsonrpc: "2.0",
+        id: 1,
+        method: "massbit_getJobProposals",
+        params: []
+      })
+      .then(res => {
+        var result = res.data.result;
+        if (result && result.length > 0) {
+          this.proposalList = [];
+          for (let index = 0; index < result.length; index++) {
+            const element = result[index];
+            if (element.length > 0) {
+              // for (let k = 0; k < result[index].length; k++) {
+              //   if (this.isByteArray(result[index][k])) {
+              //     result[index][k] = String.fromCharCode(...result[index][k]);
+              //   }
+              // }
+              let proposal = {};
+              proposal.proposer_account_id = element[0];
+              proposal.proposal_id = element[1];
+              proposal.name = String.fromCharCode(...element[2]);
+              proposal.stake = element[3];
+              proposal.description = String.fromCharCode(...element[4]);
+              proposal.call_url = String.fromCharCode(...element[5]);
+              this.proposalList.push(proposal);
+            }
+          }
+        }
+
+        // console.log(this.proposalList);
+      })
+      .catch(handleError);
+
     this.initScrollbar();
   }
 };
@@ -365,8 +292,8 @@ nav {
   position: absolute;
   left: 35px;
   right: 0;
-  bottom: 10px;
-  padding: 24px;
+  bottom: 0px;
+  padding: 12px 24px;
 }
 .fixed-bottom a {
   display: inline-block;
@@ -400,7 +327,7 @@ nav {
 }
 .dropdown {
   position: relative;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   display: inline-block;
 }
 .dropdown img {

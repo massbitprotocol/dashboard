@@ -7,7 +7,11 @@
     <div class="account-list" v-if="accounts && accounts.length > 0">
       <!-- <img src="@/assets/img/banner/polka.jpg" width="100%" /> -->
 
-      <img src="@//assets/img/logo/logo.svg" width="100%" style="padding:20px" />
+      <img
+        src="@//assets/img/logo/logo.svg"
+        width="100%"
+        style="padding:20px"
+      />
       <h4>{{ $t("SelectAccount") }}</h4>
       <ul>
         <li
@@ -65,7 +69,7 @@ export default {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 320px;
+  left: 0;
   right: 0;
   /* background: rgba(0, 0, 0, 0.3); */
   text-align: center;
@@ -119,7 +123,7 @@ export default {
 .account-list {
   background: #fff;
   text-align: left;
-  max-width: 600px;
+  max-width: 500px;
   overflow: hidden;
   border-radius: 15px;
   padding: 20px;

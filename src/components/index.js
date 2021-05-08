@@ -29,7 +29,7 @@ import CollapseItem from './Collapse/CollapseItem.vue';
 import Modal from './Modal.vue';
 import BaseSlider from './BaseSlider.vue';
 import LoadingPanel from './LoadingPanel.vue';
-import AsyncWorldMap from './WorldMap/AsyncWorldMap.vue';
+// import AsyncWorldMap from './WorldMap/AsyncWorldMap.vue';
 
 import BasePagination from './BasePagination.vue';
 
@@ -66,5 +66,5 @@ export {
   Collapse,
   CollapseItem,
   LoadingPanel,
-  AsyncWorldMap
+  // AsyncWorldMap
 };
