@@ -216,7 +216,6 @@
     },
     methods: {
       notifyVue(type = 'default') {
-        console.log(type)
         this.$notify({
           message:
             'Welcome to <b>Vue Argon Dashboard Pro</b> - a beautiful resource for every web developer',

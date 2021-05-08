@@ -34,6 +34,7 @@ import ba from "vue-ba";
 import webUtil from "./assets/js/util";
 import BigNumber from "bignumber.js";
 import Sparklines from "vue-sparklines";
+import CircularCountDownTimer from "vue-circular-count-down-timer";
 
 Vue.config.productionTip = false;
 Vue.use(VueClipboard);
@@ -41,6 +42,7 @@ Vue.use(Toast);
 Vue.use(Loading);
 Vue.use(LoginModal);
 Vue.use(Sparklines);
+Vue.use(CircularCountDownTimer);
 
 // 百度统计
 Vue.use(ba, "16aa34879f4d10c06974b0881b309e21");

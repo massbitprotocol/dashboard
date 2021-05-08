@@ -33,16 +33,28 @@ const Typography = () =>
 // Dashboard pages
 const Dashboard = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Dashboard/Dashboard.vue");
+const ActivityDashboard = () =>
+  import(
+    /* webpackChunkName: "dashboard" */ "@/views/Dashboard/ActivityDashboard.vue"
+  );
+const EpochsDashboard = () =>
+  import(
+    /* webpackChunkName: "dashboard" */ "@/views/Dashboard/EpochsDashboard.vue"
+  );
 const AlternativeDashboard = () =>
   import(
     /* webpackChunkName: "dashboard" */ "@/views/Dashboard/AlternativeDashboard.vue"
   );
 const Widgets = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Widgets.vue");
-  const Indexers = () =>
-    import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
-  const Delegators = () =>
-    import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Delegators.vue");
+const Indexers = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
+const IndexerDetail = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/IndexerDetail.vue");
+const Provider = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Provider.vue");
+const Delegators = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Delegators.vue");
 
 // Forms pages
 const FormElements = () =>
@@ -245,14 +257,14 @@ let authPages = {
 const routes = [
   {
     path: "/",
-    redirect: "/dashboard",
+    redirect: "/activityDashboard",
     name: "Dashboard"
   },
   componentsMenu,
-  formsMenu,
-  tablesMenu,
-  mapsMenu,
-  pagesMenu,
+  // formsMenu,
+  // tablesMenu,
+  // mapsMenu,
+  // pagesMenu,
   {
     path: "/",
     component: DashboardLayout,
@@ -265,32 +277,52 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "alternative",
-        name: "Alternative",
-        component: AlternativeDashboard,
-        meta: {
-          navbarType: "light"
-        }
+        path: "activityDashboard",
+        name: "Activity Dashboard",
+        component: ActivityDashboard
       },
       {
-        path: "calendar",
-        name: "Calendar",
-        component: Calendar
+        path: "epochsDashboard",
+        name: "Epochs Dashboard",
+        component: EpochsDashboard
       },
-      {
-        path: "charts",
-        name: "Charts",
-        component: Charts
-      },
-      {
-        path: "widgets",
-        name: "Widgets",
-        component: Widgets
-      },
+      // {
+      //   path: "alternative",
+      //   name: "Alternative",
+      //   component: AlternativeDashboard,
+      //   meta: {
+      //     navbarType: "light"
+      //   }
+      // },
+      // {
+      //   path: "calendar",
+      //   name: "Calendar",
+      //   component: Calendar
+      // },
+      // {
+      //   path: "charts",
+      //   name: "Charts",
+      //   component: Charts
+      // },
+      // {
+      //   path: "widgets",
+      //   name: "Widgets",
+      //   component: Widgets
+      // },
       {
         path: "/indexers",
         name: "Indexers",
         component: Indexers
+      },
+      {
+        path: "/provider/:id",
+        name: "Provider",
+        component: Provider
+      },
+      {
+        path: "/indexerDetail/:id",
+        name: "IndexerDetail",
+        component: IndexerDetail
       },
       {
         path: "/delegators",
@@ -298,8 +330,8 @@ const routes = [
         component: Delegators
       }
     ]
-  },
-  authPages
+  }
+  // authPages
 ];
 
 export default routes;
