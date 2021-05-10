@@ -5,7 +5,6 @@
     </b-card-header>
 
     <el-table
-      v-loading="tbl_loading"
       class="table-responsive table-dark"
       header-row-class-name="thead-dark"
       :data="indexersList"
@@ -28,7 +27,7 @@
               />
             </a>
             <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm">{{
+              <span class="font-weight-600 name mb-0 text-sm" @click="fn_rowClick(row)">{{
                 row.account_id
               }}</span>
             </b-media-body>
