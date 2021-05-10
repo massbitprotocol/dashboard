@@ -15,7 +15,7 @@
       </b-row>
     </base-header> -->
     <b-container fluid class="mt-6">
-      <b-row>
+      <b-row v-loading="true" id="loading">
         <b-col xl="12">
           <b-card-group deck>
             <card gradient="default" no-body="">
@@ -64,21 +64,21 @@
             </card>
           </b-card-group>
         </b-col>
-        <b-col xl="12">
+
+        <b-col xl="12" v-if="indexersList && indexersList.length > 0">
           <b-card no-body class="bg-default shadow">
             <b-card-header class="bg-transparent border-0">
               <h3 class="mb-0 text-white">{{ provider.name }} table</h3>
             </b-card-header>
-
             <el-table
-              v-loading="tbl_loading"
               class="table-responsive table-dark"
               header-row-class-name="thead-dark"
               :data="indexersList"
               @row-dblclick="fn_rowClick"
             >
               <el-table-column
-                label="Provider"
+                label="INDEXER"
+                filter-placement="The Indexer's address or Name System."
                 min-width="310px"
                 prop="name"
                 sortable
@@ -95,9 +95,11 @@
                       />
                     </a>
                     <b-media-body>
-                      <span class="font-weight-600 name mb-0 text-sm">{{
-                        row.account_id
-                      }}</span>
+                      <span
+                        class="font-weight-600 name mb-0 text-sm"
+                        @click="fn_rowClick(row)"
+                        >{{ row.account_id }}</span
+                      >
                     </b-media-body>
                   </b-media>
                 </template>
@@ -126,6 +128,8 @@
                 prop="budget"
                 min-width="160px"
                 sortable
+                filter-placement="The % of query fee rebates that the Indexer keeps when splitting with Delegators."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -133,6 +137,10 @@
                 prop="budget"
                 min-width="200px"
                 sortable
+                filter-placement="Indexing Reward Cut applied to the delegation pool. 
+  If it's negative, it means that the Indexer is giving away part of their 
+  rewards. If it's positive, the Indexer is keeping some of the rewards."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -140,6 +148,9 @@
                 prop="budget"
                 min-width="220px"
                 sortable
+                filter-placement="Time remaining until the Indexer can update their delegation parameters again. 
+	Cooldown periods are set by Indexers when they update their delegation parameters."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -147,6 +158,8 @@
                 prop="budget"
                 min-width="160px"
                 sortable
+                filter-placement="The Indexer's deposited stake, which may be slashed for malicious or incorrect behavior."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -154,13 +167,8 @@
                 prop="budget"
                 min-width="160px"
                 sortable
-              >
-              </el-table-column>
-              <el-table-column
-                label="DELEGATED"
-                prop="budget"
-                min-width="160px"
-                sortable
+                filter-placement="Stake from Delegators which can be allocated by the Indexer, but cannot be slashed."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -168,6 +176,8 @@
                 prop="budget"
                 min-width="160px"
                 sortable
+                filter-placement="Stake that Indexers are actively allocating towards the subgraphs they are indexing."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
 
@@ -176,6 +186,8 @@
                 prop="budget"
                 min-width="220px"
                 sortable
+                filter-placement=""
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
 
@@ -184,6 +196,10 @@
                 prop="budget"
                 min-width="220px"
                 sortable
+                filter-placement="The maximum amount of delegated stake the Indexer can productively 
+	accept. Excess delegated stake cannot be used for allocations or rewards 
+	calculations."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -191,6 +207,8 @@
                 prop="budget"
                 min-width="220px"
                 sortable
+                filter-placement="The total fees that users have paid for queries from this Indexer over all time."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
               <el-table-column
@@ -198,6 +216,10 @@
                 prop="budget"
                 min-width="220px"
                 sortable
+                filter-placement="The total indexer rewards earned by the Indexer and 
+	their Delegators over all time. Indexer rewards are paid through 
+	new Massbit Token (MBT) issuance."
+                :render-header="renderPhaseHeader"
               >
               </el-table-column>
 
@@ -268,6 +290,11 @@ export default {
       );
     }
   },
+  watch: {
+    providerId(newValue, oldValue) {
+      this.getWorker();
+    }
+  },
   data() {
     return {
       projects,
@@ -282,6 +309,7 @@ export default {
       this.$router.push("/indexerDetail/" + row.account_id);
     },
     getWorker: function() {
+      this.tbl_loading = true;
       Request()
         .post("", {
           jsonrpc: "2.0",
@@ -291,9 +319,7 @@ export default {
         })
         .then(res => {
           var result = res.data.result;
-
           if (result && result.length > 0) {
-            this.tbl_loading = true;
             this.indexersList = [];
             for (let index = 0; index < result.length; index++) {
               const element = result[index];
@@ -304,7 +330,8 @@ export default {
                 indexer.account_id = element[2];
                 indexer.status = element[3];
                 indexer.job_proposal_id = element[4];
-                indexer.imgWrk = this.projects[index].imgWrk;
+                indexer.imgWrk = this.projects[index % 5].imgWrk;
+                indexer.budget = "-";
                 this.indexersList.push(indexer);
               }
             }
@@ -312,9 +339,13 @@ export default {
           this.indexersList = this.indexersList.filter(
             x => x.job_proposal_id.toString() == this.providerId
           );
+
           this.tbl_loading = false;
         })
-        .catch(handleError);
+        .catch(() => {
+          handleError;
+          this.tbl_loading = false;
+        });
     },
     onCopy() {
       this.$notify({
@@ -326,18 +357,20 @@ export default {
       return h(
         "span",
         {
-          class: "class-name-if-you-want"
+          class: ""
         },
         [
           column.label + " ",
           h(
             "el-tooltip",
             {
-              class: "class-name-if-you-want",
+              class: "",
               attrs: {
-                content: "message",
-                effect: "light",
-                placement: "top-start"
+                content: column.filterPlacement,
+                effect: "dark",
+                placement: "top-start",
+                offset: 2,
+                "popper-class": "custom-tooltip"
               }
             },
             [
@@ -373,5 +406,12 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 250px;
+}
+.custom-tooltip {
+  color: white;
+  background: gray;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 200px;
 }
 </style>
