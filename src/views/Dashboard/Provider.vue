@@ -98,7 +98,7 @@
                       <span
                         class="font-weight-600 name mb-0 text-sm"
                         @click="fn_rowClick(row)"
-                        >{{ row.account_id }}</span
+                        >{{ row.worker_id + "_" + row.account_id }}</span
                       >
                     </b-media-body>
                   </b-media>
@@ -383,9 +383,9 @@ export default {
       );
     }
   },
-  updated() {
-    this.getWorker();
-  },
+  // updated() {
+  //   this.getWorker();
+  // },
   mounted() {
     this.getWorker();
   }
