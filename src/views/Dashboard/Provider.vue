@@ -34,7 +34,7 @@
                           <sup class="text-white">DESCRIPITTION</sup>
                         </b-col>
                         <b-col xl="12">
-                          <sup class=" h1 text-white">{{
+                          <sup class="h1 text-white">{{
                             provider.description
                           }}</sup>
                         </b-col>
@@ -79,7 +79,7 @@
               <el-table-column
                 label="INDEXER"
                 filter-placement="The Indexer's address or Name System."
-                min-width="310px"
+                min-width="260px"
                 prop="name"
                 sortable
                 :render-header="renderPhaseHeader"
@@ -98,14 +98,14 @@
                       <span
                         class="font-weight-600 name mb-0 text-sm"
                         @click="fn_rowClick(row)"
-                        >{{ row.worker_id + "_" + row.account_id }}</span
+                        >{{ row.worker_id + "x" + row.account_id_short }}</span
                       >
                     </b-media-body>
                   </b-media>
                 </template>
               </el-table-column>
 
-              <el-table-column label="IP" prop="IP" min-width="160px" sortable>
+              <el-table-column label="IP" prop="IP" min-width="220px" sortable>
                 <template v-slot="{ row }">
                   <span>{{ row.IP }}</span>
                   <button
@@ -120,6 +120,17 @@
                       <!-- <span>{{row.IP}}</span> -->
                     </div>
                   </button>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="status"
+                prop="status"
+                min-width="160px"
+                sortable
+              >
+                <template v-slot="{ row }">
+                  <span>{{ row.status ? "Normal" : "Black list" }}</span>
                 </template>
               </el-table-column>
 
@@ -325,9 +336,12 @@ export default {
               const element = result[index];
               if (element.length > 0) {
                 let indexer = {};
+                let account_id = element[2].toString();
                 indexer.worker_id = element[0];
                 indexer.IP = String.fromCharCode(...element[1]);
-                indexer.account_id = element[2];
+                indexer.account_id = account_id;
+                indexer.account_id_short =
+                  account_id.substring(0, 4) + "-" + account_id.substring(element[2].length - 6, element[2].length);
                 indexer.status = element[3];
                 indexer.job_proposal_id = element[4];
                 indexer.imgWrk = this.projects[index % 5].imgWrk;

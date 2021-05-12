@@ -8,10 +8,10 @@
             <route-bread-crumb></route-bread-crumb>
           </nav> -->
         </b-col>
-        <b-col lg="6" cols="5" class="text-right">
+        <!-- <b-col lg="6" cols="5" class="text-right">
           <base-button size="sm" type="neutral">New</base-button>
           <base-button size="sm" type="neutral">Filters</base-button>
-        </b-col>
+        </b-col> -->
       </b-row>
     </base-header>
     <b-container fluid class="mt--6">
