@@ -17,7 +17,6 @@
           ></sidebar-item>
         </sidebar-item>
         <sidebar-item
-          v-if="proposalList.length > 0"
           :link="{
             name: 'Providers',
             icon: 'ni ni-ui-04 text-info'
@@ -37,6 +36,16 @@
           <sidebar-item
             :link="{ name: 'SOL Provider', path: '/provider/SOLProvider' }"
           /> -->
+        </sidebar-item>
+
+        <sidebar-item
+          v-if="!proposalList || proposalList.length == 0"
+          :link="{
+            name: 'Providers',
+            icon: 'ni ni-ui-04 text-info',
+            path: '#'
+          }"
+        >
         </sidebar-item>
 
         <sidebar-item
@@ -142,7 +151,7 @@ export default {
   },
   data() {
     return {
-      accountDropdownShow: false
+      accountDropdownShow: false,
     };
   },
   computed: {
