@@ -27,9 +27,11 @@
               />
             </a>
             <b-media-body>
-              <span class="font-weight-600 name mb-0 text-sm" @click="fn_rowClick(row)">{{
-                row.account_id
-              }}</span>
+              <span
+                class="font-weight-600 name mb-0 text-sm"
+                @click="fn_rowClick(row)"
+                >{{ row.account_id }}</span
+              >
             </b-media-body>
           </b-media>
         </template>
@@ -175,36 +177,35 @@ export default {
     }
   },
   async mounted() {
-    var data = await Request()
-      .post("", {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "massbit_getWorkers",
-        params: []
-      })
-      .then(res => {
-        var result = res.data.result;
-
-        if (result && result.length > 0) {
-          this.tbl_loading = true;
-          this.indexersList = [];
-          for (let index = 0; index < result.length; index++) {
-            const element = result[index];
-            if (element.length > 0) {
-              let indexer = {};
-              indexer.worker_id = element[0];
-              indexer.IP = String.fromCharCode(...element[1]);
-              indexer.account_id = element[2];
-              indexer.status = element[3];
-              indexer.job_proposal_id = element[4];
-              indexer.imgWrk = this.projects[index].imgWrk;
-              this.indexersList.push(indexer);
-            }
-          }
-        }
-        this.tbl_loading = false;
-      })
-      .catch(handleError);
+    //  await Request()
+    //   .post("", {
+    //     jsonrpc: "2.0",
+    //     id: 1,
+    //     method: "massbit_getWorkers",
+    //     params: []
+    //   })
+    //   .then(res => {
+    //     var result = res.data.result;
+    //     if (result && result.length > 0) {
+    //       this.tbl_loading = true;
+    //       this.indexersList = [];
+    //       for (let index = 0; index < result.length; index++) {
+    //         const element = result[index];
+    //         if (element.length > 0) {
+    //           let indexer = {};
+    //           indexer.worker_id = element[0];
+    //           indexer.IP = String.fromCharCode(...element[1]);
+    //           indexer.account_id = element[2];
+    //           indexer.status = element[3];
+    //           indexer.job_proposal_id = element[4];
+    //           indexer.imgWrk = this.projects[index].imgWrk;
+    //           this.indexersList.push(indexer);
+    //         }
+    //       }
+    //     }
+    //     this.tbl_loading = false;
+    //   })
+    //   .catch(handleError);
   }
 };
 </script>
