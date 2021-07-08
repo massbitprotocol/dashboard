@@ -11,10 +11,10 @@ export const handleError = error => {
   // if (isUnauthorizedErr(error)) {
   //   logout();
   // } else {
-  //   failAlert({
-  //     text: extractError(error),
-  //     toast: true
-  //   });
+  failAlert({
+    text: extractError(error),
+    toast: true
+  });
   // }
   throw error;
 };

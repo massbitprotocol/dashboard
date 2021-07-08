@@ -28,7 +28,7 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.28);
   z-index: 1000;
 }
 .loading-box svg {
@@ -39,6 +39,7 @@ export default {
   left: 50%;
   -webkit-transform: translate(-50%, -50%) !important;
   transform: translate(-50%, -50%) !important;
+  color: white;
 }
 </style>
 
