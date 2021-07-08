@@ -49,6 +49,8 @@ const Widgets = () =>
   import(/* webpackChunkName: "dashboard" */ "@/views/Widgets.vue");
 const Indexers = () =>
   import(/* webpackChunkName: "pages" */ "@/views/Dashboard/Indexers.vue");
+const IndexerCreate = () =>
+  import(/* webpackChunkName: "pages" */ "@/views/Dashboard/IndexerCreate.vue");
 const IndexerDetail = () =>
   import(/* webpackChunkName: "pages" */ "@/views/Dashboard/IndexerDetail.vue");
 const Provider = () =>
@@ -310,9 +312,14 @@ const routes = [
       //   component: Widgets
       // },
       {
-        path: "/indexers",
+        path: "/indexers/:chain",
         name: "Indexers",
         component: Indexers
+      },
+      {
+        path: "/createIndexer/:chain",
+        name: "Indexers",
+        component: IndexerCreate
       },
       {
         path: "/provider/:id",

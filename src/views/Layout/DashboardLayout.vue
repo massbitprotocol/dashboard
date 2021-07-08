@@ -21,6 +21,7 @@
             name: 'Providers',
             icon: 'ni ni-ui-04 text-info'
           }"
+          v-if="proposalList"
         >
           <sidebar-item
             v-for="(item, index) in proposalList"
@@ -38,24 +39,37 @@
           /> -->
         </sidebar-item>
 
-        <sidebar-item
+        <!-- <sidebar-item
           v-if="!proposalList || proposalList.length == 0"
           :link="{
             name: 'Providers',
             icon: 'ni ni-ui-04 text-info',
-            path: '#'
+            path: '/'
           }"
         >
-        </sidebar-item>
+        </sidebar-item> -->
 
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: 'Indexers',
             icon: 'ni ni-chart-pie-35 text-info',
             path: '/indexers'
           }"
         >
+        </sidebar-item> -->
+
+        <sidebar-item
+          :link="{
+            name: 'Indexers',
+            icon: 'ni ni-ui-04 text-info'
+          }"
+        >
+          <sidebar-item
+            :link="{ name: 'Substrate', path: '/indexers/Substrate' }"
+          />
+          <sidebar-item :link="{ name: 'Solana', path: '/indexers/Solana' }" />
         </sidebar-item>
+
         <sidebar-item
           :link="{
             name: 'Delegators',
@@ -151,7 +165,7 @@ export default {
   },
   data() {
     return {
-      accountDropdownShow: false,
+      accountDropdownShow: false
     };
   },
   computed: {
@@ -177,42 +191,42 @@ export default {
     }
   },
   async mounted() {
-    var data = await Request()
-      .post("", {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "massbit_getJobProposals",
-        params: []
-      })
-      .then(res => {
-        var result = res.data.result;
-        if (result && result.length > 0) {
-          // this.proposalList = [];
-          let tmp = [];
-          for (let index = 0; index < result.length; index++) {
-            const element = result[index];
-            if (element.length > 0) {
-              // for (let k = 0; k < result[index].length; k++) {
-              //   if (this.isByteArray(result[index][k])) {
-              //     result[index][k] = String.fromCharCode(...result[index][k]);
-              //   }
-              // }
-              let proposal = {};
-              proposal.proposer_account_id = element[1];
-              proposal.proposal_id = element[0];
-              proposal.name = String.fromCharCode(...element[2]);
-              proposal.stake = element[3];
-              proposal.description = String.fromCharCode(...element[4]);
-              proposal.call_url = String.fromCharCode(...element[5]);
-              tmp.push(proposal);
-              // this.proposalList.push(proposal);
-            }
-          }
+    // var data = await Request()
+    //   .post("", {
+    //     jsonrpc: "2.0",
+    //     id: 1,
+    //     method: "massbit_getJobProposals",
+    //     params: []
+    //   })
+    //   .then(res => {
+    //     var result = res.data.result;
+    //     if (result && result.length > 0) {
+    //       // this.proposalList = [];
+    //       let tmp = [];
+    //       for (let index = 0; index < result.length; index++) {
+    //         const element = result[index];
+    //         if (element.length > 0) {
+    //           // for (let k = 0; k < result[index].length; k++) {
+    //           //   if (this.isByteArray(result[index][k])) {
+    //           //     result[index][k] = String.fromCharCode(...result[index][k]);
+    //           //   }
+    //           // }
+    //           let proposal = {};
+    //           proposal.proposer_account_id = element[1];
+    //           proposal.proposal_id = element[0];
+    //           proposal.name = String.fromCharCode(...element[2]);
+    //           proposal.stake = element[3];
+    //           proposal.description = String.fromCharCode(...element[4]);
+    //           proposal.call_url = String.fromCharCode(...element[5]);
+    //           tmp.push(proposal);
+    //           // this.proposalList.push(proposal);
+    //         }
+    //       }
 
-          this.setProposals(tmp);
-        }
-      })
-      .catch(handleError);
+    //       this.setProposals(tmp);
+    //     }
+    //   })
+    //   .catch(handleError);
 
     this.initScrollbar();
   }

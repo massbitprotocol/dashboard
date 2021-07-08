@@ -3,11 +3,11 @@ import Axios from "axios";
 import { API_URL } from "./Constants";
 // import { getToken, logout } from "./CredentialUtils";
 
-export const isUnauthorizedErr = (err) => {
+export const isUnauthorizedErr = err => {
   return err?.response?.status === 401;
 };
 
-export const handleError = (error) => {
+export const handleError = error => {
   // if (isUnauthorizedErr(error)) {
   //   logout();
   // } else {
@@ -19,13 +19,13 @@ export const handleError = (error) => {
   throw error;
 };
 
-export const extractError = (error) => {
+export const extractError = error => {
   return error?.response?.data?.message || error?.message;
 };
 
-export const Request = () => {
+export const Request = baseURL => {
   return Axios.create({
-    baseURL: API_URL,
+    baseURL: baseURL || API_URL
   });
 };
 
@@ -33,16 +33,16 @@ const getAuthConfig = () => {
   let config = {
     headers: {
       // Authorization: "Bearer " + getToken(),
-      'Content-Type': 'application/json;charset=utf-8'
-    },
+      "Content-Type": "application/json;charset=utf-8"
+    }
   };
   return config;
 };
 
 export const AuthRequest = {
-  then: (promise) => {
+  then: promise => {
     if (handleError) {
-      promise.catch((err) => handleError(err));
+      promise.catch(err => handleError(err));
     }
     return promise;
   },
@@ -61,5 +61,5 @@ export const AuthRequest = {
   delete(URL, handleError = true) {
     let config = getAuthConfig();
     return AuthRequest.then(Request().delete(URL, config), handleError);
-  },
+  }
 };
