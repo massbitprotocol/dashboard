@@ -66,7 +66,18 @@
             </Tab>
           </Tabs>
         </b-col>
-        <b-col cols="3" class="text-right"> </b-col>
+        <b-col cols="3" class="text-center" style="place-self: center;">
+          <b-col cols="12">
+            <base-button size="xl" type="success" @click="onCompile"
+              >Compile code</base-button
+            >
+          </b-col>
+          <b-col cols="12" class="mt-6">
+            <base-button size="xl" type="default" @click="onDeploy"
+              >Deploy</base-button
+            >
+          </b-col>
+        </b-col>
       </b-row>
     </b-container>
   </div>
@@ -178,6 +189,26 @@ export default {
     },
     highlighter(code) {
       return highlight(code, languages.js); // languages.<insert language> to return html with markup
+    },
+    onCompile() {
+      // alert(`Compile`);
+      // this.$loading(true)
+      // this.$loading(false)
+
+      this.$successAlert({
+        text: "Compile Success"
+      });
+    },
+    onDeploy() {
+      this.$failAlert({
+        text: "Deploy Fail"
+      });
+    },
+    covertToURL(code) {
+      return encodeURI(code);
+    },
+    covertToString(code) {
+      return decodeURI(code);
     }
   }
 };
@@ -207,7 +238,7 @@ export default {
 
 .cover-editor {
   background: #2d2d2d;
-  min-height: 300px;
+  height: 400px;
   padding: 10px;
 }
 </style>

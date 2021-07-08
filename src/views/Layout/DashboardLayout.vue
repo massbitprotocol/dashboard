@@ -84,7 +84,7 @@
         <hr class="my-3" />
 
         <div class="fixed-bottom">
-          <div class="dropdown">
+          <!-- <div class="dropdown">
             <button v-if="!account" class="border-btn" @click="login">
               {{ $t("Login") }}
             </button>
@@ -95,7 +95,6 @@
               @click="logoutAction"
             >
               <span style="color:white">Logout</span>
-              <!-- <img src="@/assets/img/icon/downward.png" width="16" /> -->
             </a>
             <a
               v-if="account"
@@ -111,7 +110,7 @@
                 width="16"
               />
             </a>
-          </div>
+          </div> -->
         </div>
       </template>
     </side-bar>

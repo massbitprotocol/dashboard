@@ -13,13 +13,18 @@ export default {};
   min-height: 200px;
   display: flex;
   align-items: center;
+  color: red !important;
+  background: red !important;
 }
 
 .el-loading-spinner .path {
   stroke: #66615b !important;
+  color: red !important;
+  background: red !important;
 }
 
 .el-loading-mask {
-  background: transparent !important;
+  background: red !important;
+  color: red !important;
 }
 </style>

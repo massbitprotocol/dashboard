@@ -16,6 +16,14 @@ import BaseNav from "@/components/Navbar/BaseNav";
 import BaseHeader from "@/components/BaseHeader";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { Input, Tooltip, Popover, Tabs, TabPane } from "element-ui";
+import {
+  successAlert,
+  failAlert,
+  customAlert,
+  confirm,
+  combineOptionWithFilter
+} from "../util/ComponentUtils";
+import { extractError } from "../util/Request";
 /**
  * You can register global components here and use them as a plugin in your main Vue instance
  */
@@ -45,6 +53,12 @@ const GlobalComponents = {
     Vue.use(Popover);
     Vue.use(Tabs);
     Vue.use(TabPane);
+    Vue.prototype.$successAlert = successAlert;
+    Vue.prototype.$failAlert = failAlert;
+    Vue.prototype.$customAlert = customAlert;
+    Vue.prototype.$confirm = confirm;
+    Vue.prototype.$combineOptionWithFilter = combineOptionWithFilter;
+    Vue.prototype.$extractError = extractError;
   }
 };
 
