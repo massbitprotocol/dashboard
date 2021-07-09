@@ -13,6 +13,16 @@
     <b-container fluid class="mt-6">
       <b-row>
         <b-col cols="9">
+          <base-input
+            label="Substrate Indexer Name"
+            rules="required"
+            name="Substrate Indexer Name"
+            placeholder="Fill Your Indexer Name "
+            v-model="indexerName"
+          >
+          </base-input>
+        </b-col>
+        <b-col cols="9">
           <Tabs :centered="false">
             <Tab ref="project" title="project.yaml">
               <div class="cover-editor mt-3">
@@ -72,9 +82,9 @@
               >Compile code</base-button
             >
           </b-col>
-          <b-col cols="12" class="mt-6">
+          <b-col v-if="compileLog" cols="12" class="mt-6">
             <base-button size="xl" type="default" @click="onProcess('deploy')"
-              >Deploy</base-button
+              >Deploy Your Compile File</base-button
             >
           </b-col>
         </b-col>
@@ -84,7 +94,15 @@
             <p>{{ covertToString(compileLog) }}</p>
           </div>
         </b-col>
-        <b-col cols="12" class="text-center pt-3" style="place-self: center;">
+        <b-col v-if="compileLog" cols="12" class=" pt-3">
+          <h1>Table Data</h1>
+        </b-col>
+        <b-col
+          v-if="compileLog"
+          cols="12"
+          class="text-center pt-3"
+          style="place-self: center;"
+        >
           <iframe
             width="100%"
             height="700px"
@@ -129,6 +147,7 @@ export default {
       currentPage: 1,
       is: 1,
       compileLog: null,
+      indexerName: "",
       project:
         "schema:\n" +
         "  file: ./schema.graphql\n" +
