@@ -68,15 +68,30 @@
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
           <b-col cols="12">
-            <base-button size="xl" type="success" @click="onCompile"
+            <base-button size="xl" type="success" @click="onProcess('compile')"
               >Compile code</base-button
             >
           </b-col>
           <b-col cols="12" class="mt-6">
-            <base-button size="xl" type="default" @click="onDeploy"
+            <base-button size="xl" type="default" @click="onProcess('deploy')"
               >Deploy</base-button
             >
           </b-col>
+        </b-col>
+        <b-col v-if="compileLog" cols="12" class=" pt-3">
+          <h1>Log compile</h1>
+          <div class="my-editor log-editor">
+            <p>{{ covertToString(compileLog) }}</p>
+          </div>
+        </b-col>
+        <b-col cols="12" class="text-center pt-3" style="place-self: center;">
+          <iframe
+            width="100%"
+            height="700px"
+            src="http://localhost:8080/console"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
         </b-col>
       </b-row>
     </b-container>
@@ -84,10 +99,9 @@
 </template>
 <script>
 import RouteBreadCrumb from "@/components/Breadcrumb/RouteBreadcrumb";
-import projects from "../Tables/projects";
-import users from "../Tables/users";
 import Tab from "@/components/Tabs/Tab.vue";
 import Tabs from "@/components/Tabs/Tabs.vue";
+import { handleError, Request } from "../../util/Request";
 // import Prism Editor
 import { PrismEditor } from "vue-prism-editor";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
@@ -112,9 +126,9 @@ export default {
   },
   data() {
     return {
-      projects,
-      users,
       currentPage: 1,
+      is: 1,
+      compileLog: null,
       project:
         "schema:\n" +
         "  file: ./schema.graphql\n" +
@@ -190,20 +204,85 @@ export default {
     highlighter(code) {
       return highlight(code, languages.js); // languages.<insert language> to return html with markup
     },
-    onCompile() {
-      // alert(`Compile`);
-      // this.$loading(true)
-      // this.$loading(false)
+    async onProcess(action) {
+      this.$loading(true);
 
-      this.$successAlert({
-        text: "Compile Success"
-      });
+      await Request()
+        .post(`/mock/${action}`, {
+          "mapping.rs": this.covertToURL(this.mapping),
+          "models.rs": this.covertToURL(this.models),
+          "schema.rs": this.covertToURL(this.schema),
+          "project.yaml": this.covertToURL(this.project),
+          "up.sql": this.covertToURL(this.up)
+        })
+        .then(async res => {
+          if (res.data.payload) {
+            await this.runGetProcess(true, res.data.payload, 100000, action);
+          }
+        })
+        .catch(handleError)
+        .finally(err => {
+          this.$loading(false);
+        });
     },
-    onDeploy() {
-      this.$failAlert({
-        text: "Deploy Fail"
+
+    async buildProcess() {
+      var _this = this;
+
+      this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading"
       });
+      await _this.stopProcess();
+      setTimeout(function() {
+        // _this.fn_select();
+        loading.close();
+      }, 2000);
     },
+
+    runGetProcess(isRun, requestId, noEvolution, action) {
+      var _this = this;
+
+      console.log(requestId);
+      if (!requestId) {
+        _this.stopProcess();
+      }
+      this.uploadProgressResquestID = requestId;
+      if (isRun) {
+        var isRunNext = true;
+        var _this = this;
+        Request()
+          .get(`/mock/${action}/status/${requestId}`)
+          .then(res => {
+            console.log(res);
+            if (res.status != 200) {
+              return;
+            }
+            if (res.data.payload) {
+              _this.$successAlert({
+                text: ""
+              });
+              _this.compileLog = res.data.payload;
+              isRunNext = false;
+              _this.stopProcess();
+            }
+          })
+          .catch(handleError);
+        setTimeout(function() {
+          _this.runGetProcess(isRunNext, requestId, noEvolution, action);
+        }, 2000);
+      } else {
+        _this.stopProcess();
+      }
+    },
+    stopProcess() {
+      var _this = this;
+      setTimeout(function() {
+        _this.$loading(false);
+      }, 1000);
+    },
+
     covertToURL(code) {
       return encodeURI(code);
     },
@@ -225,6 +304,10 @@ export default {
   font-size: 14px;
   line-height: 1.5;
   padding: 5px;
+}
+.log-editor {
+  overflow: auto;
+  height: 300px;
 }
 
 .prism-editor__editor {

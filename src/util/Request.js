@@ -1,5 +1,5 @@
 import Axios from "axios";
-// import { failAlert } from "./ComponentUtils";
+import { failAlert } from "./ComponentUtils";
 import { API_URL } from "./Constants";
 // import { getToken, logout } from "./CredentialUtils";
 

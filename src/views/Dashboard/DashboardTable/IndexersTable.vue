@@ -10,109 +10,24 @@
       :data="indexersList"
       @row-click="fn_rowClick"
     >
-      <el-table-column
-        label="INDEXER ID"
-        min-width="310px"
-        prop="name"
-        sortable
-      >
-        <template v-slot="{ row }">
-          <b-media no-body class="align-items-center">
-            <a href="#" class="mr-3">
-              <b-img
-                class="avatar"
-                rounded="circle"
-                alt="Image placeholder"
-                :src="row.imgWrk"
-              />
-            </a>
-            <b-media-body>
-              <span
-                class="font-weight-600 name mb-0 text-sm"
-                @click="fn_rowClick(row)"
-                >{{ row.account_id }}</span
-              >
-            </b-media-body>
-          </b-media>
-        </template>
+      <el-table-column label="id" prop="id" min-width="60px" sortable>
       </el-table-column>
-
-      <el-table-column label="IP" prop="IP" min-width="160px" sortable>
+      <el-table-column label="name" prop="name" min-width="100px" sortable>
       </el-table-column>
-
       <el-table-column
-        label="QUERY FEE CUT"
-        prop="budget"
+        label="network"
+        prop="network"
         min-width="160px"
         sortable
       >
       </el-table-column>
-      <el-table-column
-        label="EFFECTIVE REWARD CUT"
-        prop="budget"
-        min-width="200px"
-        sortable
-      >
+      <el-table-column label="description" prop="description" min-width="300px" sortable>
       </el-table-column>
-      <el-table-column
-        label="COOLDOWN REMAINING"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
+      <el-table-column label="repo" prop="repo" min-width="160px" sortable>
       </el-table-column>
-      <el-table-column label="OWNED" prop="budget" min-width="160px" sortable>
+      <el-table-column label="status" prop="status" min-width="160px" sortable>
       </el-table-column>
-      <el-table-column
-        label="DELEGATED"
-        prop="budget"
-        min-width="160px"
-        sortable
-      >
-      </el-table-column>
-      <el-table-column
-        label="DELEGATED"
-        prop="budget"
-        min-width="160px"
-        sortable
-      >
-      </el-table-column>
-      <el-table-column
-        label="ALLOCATED"
-        prop="budget"
-        min-width="160px"
-        sortable
-      >
-      </el-table-column>
-      <el-table-column
-        label="AVAILABILE"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
-      </el-table-column>
-
-      <el-table-column
-        label="MAX CAPACITY"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
-      </el-table-column>
-      <el-table-column
-        label="QUERY FEES"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
-      </el-table-column>
-      <el-table-column
-        label="INDEXER REWARDS"
-        prop="budget"
-        min-width="220px"
-        sortable
-      >
-      </el-table-column>
+      <!-- 
 
       <el-table-column min-width="180px">
         <template v-slot="{ row }">
@@ -129,7 +44,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </template>
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
   </b-card>
 </template>
@@ -173,39 +88,21 @@ export default {
   },
   methods: {
     fn_rowClick: function(row) {
-      this.$router.push("/indexerDetail/" + row.account_id);
+      this.$router.push("/indexerDetail/" + row.name);
     }
   },
   async mounted() {
-    //  await Request()
-    //   .post("", {
-    //     jsonrpc: "2.0",
-    //     id: 1,
-    //     method: "massbit_getWorkers",
-    //     params: []
-    //   })
-    //   .then(res => {
-    //     var result = res.data.result;
-    //     if (result && result.length > 0) {
-    //       this.tbl_loading = true;
-    //       this.indexersList = [];
-    //       for (let index = 0; index < result.length; index++) {
-    //         const element = result[index];
-    //         if (element.length > 0) {
-    //           let indexer = {};
-    //           indexer.worker_id = element[0];
-    //           indexer.IP = String.fromCharCode(...element[1]);
-    //           indexer.account_id = element[2];
-    //           indexer.status = element[3];
-    //           indexer.job_proposal_id = element[4];
-    //           indexer.imgWrk = this.projects[index].imgWrk;
-    //           this.indexersList.push(indexer);
-    //         }
-    //       }
-    //     }
-    //     this.tbl_loading = false;
-    //   })
-    //   .catch(handleError);
+    await Request()
+      .get("/mock/indexer-list")
+      .then(res => {
+        var result = res.data.payload;
+        console.log(result);
+        if (result && result.length > 0) {
+          this.indexersList = result;
+        }
+        this.tbl_loading = false;
+      })
+      .catch(handleError);
   }
 };
 </script>
@@ -222,6 +119,6 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 250px;
+  max-width: 500px;
 }
 </style>
