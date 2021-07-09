@@ -25,7 +25,7 @@ import projects from "../Tables/projects";
 import users from "../Tables/users";
 import DelegateTable from "./DashboardTable/DelegateTable.vue";
 
-import { AuthRequest, handleError, Request } from "../../util/Request";
+import { handleError, Request } from "../../util/Request";
 
 export default {
   components: { DelegateTable, RouteBreadCrumb },

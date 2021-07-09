@@ -1,4 +1,4 @@
-export const API_URL = process.env.VUE_APP_API_URL || "https://dev-api.massbit.io/";
+export const API_URL = process.env.VUE_APP_API_URL || "http://dev-indexer.massbit.io/code-compiler/";
 export const DEFAULT_LANGUAGE = "en";
 export const SUPPORTED_LANGUAGES = ["vi", "en"];
 // The following components is not required to confirm email before using it
