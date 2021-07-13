@@ -82,7 +82,7 @@
               >Compile code</base-button
             >
           </b-col>
-          <b-col v-if="compileLog" cols="12" class="mt-6">
+          <b-col v-if="compilation_id" cols="12" class="mt-6">
             <base-button size="xl" type="default" @click="onProcess('deploy')"
               >Deploy Your Compile File</base-button
             >
@@ -94,19 +94,14 @@
             <p>{{ covertToString(compileLog) }}</p>
           </div>
         </b-col>
-        <b-col v-if="compileLog" cols="12" class=" pt-3">
+        <b-col v-if="compilation_id" cols="12" class=" pt-3">
           <h1>Table Data</h1>
         </b-col>
-        <b-col
-          v-if="compileLog"
-          cols="12"
-          class="text-center pt-3"
-          style="place-self: center;"
-        >
+        <b-col cols="12" class="text-center pt-3" style="place-self: center;">
           <iframe
             width="100%"
             height="700px"
-            src="http://localhost:8080/console"
+            src="https://b83f8acb0bef.ngrok.io/console"
             frameborder="0"
             allowfullscreen
           ></iframe>
@@ -147,12 +142,13 @@ export default {
       currentPage: 1,
       is: 1,
       compileLog: null,
+      compilation_id: "",
       mapping:
-        "use crate::models::BlockTs;\n" +
+        "use crate::models::Blockts52;\n" +
         "use massbit_chain_substrate::data_type::SubstrateBlock;\n" +
         "\n" +
         "pub fn handle_block(block: &SubstrateBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
-        "    let block_ts = BlockTs {\n" +
+        "    let block_ts = Blockts52 {\n" +
         "        block_hash: block.header.hash().to_string(),\n" +
         "        block_height: block.header.number as i64,\n" +
         "    };\n" +
@@ -165,24 +161,24 @@ export default {
         "use structmap_derive::{FromMap, ToMap};\n" +
         "\n" +
         "#[derive(Default, Clone, FromMap, ToMap)]\n" +
-        "pub struct BlockTs {\n" +
+        "pub struct Blockts52 {\n" +
         "    pub block_hash: String,\n" +
         "    pub block_height: i64,\n" +
         "}\n" +
         "\n" +
-        "impl Into<structmap::GenericMap> for BlockTs {\n" +
+        "impl Into<structmap::GenericMap> for Blockts52 {\n" +
         "    fn into(self) -> structmap::GenericMap {\n" +
-        "        BlockTs::to_genericmap(self.clone())\n" +
+        "        Blockts52::to_genericmap(self.clone())\n" +
         "    }\n" +
         "}\n" +
         "\n" +
-        "impl BlockTs {\n" +
+        "impl Blockts52 {\n" +
         "    pub fn save(&self) {\n" +
         "        unsafe {\n" +
         "            STORE\n" +
         "                .as_ref()\n" +
         "                .unwrap()\n" +
-        '                .save("BlockTs".to_string(), self.clone().into());\n' +
+        '                .save("Blockts52".to_string(), self.clone().into());\n' +
         "        }\n" +
         "    }\n" +
         "}",
@@ -194,11 +190,11 @@ export default {
         "  - kind: substrate\n" +
         "    name: Index",
       up:
-        "CREATE TABLE BlockTs (\n" +
+        "CREATE TABLE Blockts52 (\n" +
         "    block_hash varchar,\n" +
         "    block_height bigint\n" +
         ")",
-      table: "BlockTs"
+      table: "Blockts52"
     };
   },
   methods: {
@@ -216,43 +212,34 @@ export default {
       this.$loading(true);
 
       await Request()
-        .post(`/mock/${action}`, {
+        .post(`/${action}`, {
           "mapping.rs": this.covertToURL(this.mapping),
           "models.rs": this.covertToURL(this.models),
           // "schema.rs": this.covertToURL(this.schema),
           "project.yaml": this.covertToURL(this.project),
           "up.sql": this.covertToURL(this.up),
-          "table": this.table
+          table: this.table,
+          // compilation_id: "d4b6b98121972be58b5b158757bfc35c"
+          compilation_id: this.compilation_id
         })
         .then(async res => {
-          if (res.data.payload) {
+          if (res.data.payload && res.data.payload.length > 0) {
+            this.compilation_id = res.data.payload;
             await this.runGetProcess(true, res.data.payload, 100000, action);
+          } else if (res.data.status == "success") {
+            this.$successAlert({
+              text: "Deploy Success"
+            });
           }
         })
-        .catch(handleError)
-        .finally(err => {
-          this.$loading(false);
-        });
-    },
-
-    async buildProcess() {
-      var _this = this;
-
-      this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading"
-      });
-      await _this.stopProcess();
-      setTimeout(function() {
-        // _this.fn_select();
-        loading.close();
-      }, 2000);
+        .catch(handleError);
+      this.$loading(false);
     },
 
     runGetProcess(isRun, requestId, noEvolution, action) {
       var _this = this;
 
+      _this.$loading(true);
       console.log(requestId);
       if (!requestId) {
         _this.stopProcess();
@@ -262,15 +249,15 @@ export default {
         var isRunNext = true;
         var _this = this;
         Request()
-          .get(`/mock/${action}/status/${requestId}`)
+          .get(`/${action}/status/${requestId}`)
           .then(res => {
             console.log(res);
             if (res.status != 200) {
               return;
             }
-            if (res.data.payload) {
+            if (res.data.status == "success") {
               _this.$successAlert({
-                text: ""
+                text: "Compile Success"
               });
               _this.compileLog = res.data.payload;
               isRunNext = false;
@@ -283,6 +270,7 @@ export default {
         }, 2000);
       } else {
         _this.stopProcess();
+        _this.$loading(false);
       }
     },
     stopProcess() {
