@@ -1,23 +1,25 @@
 <template>
-  <div class="loading-box" ref="loading" v-show="loadingShow"></div>
+  <div class="loading-box" ref="loading" v-show="loadingShow">
+    <img class="loading-svg" style="width: 50px" :src="loadimage" />
+  </div>
 </template>
 <script>
 import lottie from "lottie-web";
 export default {
-  data(){
+  data() {
     return {
-      loadingShow:false,
-    }
+      loadingShow: false,
+      loadimage: require("@/assets/img/loading.gif")
+    };
   },
   mounted() {
     lottie.loadAnimation({
-        container: this.$refs.loading,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: 'static/loading.json'
-      }
-    );
+      container: this.$refs.loading,
+      renderer: "svg",
+      loop: true,
+      autoplay: true,
+      path: "static/loading.json"
+    });
   }
 };
 </script>
@@ -31,7 +33,7 @@ export default {
   background: rgba(0, 0, 0, 0.28);
   z-index: 1000;
 }
-.loading-box svg {
+.loading-svg {
   width: 96px !important;
   height: 96px !important;
   position: absolute;
@@ -42,5 +44,3 @@ export default {
   color: white;
 }
 </style>
-
-

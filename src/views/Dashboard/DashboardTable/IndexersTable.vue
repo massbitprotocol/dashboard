@@ -21,7 +21,12 @@
         sortable
       >
       </el-table-column>
-      <el-table-column label="description" prop="description" min-width="300px" sortable>
+      <el-table-column
+        label="description"
+        prop="description"
+        min-width="300px"
+        sortable
+      >
       </el-table-column>
       <el-table-column label="repo" prop="repo" min-width="160px" sortable>
       </el-table-column>
@@ -77,6 +82,15 @@ export default {
     [DropdownItem.name]: DropdownItem,
     [DropdownMenu.name]: DropdownMenu
   },
+  props: {
+    indexerName: {
+      type: String,
+      default: "solana"
+    }
+  },
+  watch: {
+    value(newValue, oldValue) {}
+  },
   data() {
     return {
       projects,
@@ -89,20 +103,56 @@ export default {
   methods: {
     fn_rowClick: function(row) {
       this.$router.push("/indexerDetail/" + row.name);
+    },
+    async getDataWithChain() {
+      console.log(this.indexerName);
+
+      this.$loading(true);
+
+      // await Request()
+      //   .get("/mock/indexer-list")
+      //   .then(res => {
+      //     var result = res.data.payload;
+      //     console.log(result);
+      //     if (result && result.length > 0) {
+
+      //       this.indexersList = result;
+      //       this.indexersList = this.indexersList.filter(
+      //         x =>
+      //           x.network.toString().toLowerCase() ==
+      //           this.indexerName.toLowerCase()
+      //       );
+      //     }
+      //     this.tbl_loading = false;
+      //   })
+      await Request()
+        .post("", {
+          jsonrpc: "2.0",
+          id: 1,
+          method: "index_list",
+          params: []
+        })
+        .then(res => {
+          var result = res.data.result;
+          if (result && result.length > 0) {
+            this.indexersList = result;
+            this.indexersList = this.indexersList.filter(
+              x =>
+                x.network.toString().toLowerCase() ==
+                this.indexerName.toLowerCase()
+            );
+          }
+
+          this.tbl_loading = false;
+        })
+        .catch(handleError)
+        .finally(() => {
+          this.$loading(false);
+        });
     }
   },
-  async mounted() {
-    await Request()
-      .get("/mock/indexer-list")
-      .then(res => {
-        var result = res.data.payload;
-        console.log(result);
-        if (result && result.length > 0) {
-          this.indexersList = result;
-        }
-        this.tbl_loading = false;
-      })
-      .catch(handleError);
+  mounted() {
+    this.getDataWithChain();
   }
 };
 </script>
