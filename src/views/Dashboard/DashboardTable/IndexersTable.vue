@@ -89,7 +89,9 @@ export default {
     }
   },
   watch: {
-    value(newValue, oldValue) {}
+    indexerName(newValue, oldValue) {
+      this.getDataWithChain();
+    }
   },
   data() {
     return {
@@ -126,7 +128,7 @@ export default {
       //     this.tbl_loading = false;
       //   })
       await Request()
-        .post("", {
+        .post("https://7131a7c8f960.ngrok.io/", {
           jsonrpc: "2.0",
           id: 1,
           method: "index_list",
@@ -141,7 +143,7 @@ export default {
                 x.network.toString().toLowerCase() ==
                 this.indexerName.toLowerCase()
             );
-          }
+          } 
 
           this.tbl_loading = false;
         })
