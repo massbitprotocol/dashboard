@@ -18,7 +18,7 @@
             rules="required"
             name="Substrate Indexer Name"
             placeholder="Fill Your Indexer Name "
-            v-model="indexerName"
+            v-model="table"
           >
           </base-input>
         </b-col>
@@ -64,7 +64,7 @@
                 ></prism-editor>
               </div>
             </Tab>
-            <Tab ref="schema" title="schema.rs">
+            <!-- <Tab ref="schema" title="schema.rs">
               <div class="cover-editor mt-3">
                 <prism-editor
                   class="my-editor"
@@ -73,7 +73,7 @@
                   line-numbers
                 ></prism-editor>
               </div>
-            </Tab>
+            </Tab> -->
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
@@ -147,69 +147,58 @@ export default {
       currentPage: 1,
       is: 1,
       compileLog: null,
-      indexerName: "",
+      mapping:
+        "use crate::models::BlockTs;\n" +
+        "use massbit_chain_substrate::data_type::SubstrateBlock;\n" +
+        "\n" +
+        "pub fn handle_block(block: &SubstrateBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
+        "    let block_ts = BlockTs {\n" +
+        "        block_hash: block.header.hash().to_string(),\n" +
+        "        block_height: block.header.number as i64,\n" +
+        "    };\n" +
+        "    block_ts.save();\n" +
+        "    Ok(())\n" +
+        "}",
+      models:
+        "use crate::STORE;\n" +
+        "use structmap::{FromMap, ToMap};\n" +
+        "use structmap_derive::{FromMap, ToMap};\n" +
+        "\n" +
+        "#[derive(Default, Clone, FromMap, ToMap)]\n" +
+        "pub struct BlockTs {\n" +
+        "    pub block_hash: String,\n" +
+        "    pub block_height: i64,\n" +
+        "}\n" +
+        "\n" +
+        "impl Into<structmap::GenericMap> for BlockTs {\n" +
+        "    fn into(self) -> structmap::GenericMap {\n" +
+        "        BlockTs::to_genericmap(self.clone())\n" +
+        "    }\n" +
+        "}\n" +
+        "\n" +
+        "impl BlockTs {\n" +
+        "    pub fn save(&self) {\n" +
+        "        unsafe {\n" +
+        "            STORE\n" +
+        "                .as_ref()\n" +
+        "                .unwrap()\n" +
+        '                .save("BlockTs".to_string(), self.clone().into());\n' +
+        "        }\n" +
+        "    }\n" +
+        "}",
       project:
         "schema:\n" +
         "  file: ./schema.graphql\n" +
         "\n" +
         "dataSources:\n" +
         "  - kind: substrate\n" +
-        "    name: Index\n" +
-        "    network: https://data-seed-prebsc-1-s1.binance.org:8545/\n" +
-        "    mapping:\n" +
-        "      language: rust\n" +
-        "      handlers:\n" +
-        "        - handler: handleBlock\n" +
-        "          kind: substrate/BlockHandler\n" +
-        "        - handler: handleCall\n" +
-        "          kind: substrate/CallHandler\n" +
-        "        - handler: handleEvent\n" +
-        "          kind: substrate/EventHandler",
+        "    name: Index",
       up:
-        "CREATE TABLE blocks (\n" +
-        "    id SERIAL PRIMARY KEY,\n" +
-        "    number BIGINT NOT NULL\n" +
+        "CREATE TABLE BlockTs (\n" +
+        "    block_hash varchar,\n" +
+        "    block_height bigint\n" +
         ")",
-      mapping:
-        "use super::models::NewBlock;\n" +
-        "use super::schema::blocks;\n" +
-        "use diesel::pg::PgConnection;\n" +
-        "use diesel::prelude::*;\n" +
-        "use massbit_chain_substrate::data_type::SubstrateBlock;\n" +
-        "use plugin::core::{BlockHandler, InvocationError};\n" +
-        "use std::env;\n" +
-        "use index_store::core::IndexStore;\n" +
-        "\n" +
-        "#[derive(Debug, Clone, PartialEq)]\n" +
-        "pub struct BlockIndexer;\n" +
-        "\n" +
-        "impl BlockHandler for BlockIndexer {\n" +
-        "    fn handle_block(&self, store: &IndexStore, substrate_block: &SubstrateBlock) -> Result<(), InvocationError> {\n" +
-        '        println!("[.SO File] triggered!");\n' +
-        "\n" +
-        "        let number = substrate_block.header.number as i64;\n" +
-        "        let new_block = NewBlock { number };\n" +
-        "\n" +
-        "        store.save(blocks::table, new_block);\n" +
-        "        Ok(())\n" +
-        "    }\n" +
-        "}",
-      models:
-        "use super::schema::blocks;\n" +
-        "use diesel::{PgConnection, Connection, RunQueryDsl};\n" +
-        "\n" +
-        "#[derive(Insertable)]\n" +
-        '#[table_name = "blocks"]\n' +
-        "pub struct NewBlock {\n" +
-        "    pub number: i64,\n" +
-        "}",
-      schema:
-        "table! {\n" +
-        "    blocks (id) {\n" +
-        "        id -> Int4,\n" +
-        "        number -> Int8,\n" +
-        "    }\n" +
-        "}"
+      table: "BlockTs"
     };
   },
   methods: {
@@ -230,9 +219,10 @@ export default {
         .post(`/mock/${action}`, {
           "mapping.rs": this.covertToURL(this.mapping),
           "models.rs": this.covertToURL(this.models),
-          "schema.rs": this.covertToURL(this.schema),
+          // "schema.rs": this.covertToURL(this.schema),
           "project.yaml": this.covertToURL(this.project),
-          "up.sql": this.covertToURL(this.up)
+          "up.sql": this.covertToURL(this.up),
+          "table": this.table
         })
         .then(async res => {
           if (res.data.payload) {

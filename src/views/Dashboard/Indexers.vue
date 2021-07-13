@@ -20,8 +20,8 @@
         </b-col>
       </b-row>
     </base-header>
-    <b-container fluid class="mt-3" >
-      <indexers-table />
+    <b-container fluid class="mt-3">
+      <indexers-table :indexerName="chain" />
     </b-container>
   </div>
 </template>
