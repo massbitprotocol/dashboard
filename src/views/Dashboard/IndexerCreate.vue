@@ -77,12 +77,12 @@
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
-          <b-col cols="12">
-            <base-button size="xl" type="warning" @click="loadBlockTemp"
+          <b-col cols="12" >
+            <base-button size="xl" type="warning" @click="loadBlockTemp" class="mt-2"
               >Load Block Template</base-button
             >
 
-            <base-button size="xl" type="warning" @click="loadExtrinsicTemp"
+            <base-button size="xl" type="warning" @click="loadExtrinsicTemp" class="mt-2"
               >Load Extrinsic Template</base-button
             > 
           </b-col>
