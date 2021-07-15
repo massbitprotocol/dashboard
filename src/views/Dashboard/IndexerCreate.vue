@@ -259,12 +259,6 @@ export default {
           compilation_id: this.compilation_id
         })
         .then(async res => {
-          if (res.data.status == "error") {
-            this.$failAlert({
-              text: res.data.payload
-            });
-          }
-
           if (res.data.payload && res.data.payload.length > 0) {
             this.compilation_id = res.data.payload;
             await this.runGetProcess(true, res.data.payload, 100000, action);
@@ -299,7 +293,13 @@ export default {
           .get(`/${action}/status/${requestId}`)
           .then(res => {
             console.log(res);
-            if (res.status != 200) {
+
+            if (res.status != 200 || res.data.status == "error") {
+              _this.$failAlert({
+                text: ""
+              });
+              _this.compileLog = res.data.payload;
+              _this.stopProcess();
               return;
             }
             if (res.data.status == "success") {
