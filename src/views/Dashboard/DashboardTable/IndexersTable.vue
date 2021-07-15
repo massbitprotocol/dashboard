@@ -128,7 +128,7 @@ export default {
       //     this.tbl_loading = false;
       //   })
       await Request()
-        .post("https://7131a7c8f960.ngrok.io/", {
+        .post("http://localhost:3030", {
           jsonrpc: "2.0",
           id: 1,
           method: "index_list",

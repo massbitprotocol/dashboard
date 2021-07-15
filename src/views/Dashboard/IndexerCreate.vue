@@ -101,7 +101,7 @@
           <iframe
             width="100%"
             height="700px"
-            src="https://b83f8acb0bef.ngrok.io/console"
+            src="http://localhost:8080/console"
             frameborder="0"
             allowfullscreen
           ></iframe>

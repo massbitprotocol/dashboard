@@ -190,17 +190,16 @@
         </b-card-group>
       </b-col>
 
-      <b-col xl="12"> <DelegateTable></DelegateTable> </b-col>
+        <b-col cols="12" class="text-center pt-3" style="place-self: center;">
+          <iframe
+            width="100%"
+            height="700px"
+            src="http://localhost:8080/console"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </b-col>
+
     </b-row>
   </b-card>
 </template>
-<script>
-import DelegateTable from "../DashboardTable/DelegateTable";
-export default {
-  name: "index-tab",
-  components: { DelegateTable },
-  data() {
-    return {};
-  }
-};
-</script>
