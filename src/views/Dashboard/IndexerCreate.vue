@@ -77,14 +77,22 @@
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
-          <b-col cols="12" >
-            <base-button size="xl" type="warning" @click="loadBlockTemp" class="mt-2"
+          <b-col cols="12">
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadBlockTemp"
+              class="mt-2"
               >Load Block Template</base-button
             >
 
-            <base-button size="xl" type="warning" @click="loadExtrinsicTemp" class="mt-2"
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadExtrinsicTemp"
+              class="mt-2"
               >Load Extrinsic Template</base-button
-            > 
+            >
           </b-col>
           <b-col cols="12" class="mt-2">
             <base-button size="xl" type="warning" @click="loadEventTemp"
@@ -111,7 +119,12 @@
         <b-col v-if="compilation_id" cols="12" class=" pt-3">
           <h1>Table Data</h1>
         </b-col>
-        <b-col cols="12" class="text-center pt-3" style="place-self: center;">
+        <b-col
+          v-if="isShowHasura"
+          cols="12"
+          class="text-center pt-3"
+          style="place-self: center;"
+        >
           <iframe
             width="100%"
             height="700px"
@@ -185,7 +198,8 @@ export default {
       models: "",
       project: "",
       up: "",
-      table: ""
+      table: "",
+      isShowHasura: false
     };
   },
   methods: {
@@ -231,6 +245,8 @@ export default {
     async onProcess(action) {
       this.$loading(true);
 
+      this.isShowHasura = false;
+
       await Request()
         .post(`/${action}`, {
           "mapping.rs": this.covertToURL(this.mapping),
@@ -243,6 +259,12 @@ export default {
           compilation_id: this.compilation_id
         })
         .then(async res => {
+          if (res.data.status == "error") {
+            this.$failAlert({
+              text: res.data.payload
+            });
+          }
+
           if (res.data.payload && res.data.payload.length > 0) {
             this.compilation_id = res.data.payload;
             await this.runGetProcess(true, res.data.payload, 100000, action);
@@ -250,6 +272,11 @@ export default {
             this.$successAlert({
               text: "Deploy Success"
             });
+
+            var _this = this;
+            setTimeout(function() {
+              _this.isShowHasura = true;
+            }, 2000);
           }
         })
         .catch(handleError);

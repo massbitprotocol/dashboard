@@ -18,7 +18,8 @@ export const DEFAULT_TEMPLATE_BLOCK = {
     "}\n" +
     "\n" +
     "pub fn handle_event(event: &SubstrateEventRecord) -> Result<(), Box<dyn std::error::Error>> {\n" +
-    "    Ok(())\n",
+    "    Ok(())\n" +
+    "}\n",
   MODELS:
     "use crate::STORE;\n" +
     "use structmap::{FromMap, ToMap};\n" +
