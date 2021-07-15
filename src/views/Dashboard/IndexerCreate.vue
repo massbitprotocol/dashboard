@@ -295,9 +295,9 @@ export default {
             console.log(res);
 
             if (res.status != 200 || res.data.status == "error") {
-              // _this.$failAlert({
-              //   text: ""
-              // });
+              _this.$failAlert({
+                text: ""
+              });
               _this.compileLog = res.data.payload;
               isRunNext = false;
               _this.stopProcess();
