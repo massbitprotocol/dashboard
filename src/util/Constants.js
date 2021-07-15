@@ -1,4 +1,4 @@
-export const API_URL = process.env.VUE_APP_API_URL || "https://54a31ec62997.ngrok.io";
+// export const API_URL = process.env.VUE_APP_API_URL || "https://54a31ec62997.ngrok.io";
 export const API_URL = process.env.VUE_APP_API_URL || "http://localhost:5000";
 export const DEFAULT_LANGUAGE = "en";
 export const SUPPORTED_LANGUAGES = ["vi", "en"];
@@ -22,13 +22,18 @@ export const COLORS_USER = [
   "#EFCECA",
   "#BFEFEC",
   "#EFD4AC",
-  "#D1F4AE",
+  "#D1F4AE"
 ];
 // Local field
 export const LOCAL_STORE = {
   TOKEN: "token",
   LANG: "lang",
-  EDITOR_DRAFT: "editorDraft",
+  TABLE: "table",
+  MAPPING: "mapping",
+  MODELS: "models",
+  PROJECT: "project",
+  UP: "up",
+  COMPILE: "compile"
 };
 // Step
 export const STEPPER = {
@@ -36,13 +41,13 @@ export const STEPPER = {
   STEP_2: 2,
   STEP_3: 3,
   STEP_4: 4,
-  STEP_5: 5,
+  STEP_5: 5
 };
 // Protocol
 export const PROTOCOL = {
   needSign: "Need to Sign",
   personSign: "In Person Signing",
-  receivesCopy: "Receives a Copy",
+  receivesCopy: "Receives a Copy"
 };
 
 // Day reminder
@@ -51,12 +56,12 @@ export const REMINDER = {
   EVERY_2_DAYS: 2,
   EVERY_3_DAYS: 3,
   EVERY_4_DAYS: 4,
-  EVERY_5_DAYS: 5,
+  EVERY_5_DAYS: 5
 };
 // ContractStatus
 export const CONTRACT_STATTUS = {
   DRAFT: "draft",
   SIGNING: "signing",
   EXPIRE: "expire",
-  COMPLETE: "complete",
+  COMPLETE: "complete"
 };
