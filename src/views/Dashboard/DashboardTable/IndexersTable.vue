@@ -60,6 +60,7 @@ import users from "../../Tables/users";
 import LightTable from "../../Tables/RegularTables/LightTable";
 import TranslucentTable from "../../Tables/RegularTables/TranslucentTable";
 import DarkTable from "../../Tables/RegularTables/DarkTable";
+import { INDEX_MANAGER_URL } from "../../../util/Constants";
 
 import { AuthRequest, handleError, Request } from "../../../util/Request";
 import {
@@ -128,7 +129,7 @@ export default {
       //     this.tbl_loading = false;
       //   })
       await Request()
-        .post("http://localhost:3030", {
+        .post(INDEX_MANAGER_URL, {
           jsonrpc: "2.0",
           id: 1,
           method: "index_list",

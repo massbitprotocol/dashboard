@@ -106,7 +106,7 @@
           <iframe
             width="100%"
             height="700px"
-            src="http://localhost:8080/console"
+            src={{ hasura_url }}
             frameborder="0"
             allowfullscreen
           ></iframe>
@@ -124,6 +124,7 @@ import { handleError, Request } from "../../util/Request";
 import { PrismEditor } from "vue-prism-editor";
 
 import { LOCAL_STORE } from "../../util/Constants";
+import { HASURA_URL } from "../../util/Constants";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
@@ -142,6 +143,9 @@ export default {
   computed: {
     chain() {
       return this.$route.params.chain;
+    },
+    hasura_url() {
+      return HASURA_URL;
     }
   },
   mounted() {
