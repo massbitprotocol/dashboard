@@ -78,8 +78,17 @@
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
           <b-col cols="12">
-            <base-button size="xl" type="success" @click="loadDefaultTemp"
-              >Load Default Template</base-button
+            <base-button size="xl" type="warning" @click="loadBlockTemp"
+              >Load Block Template</base-button
+            >
+
+            <base-button size="xl" type="warning" @click="loadExtrinsicTemp"
+              >Load Extrinsic Template</base-button
+            > 
+          </b-col>
+          <b-col cols="12" class="mt-2">
+            <base-button size="xl" type="warning" @click="loadEventTemp"
+              >Load Event Template</base-button
             >
           </b-col>
           <b-col cols="12" class="mt-6">
@@ -106,7 +115,7 @@
           <iframe
             width="100%"
             height="700px"
-            src={{ hasura_url }}
+            :src="hasura_url"
             frameborder="0"
             allowfullscreen
           ></iframe>
@@ -123,8 +132,12 @@ import { handleError, Request } from "../../util/Request";
 // import Prism Editor
 import { PrismEditor } from "vue-prism-editor";
 
-import { LOCAL_STORE } from "../../util/Constants";
-import { HASURA_URL } from "../../util/Constants";
+import { LOCAL_STORE, HASURA_URL } from "../../util/Constants";
+import {
+  DEFAULT_TEMPLATE_BLOCK,
+  DEFAULT_TEMPLATE_EXTRINSIC,
+  DEFAULT_TEMPLATE_EVENT
+} from "../../util/Templates";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
@@ -166,7 +179,7 @@ export default {
     return {
       currentPage: 1,
       is: 1,
-      compileLog: null,
+      compileLog: "",
       compilation_id: "",
       mapping: "",
       models: "",
@@ -176,12 +189,28 @@ export default {
     };
   },
   methods: {
-    loadDefaultTemp: function() {
-      this.mapping = DEFAULT_TEMPLATE.MAPPING;
-      this.models = DEFAULT_TEMPLATE.MODELS;
-      this.up = DEFAULT_TEMPLATE.UP;
-      this.table = DEFAULT_TEMPLATE.TABLE;
-      this.project = DEFAULT_TEMPLATE.PROJECT;
+    loadBlockTemp() {
+      this.mapping = DEFAULT_TEMPLATE_BLOCK.MAPPING;
+      this.models = DEFAULT_TEMPLATE_BLOCK.MODELS;
+      this.up = DEFAULT_TEMPLATE_BLOCK.UP;
+      this.table = DEFAULT_TEMPLATE_BLOCK.TABLE;
+      this.project = DEFAULT_TEMPLATE_BLOCK.PROJECT;
+      this.compilation_id = "";
+    },
+    loadExtrinsicTemp() {
+      this.mapping = DEFAULT_TEMPLATE_EXTRINSIC.MAPPING;
+      this.models = DEFAULT_TEMPLATE_EXTRINSIC.MODELS;
+      this.up = DEFAULT_TEMPLATE_EXTRINSIC.UP;
+      this.table = DEFAULT_TEMPLATE_EXTRINSIC.TABLE;
+      this.project = DEFAULT_TEMPLATE_EXTRINSIC.PROJECT;
+      this.compilation_id = "";
+    },
+    loadEventTemp() {
+      this.mapping = DEFAULT_TEMPLATE_EVENT.MAPPING;
+      this.models = DEFAULT_TEMPLATE_EVENT.MODELS;
+      this.up = DEFAULT_TEMPLATE_EVENT.UP;
+      this.table = DEFAULT_TEMPLATE_EVENT.TABLE;
+      this.project = DEFAULT_TEMPLATE_EVENT.PROJECT;
       this.compilation_id = "";
     },
     catchData() {
@@ -278,61 +307,6 @@ export default {
       return decodeURI(code);
     }
   }
-};
-
-const DEFAULT_TEMPLATE = {
-  MAPPING:
-    "use crate::models::Blockts52;\n" +
-    "use massbit_chain_substrate::data_type::SubstrateBlock;\n" +
-    "\n" +
-    "pub fn handle_block(block: &SubstrateBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
-    "    let block_ts = Blockts52 {\n" +
-    "        block_hash: block.header.hash().to_string(),\n" +
-    "        block_height: block.header.number as i64,\n" +
-    "    };\n" +
-    "    block_ts.save();\n" +
-    "    Ok(())\n" +
-    "}",
-  MODELS:
-    "use crate::STORE;\n" +
-    "use structmap::{FromMap, ToMap};\n" +
-    "use structmap_derive::{FromMap, ToMap};\n" +
-    "\n" +
-    "#[derive(Default, Clone, FromMap, ToMap)]\n" +
-    "pub struct Blockts52 {\n" +
-    "    pub block_hash: String,\n" +
-    "    pub block_height: i64,\n" +
-    "}\n" +
-    "\n" +
-    "impl Into<structmap::GenericMap> for Blockts52 {\n" +
-    "    fn into(self) -> structmap::GenericMap {\n" +
-    "        Blockts52::to_genericmap(self.clone())\n" +
-    "    }\n" +
-    "}\n" +
-    "\n" +
-    "impl Blockts52 {\n" +
-    "    pub fn save(&self) {\n" +
-    "        unsafe {\n" +
-    "            STORE\n" +
-    "                .as_ref()\n" +
-    "                .unwrap()\n" +
-    '                .save("Blockts52".to_string(), self.clone().into());\n' +
-    "        }\n" +
-    "    }\n" +
-    "}",
-  PROJECT:
-    "schema:\n" +
-    "  file: ./schema.graphql\n" +
-    "\n" +
-    "dataSources:\n" +
-    "  - kind: substrate\n" +
-    "    name: Index",
-  UP:
-    "CREATE TABLE Blockts52 (\n" +
-    "    block_hash varchar,\n" +
-    "    block_height bigint\n" +
-    ")",
-  TABLE: "Blockts52"
 };
 </script>
 <style>
