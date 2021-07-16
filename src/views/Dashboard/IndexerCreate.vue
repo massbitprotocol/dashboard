@@ -3,7 +3,10 @@
     <base-header class="pb-2">
       <b-row align-v="center" class="py-4">
         <b-col lg="6" cols="7">
-          <h6 class="h2 text-white d-inline-block mb-0">
+          <h6
+            class="h2 text-white d-inline-block mb-0"
+            style="text-transform: capitalize;"
+          >
             Create {{ chain }} Indexers
           </h6>
         </b-col>
@@ -14,9 +17,9 @@
       <b-row>
         <b-col cols="9">
           <base-input
-            label="Substrate Indexer Name"
+            label="Indexer Name"
             rules="required"
-            name="Substrate Indexer Name"
+            name="Indexer Name"
             placeholder="Fill Your Indexer Name "
             v-model="table"
           >
@@ -64,20 +67,10 @@
                 ></prism-editor>
               </div>
             </Tab>
-            <!-- <Tab ref="schema" title="schema.rs">
-              <div class="cover-editor mt-3">
-                <prism-editor
-                  class="my-editor"
-                  v-model="schema"
-                  :highlight="highlighter"
-                  line-numbers
-                ></prism-editor>
-              </div>
-            </Tab> -->
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
-          <b-col cols="12">
+          <b-col cols="12" v-if="chain == 'substrate'">
             <base-button
               size="xl"
               type="warning"
@@ -94,7 +87,24 @@
               >Load Extrinsic Template</base-button
             >
           </b-col>
-          <b-col cols="12" class="mt-2">
+          <b-col v-if="chain == 'solana'" cols="12">
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadBlockSOLTemp"
+              class="mt-2"
+              >Load Block Template</base-button
+            >
+
+            <!-- <base-button
+              size="xl"
+              type="warning"
+              @click="loadExtrinsicTemp"
+              class="mt-2"
+              >Load Extrinsic Template</base-button
+            > -->
+          </b-col>
+          <b-col cols="12" class="mt-2" v-if="chain == 'substrate'">
             <base-button size="xl" type="warning" @click="loadEventTemp"
               >Load Event Template</base-button
             >
@@ -147,9 +157,10 @@ import { PrismEditor } from "vue-prism-editor";
 
 import { LOCAL_STORE, HASURA_URL } from "../../util/Constants";
 import {
-  DEFAULT_TEMPLATE_BLOCK,
-  DEFAULT_TEMPLATE_EXTRINSIC,
-  DEFAULT_TEMPLATE_EVENT
+  SUB_TEMPLATE_BLOCK,
+  SUB_TEMPLATE_EXTRINSIC,
+  SUB_TEMPLATE_EVENT,
+  SOL_TEMPLATE_BLOCK
 } from "../../util/Templates";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
@@ -168,19 +179,28 @@ export default {
   },
   computed: {
     chain() {
-      return this.$route.params.chain;
+      return this.$route.params.chain.toLowerCase();
     },
     hasura_url() {
       return HASURA_URL;
     }
   },
+  watch: {
+    chain(newValue, oldValue) {
+      this.loadEmpty();
+    }
+  },
   mounted() {
-    this.mapping = localStorage.getItem(LOCAL_STORE.MAPPING);
-    this.models = localStorage.getItem(LOCAL_STORE.MODELS);
-    this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
-    this.up = localStorage.getItem(LOCAL_STORE.UP);
-    this.table = localStorage.getItem(LOCAL_STORE.TABLE);
-    this.compilation_id = localStorage.getItem(LOCAL_STORE.COMPILE);
+    if (this.chain == localStorage.getItem(LOCAL_STORE.CHAIN)) {
+      this.mapping = localStorage.getItem(LOCAL_STORE.MAPPING);
+      this.models = localStorage.getItem(LOCAL_STORE.MODELS);
+      this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
+      this.up = localStorage.getItem(LOCAL_STORE.UP);
+      this.table = localStorage.getItem(LOCAL_STORE.TABLE);
+      this.compilation_id = localStorage.getItem(LOCAL_STORE.COMPILE);
+    }
+
+    localStorage.setItem(LOCAL_STORE.CHAIN, this.chain);
   },
   beforeUpdate() {
     this.catchData();
@@ -203,28 +223,44 @@ export default {
     };
   },
   methods: {
+    loadEmpty() {
+      this.mapping = "";
+      this.models = "";
+      this.up = "";
+      this.table = "";
+      this.project = "";
+      this.compilation_id = "";
+    },
+    loadBlockSOLTemp() {
+      this.mapping = SOL_TEMPLATE_BLOCK.MAPPING;
+      this.models = SOL_TEMPLATE_BLOCK.MODELS;
+      this.up = SOL_TEMPLATE_BLOCK.UP;
+      this.table = SOL_TEMPLATE_BLOCK.TABLE;
+      this.project = SOL_TEMPLATE_BLOCK.PROJECT;
+      this.compilation_id = "";
+    },
     loadBlockTemp() {
-      this.mapping = DEFAULT_TEMPLATE_BLOCK.MAPPING;
-      this.models = DEFAULT_TEMPLATE_BLOCK.MODELS;
-      this.up = DEFAULT_TEMPLATE_BLOCK.UP;
-      this.table = DEFAULT_TEMPLATE_BLOCK.TABLE;
-      this.project = DEFAULT_TEMPLATE_BLOCK.PROJECT;
+      this.mapping = SUB_TEMPLATE_BLOCK.MAPPING;
+      this.models = SUB_TEMPLATE_BLOCK.MODELS;
+      this.up = SUB_TEMPLATE_BLOCK.UP;
+      this.table = SUB_TEMPLATE_BLOCK.TABLE;
+      this.project = SUB_TEMPLATE_BLOCK.PROJECT;
       this.compilation_id = "";
     },
     loadExtrinsicTemp() {
-      this.mapping = DEFAULT_TEMPLATE_EXTRINSIC.MAPPING;
-      this.models = DEFAULT_TEMPLATE_EXTRINSIC.MODELS;
-      this.up = DEFAULT_TEMPLATE_EXTRINSIC.UP;
-      this.table = DEFAULT_TEMPLATE_EXTRINSIC.TABLE;
-      this.project = DEFAULT_TEMPLATE_EXTRINSIC.PROJECT;
+      this.mapping = SUB_TEMPLATE_EXTRINSIC.MAPPING;
+      this.models = SUB_TEMPLATE_EXTRINSIC.MODELS;
+      this.up = SUB_TEMPLATE_EXTRINSIC.UP;
+      this.table = SUB_TEMPLATE_EXTRINSIC.TABLE;
+      this.project = SUB_TEMPLATE_EXTRINSIC.PROJECT;
       this.compilation_id = "";
     },
     loadEventTemp() {
-      this.mapping = DEFAULT_TEMPLATE_EVENT.MAPPING;
-      this.models = DEFAULT_TEMPLATE_EVENT.MODELS;
-      this.up = DEFAULT_TEMPLATE_EVENT.UP;
-      this.table = DEFAULT_TEMPLATE_EVENT.TABLE;
-      this.project = DEFAULT_TEMPLATE_EVENT.PROJECT;
+      this.mapping = SUB_TEMPLATE_EVENT.MAPPING;
+      this.models = SUB_TEMPLATE_EVENT.MODELS;
+      this.up = SUB_TEMPLATE_EVENT.UP;
+      this.table = SUB_TEMPLATE_EVENT.TABLE;
+      this.project = SUB_TEMPLATE_EVENT.PROJECT;
       this.compilation_id = "";
     },
     catchData() {
@@ -251,12 +287,11 @@ export default {
         .post(`/${action}`, {
           "mapping.rs": this.covertToURL(this.mapping),
           "models.rs": this.covertToURL(this.models),
-          // "schema.rs": this.covertToURL(this.schema),
           "project.yaml": this.covertToURL(this.project),
           "up.sql": this.covertToURL(this.up),
           table: this.table,
-          // compilation_id: "d4b6b98121972be58b5b158757bfc35c"
-          compilation_id: this.compilation_id
+          compilation_id: this.compilation_id,
+          network_type: this.chain
         })
         .then(async res => {
           if (res.data.payload && res.data.payload.length > 0) {

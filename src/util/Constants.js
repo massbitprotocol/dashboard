@@ -1,7 +1,7 @@
 export const API_URL = process.env.VUE_APP_CODE_COMPILER_URL || "http://localhost:5000"; // Should be re-named CODE_COMPILER_URL
 export const INDEX_MANAGER_URL = process.env.VUE_APP_INDEX_MANAGER_URL || "http://localhost:3030";
 export const HASURA_URL = process.env.VUE_APP_HASURA_URL || "http://localhost:8080/console";
-export const DEFAULT_LANGUAGE = "en";
+export const SUB_LANGUAGE = "en";
 export const SUPPORTED_LANGUAGES = ["vi", "en"];
 // The following components is not required to confirm email before using it
 export const NO_CONFIRM_EMAIL_ROUTES = ["ConfirmEmail"];
@@ -34,7 +34,8 @@ export const LOCAL_STORE = {
   MODELS: "models",
   PROJECT: "project",
   UP: "up",
-  COMPILE: "compile"
+  COMPILE: "compile",
+  CHAIN: "chain",
 };
 // Step
 export const STEPPER = {
