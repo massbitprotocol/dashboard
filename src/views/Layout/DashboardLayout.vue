@@ -65,9 +65,9 @@
           }"
         >
           <sidebar-item
-            :link="{ name: 'Substrate', path: '/indexers/Substrate' }"
+            :link="{ name: 'Substrate', path: '/indexers/substrate' }"
           />
-          <sidebar-item :link="{ name: 'Solana', path: '/indexers/Solana' }" />
+          <sidebar-item :link="{ name: 'Solana', path: '/indexers/solana' }" />
         </sidebar-item>
 
         <sidebar-item
@@ -84,7 +84,7 @@
         <hr class="my-3" />
 
         <div class="fixed-bottom">
-          <!-- <div class="dropdown">
+          <div class="dropdown">
             <button v-if="!account" class="border-btn" @click="login">
               {{ $t("Login") }}
             </button>
@@ -110,7 +110,7 @@
                 width="16"
               />
             </a>
-          </div> -->
+          </div>
         </div>
       </template>
     </side-bar>

@@ -3,7 +3,10 @@
     <base-header class="pb-2">
       <b-row align-v="center" class="py-4">
         <b-col lg="6" cols="7">
-          <h6 class="h2 text-white d-inline-block mb-0">
+          <h6
+            class="h2 text-white d-inline-block mb-0"
+            style="text-transform: capitalize;"
+          >
             {{ chain }} Indexers
           </h6>
           <!-- <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
@@ -14,7 +17,11 @@
           <!-- <base-button size="sm" type="neutral">New</base-button>
           <base-button size="sm" type="neutral">Filters</base-button> -->
 
-          <base-button size="xl" type="neutral" @click="create"
+          <base-button
+            size="xl"
+            type="neutral"
+            @click="create"
+            style="text-transform: capitalize;"
             >Create New {{ chain }} Indexer</base-button
           >
         </b-col>

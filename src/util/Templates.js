@@ -1,4 +1,79 @@
-export const DEFAULT_TEMPLATE_BLOCK = {
+export const SOL_TEMPLATE_BLOCK = {
+  MAPPING:
+    "use crate::models::BlockSolanaTs;\n" +
+    "use massbit_chain_solana::data_type::{\n" +
+    "    SolanaBlock,\n" +
+    "    SolanaTransaction,\n" +
+    "    SolanaLogMessages\n" +
+    "};\n" +
+    "\n" +
+    "pub fn handle_block(block: &SolanaBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    '    println!("[SO File] Received Solana Block");\n' +
+    "    let block_solana_ts = BlockSolanaTs {\n" +
+    "        block_hash: block.block.blockhash.clone(),\n" +
+    "        block_height: block.block.block_height.unwrap() as i64,\n" +
+    "        timestamp: block.block.block_time.unwrap().to_string(),\n" +
+    "    };\n" +
+    "    block_solana_ts.save();\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_transaction(transaction: &SolanaTransaction) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_log_messages(event: &SolanaLogMessages) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "",
+  MODELS:
+    "use crate::STORE;\n" +
+    "use structmap::{FromMap, ToMap};\n" +
+    "use structmap_derive::{FromMap, ToMap};\n" +
+    "\n" +
+    "#[derive(Default, Clone, FromMap, ToMap)]\n" +
+    "pub struct BlockSolanaTs {\n" +
+    "    pub block_hash: String,\n" +
+    "    pub block_height: i64,\n" +
+    "    pub timestamp: String\n" +
+    "}\n" +
+    "\n" +
+    "impl Into<structmap::GenericMap> for BlockSolanaTs {\n" +
+    "    fn into(self) -> structmap::GenericMap {\n" +
+    "        BlockSolanaTs::to_genericmap(self.clone())\n" +
+    "    }\n" +
+    "}\n" +
+    "\n" +
+    "impl BlockSolanaTs {\n" +
+    "    pub fn save(&self) {\n" +
+    "        unsafe {\n" +
+    "            STORE\n" +
+    "                .as_ref()\n" +
+    "                .unwrap()\n" +
+    '                .save("BlockSolanaTs".to_string(), self.clone().into());\n' +
+    "        }\n" +
+    "    }\n" +
+    "}\n" +
+    "",
+  PROJECT:
+    "schema:\n" +
+    "  file: ./schema.graphql\n" +
+    "\n" +
+    "dataSources:\n" +
+    "  - kind: solana\n" +
+    "    name: Index\n" +
+    "    network: https://data-seed-prebsc-1-s1.binance.org:8545/\n" +
+    "",
+  UP:
+    "CREATE TABLE BlockSolanaTs (\n" +
+    "    block_hash varchar,\n" +
+    "    block_height bigint,\n" +
+    "    timestamp varchar\n" +
+    ")",
+  TABLE: "BlockTs"
+};
+
+export const SUB_TEMPLATE_BLOCK = {
   MAPPING:
     "use crate::models::BlockTs;\n" +
     "use massbit_chain_substrate::data_type::{SubstrateBlock, SubstrateUncheckedExtrinsic, SubstrateEventRecord};\n" +
@@ -72,7 +147,7 @@ export const DEFAULT_TEMPLATE_BLOCK = {
     ")",
   TABLE: "BlockTs"
 };
-export const DEFAULT_TEMPLATE_EVENT = {
+export const SUB_TEMPLATE_EVENT = {
   MAPPING:
     "use crate::models::EventTs;\n" +
     "use massbit_chain_substrate::data_type::{SubstrateEventRecord, SubstrateUncheckedExtrinsic, SubstrateBlock};\n" +
@@ -140,8 +215,7 @@ export const DEFAULT_TEMPLATE_EVENT = {
     ")",
   TABLE: "EventTs"
 };
-
-export const DEFAULT_TEMPLATE_EXTRINSIC = {
+export const SUB_TEMPLATE_EXTRINSIC = {
   MAPPING:
     "use crate::models::ExtrinsicTs;\n" +
     "use massbit_chain_substrate::data_type::{SubstrateUncheckedExtrinsic, SubstrateEventRecord, SubstrateBlock};\n" +
