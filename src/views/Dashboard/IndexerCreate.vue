@@ -96,17 +96,22 @@
               >Load Block Template</base-button
             >
 
-            <!-- <base-button
+            <base-button
               size="xl"
               type="warning"
-              @click="loadExtrinsicTemp"
+              @click="loadTransSOLTemp"
               class="mt-2"
-              >Load Extrinsic Template</base-button
-            > -->
+              >Load Transaction Template</base-button
+            >
           </b-col>
           <b-col cols="12" class="mt-2" v-if="chain == 'substrate'">
             <base-button size="xl" type="warning" @click="loadEventTemp"
               >Load Event Template</base-button
+            >
+          </b-col>
+          <b-col cols="12" class="mt-2" v-if="chain == 'solana'">
+            <base-button size="xl" type="warning" @click="loadLogsSOLTemp"
+              >Load Log Message Template</base-button
             >
           </b-col>
           <b-col cols="12" class="mt-6">
@@ -160,7 +165,9 @@ import {
   SUB_TEMPLATE_BLOCK,
   SUB_TEMPLATE_EXTRINSIC,
   SUB_TEMPLATE_EVENT,
-  SOL_TEMPLATE_BLOCK
+  SOL_TEMPLATE_BLOCK,
+  SOL_TEMPLATE_TRANS,
+  SOL_TEMPLATE_LOGS
 } from "../../util/Templates";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
@@ -237,6 +244,22 @@ export default {
       this.up = SOL_TEMPLATE_BLOCK.UP;
       this.table = SOL_TEMPLATE_BLOCK.TABLE;
       this.project = SOL_TEMPLATE_BLOCK.PROJECT;
+      this.compilation_id = "";
+    },
+    loadTransSOLTemp() {
+      this.mapping = SOL_TEMPLATE_TRANS.MAPPING;
+      this.models = SOL_TEMPLATE_TRANS.MODELS;
+      this.up = SOL_TEMPLATE_TRANS.UP;
+      this.table = SOL_TEMPLATE_TRANS.TABLE;
+      this.project = SOL_TEMPLATE_TRANS.PROJECT;
+      this.compilation_id = "";
+    },
+    loadLogsSOLTemp() {
+      this.mapping = SOL_TEMPLATE_LOGS.MAPPING;
+      this.models = SOL_TEMPLATE_LOGS.MODELS;
+      this.up = SOL_TEMPLATE_LOGS.UP;
+      this.table = SOL_TEMPLATE_LOGS.TABLE;
+      this.project = SOL_TEMPLATE_LOGS.PROJECT;
       this.compilation_id = "";
     },
     loadBlockTemp() {
