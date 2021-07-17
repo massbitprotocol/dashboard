@@ -10,27 +10,27 @@
       :data="indexersList"
       @row-click="fn_rowClick"
     >
-      <el-table-column label="id" prop="id" min-width="60px" sortable>
+      <el-table-column label="id" prop="id" min-width="220px" sortable>
       </el-table-column>
-      <el-table-column label="name" prop="name" min-width="100px" sortable>
+      <el-table-column label="name" prop="name" min-width="220px" sortable>
       </el-table-column>
       <el-table-column
         label="network"
         prop="network"
-        min-width="160px"
+        min-width="220px"
         sortable
       >
       </el-table-column>
       <el-table-column
         label="description"
         prop="description"
-        min-width="300px"
+        min-width="220px"
         sortable
       >
       </el-table-column>
-      <el-table-column label="repo" prop="repo" min-width="160px" sortable>
+      <el-table-column label="repo" prop="repo" min-width="220px" sortable>
       </el-table-column>
-      <el-table-column label="status" prop="status" min-width="160px" sortable>
+      <el-table-column label="status" prop="status" min-width="220px" sortable>
       </el-table-column>
       <!-- 
 
@@ -144,7 +144,7 @@ export default {
                 x.network.toString().toLowerCase() ==
                 this.indexerName.toLowerCase()
             );
-          } 
+          }
 
           this.tbl_loading = false;
         })
@@ -172,6 +172,6 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 500px;
+  max-width: 200px;
 }
 </style>
