@@ -70,7 +70,157 @@ export const SOL_TEMPLATE_BLOCK = {
     "    block_height bigint,\n" +
     "    timestamp varchar\n" +
     ")",
-  TABLE: "BlockTs"
+  TABLE: "BlockSolanaTs"
+};
+export const SOL_TEMPLATE_TRANS = {
+  MAPPING:
+    "use crate::models::TransactionSolanaTs;\n" +
+    "use massbit_chain_solana::data_type::{\n" +
+    "    SolanaBlock,\n" +
+    "    SolanaTransaction,\n" +
+    "    SolanaLogMessages\n" +
+    "};\n" +
+    "\n" +
+    "pub fn handle_block(block: &SolanaBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_transaction(transaction: &SolanaTransaction) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    '    println!("[SO File] Received Solana Transaction");\n' +
+    "\n" +
+    "    let transaction_solana_ts = TransactionSolanaTs {\n" +
+    "        block_number: transaction.block_number as i64,\n" +
+    "        fee: transaction.transaction.meta.clone().unwrap().fee as i64,\n" +
+    '        signature: format!("{:?}", transaction.transaction.transaction.signatures),\n' +
+    "    };\n" +
+    "    transaction_solana_ts.save();\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_log_messages(event: &SolanaLogMessages) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "",
+  MODELS:
+    "use crate::STORE;\n" +
+    "use structmap::{FromMap, ToMap};\n" +
+    "use structmap_derive::{FromMap, ToMap};\n" +
+    "\n" +
+    "#[derive(Default, Clone, FromMap, ToMap)]\n" +
+    "pub struct TransactionSolanaTs {\n" +
+    "    pub block_number: i64,\n" +
+    "    pub fee: i64,\n" +
+    "    pub signature: String\n" +
+    "}\n" +
+    "\n" +
+    "impl Into<structmap::GenericMap> for TransactionSolanaTs {\n" +
+    "    fn into(self) -> structmap::GenericMap {\n" +
+    "        TransactionSolanaTs::to_genericmap(self.clone())\n" +
+    "    }\n" +
+    "}\n" +
+    "\n" +
+    "impl TransactionSolanaTs {\n" +
+    "    pub fn save(&self) {\n" +
+    "        unsafe {\n" +
+    "            STORE\n" +
+    "                .as_ref()\n" +
+    "                .unwrap()\n" +
+    '                .save("TransactionSolanaTs".to_string(), self.clone().into());\n' +
+    "        }\n" +
+    "    }\n" +
+    "}\n" +
+    "",
+  PROJECT:
+    "schema:\n" +
+    "  file: ./schema.graphql\n" +
+    "\n" +
+    "dataSources:\n" +
+    "  - kind: solana\n" +
+    "    name: Index\n" +
+    "    network: https://data-seed-prebsc-1-s1.binance.org:8545/\n" +
+    "",
+  UP:
+    "CREATE TABLE TransactionSolanaTs (\n" +
+    "    block_number bigint,\n" +
+    "    fee bigint,\n" +
+    "    signature varchar\n" +
+    ")",
+  TABLE: "TransactionSolanaTs"
+};
+export const SOL_TEMPLATE_LOGS = {
+  MAPPING:
+    "use crate::models::LogMessagesSolanaTs;\n" +
+    "use massbit_chain_solana::data_type::{\n" +
+    "    SolanaBlock,\n" +
+    "    SolanaTransaction,\n" +
+    "    SolanaLogMessages\n" +
+    "};\n" +
+    "\n" +
+    "pub fn handle_block(block: &SolanaBlock) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_transaction(transaction: &SolanaTransaction) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "\n" +
+    "pub fn handle_log_messages(log_messages: &SolanaLogMessages) -> Result<(), Box<dyn std::error::Error>> {\n" +
+    '    println!("[SO File] Received Solana Log Messages");\n' +
+    "\n" +
+    "    let log_messages_solana_ts = LogMessagesSolanaTs {\n" +
+    "        block_number: log_messages.block_number as i64,\n" +
+    '        log_messages: format!("{:?}", log_messages.log_messages),\n' +
+    '        signature: format!("{:?}", log_messages.transaction.transaction.transaction.signatures),\n' +
+    "    };\n" +
+    "    log_messages_solana_ts.save();\n" +
+    "    Ok(())\n" +
+    "}\n" +
+    "",
+  MODELS:
+    "use crate::STORE;\n" +
+    "use structmap::{FromMap, ToMap};\n" +
+    "use structmap_derive::{FromMap, ToMap};\n" +
+    "\n" +
+    "#[derive(Default, Clone, FromMap, ToMap)]\n" +
+    "pub struct LogMessagesSolanaTs {\n" +
+    "    pub block_number: i64,\n" +
+    "    pub log_messages: String,\n" +
+    "    pub signature: String\n" +
+    "}\n" +
+    "\n" +
+    "impl Into<structmap::GenericMap> for LogMessagesSolanaTs {\n" +
+    "    fn into(self) -> structmap::GenericMap {\n" +
+    "        LogMessagesSolanaTs::to_genericmap(self.clone())\n" +
+    "    }\n" +
+    "}\n" +
+    "\n" +
+    "impl LogMessagesSolanaTs {\n" +
+    "    pub fn save(&self) {\n" +
+    "        unsafe {\n" +
+    "            STORE\n" +
+    "                .as_ref()\n" +
+    "                .unwrap()\n" +
+    '                .save("LogMessagesSolanaTs".to_string(), self.clone().into());\n' +
+    "        }\n" +
+    "    }\n" +
+    "}\n" +
+    "",
+  PROJECT:
+    "schema:\n" +
+    "  file: ./schema.graphql\n" +
+    "\n" +
+    "dataSources:\n" +
+    "  - kind: solana\n" +
+    "    name: Index\n" +
+    "    network: https://data-seed-prebsc-1-s1.binance.org:8545/\n" +
+    "",
+  UP:
+    "CREATE TABLE LogMessagesSolanaTs (\n" +
+    "    block_number bigint,\n" +
+    "    log_messages varchar,\n" +
+    "    signature varchar\n" +
+    ")",
+  TABLE: "LogMessagesSolanaTs"
 };
 
 export const SUB_TEMPLATE_BLOCK = {
