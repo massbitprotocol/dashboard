@@ -131,7 +131,7 @@
             <p>{{ covertToString(compileLog) }}</p>
           </div>
         </b-col>
-        <b-col v-if="compilation_id" cols="12" class=" pt-3">
+        <b-col v-if="isShowHasura" cols="12" class=" pt-3">
           <h1>Table Data</h1>
         </b-col>
         <b-col

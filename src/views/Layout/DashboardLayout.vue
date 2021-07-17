@@ -83,7 +83,7 @@
       <template slot="links-after">
         <hr class="my-3" />
 
-        <div class="fixed-bottom">
+        <!-- <div class="fixed-bottom">
           <div class="dropdown">
             <button v-if="!account" class="border-btn" @click="login">
               {{ $t("Login") }}
@@ -111,7 +111,7 @@
               />
             </a>
           </div>
-        </div>
+        </div> -->
       </template>
     </side-bar>
     <div class="main-content">
