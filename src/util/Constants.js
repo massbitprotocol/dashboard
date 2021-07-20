@@ -34,6 +34,7 @@ export const LOCAL_STORE = {
   MODELS: "models",
   PROJECT: "project",
   UP: "up",
+  QUERY: "query",
   COMPILE: "compile",
   CHAIN: "chain",
 };

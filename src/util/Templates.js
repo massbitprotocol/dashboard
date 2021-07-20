@@ -70,7 +70,8 @@ export const SOL_TEMPLATE_BLOCK = {
     "    block_height bigint,\n" +
     "    timestamp varchar\n" +
     ")",
-  TABLE: "BlockSolanaTs"
+  TABLE: "BlockSolanaTs",
+  QUERY: ""
 };
 export const SOL_TEMPLATE_TRANS = {
   MAPPING:
@@ -145,7 +146,8 @@ export const SOL_TEMPLATE_TRANS = {
     "    fee bigint,\n" +
     "    signature varchar\n" +
     ")",
-  TABLE: "TransactionSolanaTs"
+  TABLE: "TransactionSolanaTs",
+  QUERY: ""
 };
 export const SOL_TEMPLATE_LOGS = {
   MAPPING:
@@ -220,7 +222,8 @@ export const SOL_TEMPLATE_LOGS = {
     "    log_messages varchar,\n" +
     "    signature varchar\n" +
     ")",
-  TABLE: "LogMessagesSolanaTs"
+  TABLE: "LogMessagesSolanaTs",
+  QUERY: ""
 };
 
 export const SUB_TEMPLATE_BLOCK = {
@@ -295,7 +298,8 @@ export const SUB_TEMPLATE_BLOCK = {
     "    block_hash varchar,\n" +
     "    block_height bigint\n" +
     ")",
-  TABLE: "BlockTs"
+  TABLE: "BlockTs",
+  QUERY: ""
 };
 export const SUB_TEMPLATE_EVENT = {
   MAPPING:
@@ -363,7 +367,8 @@ export const SUB_TEMPLATE_EVENT = {
     "    timestamp varchar,\n" +
     "    event varchar\n" +
     ")",
-  TABLE: "EventTs"
+  TABLE: "EventTs",
+  QUERY: ""
 };
 export const SUB_TEMPLATE_EXTRINSIC = {
   MAPPING:
@@ -429,5 +434,6 @@ export const SUB_TEMPLATE_EXTRINSIC = {
     "    block_number bigint,\n" +
     "    extrinsic varchar\n" +
     ")",
-  TABLE: "ExtrinsicTs"
+  TABLE: "ExtrinsicTs",
+  QUERY: ""
 };
