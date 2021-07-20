@@ -87,21 +87,23 @@ export const SOL_TEMPLATE_TRANS = {
     "}\n" +
     "\n" +
     "pub fn handle_transaction(transaction: &SolanaTransaction) -> Result<(), Box<dyn std::error::Error>> {\n" +
-    '    println!("[SO File] Received Solana Transaction");\n' +
     "\n" +
-    "    let transaction_solana_ts = TransactionSolanaTs {\n" +
-    "        block_number: transaction.block_number as i64,\n" +
-    "        fee: transaction.transaction.meta.clone().unwrap().fee as i64,\n" +
-    '        signature: format!("{:?}", transaction.transaction.transaction.signatures),\n' +
-    "    };\n" +
-    "    transaction_solana_ts.save();\n" +
+    "    if transaction.transaction.meta.clone().unwrap().fee > 5000 {\n" +
+    "        let transaction_solana_ts = TransactionSolanaTs {\n" +
+    "            block_number: transaction.block_number as i64,\n" +
+    "            fee: transaction.transaction.meta.clone().unwrap().fee as i64,\n" +
+    '            signature: format!("{:?}", transaction.transaction.transaction.signatures),\n' +
+    "        };\n" +
+    "        transaction_solana_ts.save();\n" +
+    "    }\n" +
+    "\n" +
+    "\n" +
     "    Ok(())\n" +
     "}\n" +
     "\n" +
     "pub fn handle_log_messages(event: &SolanaLogMessages) -> Result<(), Box<dyn std::error::Error>> {\n" +
     "    Ok(())\n" +
-    "}\n" +
-    "",
+    "}",
   MODELS:
     "use crate::STORE;\n" +
     "use structmap::{FromMap, ToMap};\n" +
@@ -168,16 +170,26 @@ export const SOL_TEMPLATE_LOGS = {
     "\n" +
     "pub fn handle_log_messages(log_messages: &SolanaLogMessages) -> Result<(), Box<dyn std::error::Error>> {\n" +
     '    println!("[SO File] Received Solana Log Messages");\n' +
+    '    let serum_dex_key = "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin";\n' +
+    "    let mut check_key= false;\n" +
+    "    for acc_key in &log_messages.transaction.transaction.message.account_keys {\n" +
+    "        if acc_key.to_string() == serum_dex_key {\n" +
+    "            check_key = true;\n" +
+    "            break;\n" +
+    "        }\n" +
+    "    }\n" +
     "\n" +
-    "    let log_messages_solana_ts = LogMessagesSolanaTs {\n" +
-    "        block_number: log_messages.block_number as i64,\n" +
-    '        log_messages: format!("{:?}", log_messages.log_messages),\n' +
-    '        signature: format!("{:?}", log_messages.transaction.transaction.transaction.signatures),\n' +
+    "    if check_key {\n" +
+    "\n" +
+    "        let log_messages_solana_ts = LogMessagesSolanaTs {\n" +
+    "            block_number: log_messages.block_number as i64,\n" +
+    '            log_messages: format!("{:?}", log_messages.log_messages),\n' +
+    '            signature: format!("{:?}", log_messages.transaction.transaction.signatures),\n' +
+    "        };\n" +
+    "        log_messages_solana_ts.save();\n" +
     "    };\n" +
-    "    log_messages_solana_ts.save();\n" +
     "    Ok(())\n" +
-    "}\n" +
-    "",
+    "}",
   MODELS:
     "use crate::STORE;\n" +
     "use structmap::{FromMap, ToMap};\n" +

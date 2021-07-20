@@ -67,6 +67,16 @@
                 ></prism-editor>
               </div>
             </Tab>
+            <!-- <Tab ref="query" title="Query Example">
+              <div class="cover-editor mt-3">
+                <prism-editor
+                  class="my-editor"
+                  v-model="query"
+                  :highlight="highlighter"
+                  line-numbers
+                ></prism-editor>
+              </div>
+            </Tab> -->
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
@@ -203,6 +213,7 @@ export default {
       this.models = localStorage.getItem(LOCAL_STORE.MODELS);
       this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
       this.up = localStorage.getItem(LOCAL_STORE.UP);
+      this.query = localStorage.getItem(LOCAL_STORE.QUERY);
       this.table = localStorage.getItem(LOCAL_STORE.TABLE);
       this.compilation_id = localStorage.getItem(LOCAL_STORE.COMPILE);
     }
@@ -223,6 +234,7 @@ export default {
       compilation_id: "",
       mapping: "",
       models: "",
+      query: "",
       project: "",
       up: "",
       table: "",
@@ -236,6 +248,7 @@ export default {
       this.up = "";
       this.table = "";
       this.project = "";
+      this.query = "";
       this.compilation_id = "";
     },
     loadBlockSOLTemp() {
@@ -244,6 +257,7 @@ export default {
       this.up = SOL_TEMPLATE_BLOCK.UP;
       this.table = SOL_TEMPLATE_BLOCK.TABLE;
       this.project = SOL_TEMPLATE_BLOCK.PROJECT;
+      this.query = SOL_TEMPLATE_BLOCK.QUERY;
       this.compilation_id = "";
     },
     loadTransSOLTemp() {
@@ -252,6 +266,7 @@ export default {
       this.up = SOL_TEMPLATE_TRANS.UP;
       this.table = SOL_TEMPLATE_TRANS.TABLE;
       this.project = SOL_TEMPLATE_TRANS.PROJECT;
+      this.query = SOL_TEMPLATE_TRANS.QUERY;
       this.compilation_id = "";
     },
     loadLogsSOLTemp() {
@@ -260,6 +275,7 @@ export default {
       this.up = SOL_TEMPLATE_LOGS.UP;
       this.table = SOL_TEMPLATE_LOGS.TABLE;
       this.project = SOL_TEMPLATE_LOGS.PROJECT;
+      this.query = SOL_TEMPLATE_LOGS.QUERY;
       this.compilation_id = "";
     },
     loadBlockTemp() {
@@ -268,6 +284,7 @@ export default {
       this.up = SUB_TEMPLATE_BLOCK.UP;
       this.table = SUB_TEMPLATE_BLOCK.TABLE;
       this.project = SUB_TEMPLATE_BLOCK.PROJECT;
+      this.query = SUB_TEMPLATE_BLOCK.QUERY;
       this.compilation_id = "";
     },
     loadExtrinsicTemp() {
@@ -276,6 +293,7 @@ export default {
       this.up = SUB_TEMPLATE_EXTRINSIC.UP;
       this.table = SUB_TEMPLATE_EXTRINSIC.TABLE;
       this.project = SUB_TEMPLATE_EXTRINSIC.PROJECT;
+      this.query = SUB_TEMPLATE_EXTRINSIC.QUERY;
       this.compilation_id = "";
     },
     loadEventTemp() {
@@ -284,6 +302,7 @@ export default {
       this.up = SUB_TEMPLATE_EVENT.UP;
       this.table = SUB_TEMPLATE_EVENT.TABLE;
       this.project = SUB_TEMPLATE_EVENT.PROJECT;
+      this.query = SUB_TEMPLATE_EVENT.QUERY;
       this.compilation_id = "";
     },
     catchData() {
@@ -293,6 +312,7 @@ export default {
       localStorage.setItem(LOCAL_STORE.UP, this.up);
       localStorage.setItem(LOCAL_STORE.TABLE, this.table);
       localStorage.setItem(LOCAL_STORE.COMPILE, this.compilation_id);
+      localStorage.setItem(LOCAL_STORE.QUERY, this.query);
     },
     isByteArray(array) {
       if (array && array.length > 0) return true;
