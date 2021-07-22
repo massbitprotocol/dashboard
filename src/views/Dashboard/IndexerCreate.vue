@@ -10,7 +10,15 @@
             Create {{ chain }} Indexers
           </h6>
         </b-col>
-        <b-col lg="6" cols="5" class="text-right"> </b-col>
+        <b-col lg="6" cols="5" class="text-right">
+          <base-button
+            size="xl"
+            type="warning"
+            @click="authenticate('github')"
+            class="mt-2"
+            >Import Github</base-button
+          >
+        </b-col>
       </b-row>
     </base-header>
     <b-container fluid class="mt-6">
@@ -242,6 +250,15 @@ export default {
     };
   },
   methods: {
+    authenticate: async function(provider) {
+      try {
+        await this.$auth.authenticate(provider).then(function(result) {
+          console.log(result);
+        });
+      } catch (error) {
+        this.$failAlert({ text: error });
+      }
+    },
     loadEmpty() {
       this.mapping = "";
       this.models = "";
