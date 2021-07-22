@@ -35,7 +35,19 @@ import webUtil from "./assets/js/util";
 import BigNumber from "bignumber.js";
 import Sparklines from "vue-sparklines";
 import CircularCountDownTimer from "vue-circular-count-down-timer";
+import VueAuthenticate from "./plugins/vue-auth/index";
+import VueAxios from "vue-axios";
 
+Vue.use(VueAuthenticate, {
+  baseUrl: process.env.VUE_APP_INDEX_MANAGER_URL || "http://localhost:3030", // Your API domain
+
+  providers: {
+    github: {
+      clientId: "a63592ba4bf65ed6017f"
+      // redirectUri: "http://localhost:8088/#/createIndexer/solana" // Your client app URL
+    }
+  }
+});
 Vue.config.productionTip = false;
 Vue.use(VueClipboard);
 Vue.use(Toast);
@@ -43,7 +55,7 @@ Vue.use(Loading);
 Vue.use(LoginModal);
 Vue.use(Sparklines);
 Vue.use(CircularCountDownTimer);
-
+Vue.use(VueAxios, axios);
 // 百度统计
 Vue.use(ba, "16aa34879f4d10c06974b0881b309e21");
 Vue.use(ba, { siteId: "16aa34879f4d10c06974b0881b309e21" });
@@ -99,7 +111,7 @@ Vue.mixin({
       category: "category",
       selectedCategory: "selectedCategory",
       screenWidth: "screenWidth",
-      proposalList: "proposalList",
+      proposalList: "proposalList"
     })
   },
   methods: {
