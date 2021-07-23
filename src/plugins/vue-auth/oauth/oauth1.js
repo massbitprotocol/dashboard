@@ -48,7 +48,8 @@ export default class OAuth {
     }
 
     return this.getRequestToken().then(response => {
-      return this.openPopup(response).then(popupResponse => {
+      return this.openPopup(response)
+      .then(popupResponse => {
         return this.exchangeForToken(popupResponse, userData);
       });
     });

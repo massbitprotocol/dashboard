@@ -71,7 +71,7 @@ export const SOL_TEMPLATE_BLOCK = {
     "    timestamp varchar\n" +
     ")",
   TABLE: "BlockSolanaTs",
-  QUERY: ""
+  SCHEMA: ""
 };
 export const SOL_TEMPLATE_TRANS = {
   MAPPING:
@@ -149,7 +149,7 @@ export const SOL_TEMPLATE_TRANS = {
     "    signature varchar\n" +
     ")",
   TABLE: "TransactionSolanaTs",
-  QUERY: ""
+  SCHEMA: ""
 };
 export const SOL_TEMPLATE_LOGS = {
   MAPPING:
@@ -235,7 +235,7 @@ export const SOL_TEMPLATE_LOGS = {
     "    signature varchar\n" +
     ")",
   TABLE: "LogMessagesSolanaTs",
-  QUERY: ""
+  SCHEMA: ""
 };
 
 export const SUB_TEMPLATE_BLOCK = {
@@ -311,7 +311,7 @@ export const SUB_TEMPLATE_BLOCK = {
     "    block_height bigint\n" +
     ")",
   TABLE: "BlockTs",
-  QUERY: ""
+  SCHEMA: ""
 };
 export const SUB_TEMPLATE_EVENT = {
   MAPPING:
@@ -380,7 +380,7 @@ export const SUB_TEMPLATE_EVENT = {
     "    event varchar\n" +
     ")",
   TABLE: "EventTs",
-  QUERY: ""
+  SCHEMA: ""
 };
 export const SUB_TEMPLATE_EXTRINSIC = {
   MAPPING:
@@ -447,5 +447,96 @@ export const SUB_TEMPLATE_EXTRINSIC = {
     "    extrinsic varchar\n" +
     ")",
   TABLE: "ExtrinsicTs",
-  QUERY: ""
+  SCHEMA: ""
 };
+export const DEFAULT_SCHEMA =
+  "  type _Schema_ @fulltext(\n" +
+  '        name: "userSearch"\n' +
+  "        language: en\n" +
+  "        algorithm: rank\n" +
+  "        include: [\n" +
+  "            {\n" +
+  '                entity: "User",\n' +
+  "                fields: [\n" +
+  '                    { name: "name"},\n' +
+  '                    { name: "email"},\n' +
+  "                ]\n" +
+  "            }\n" +
+  "        ]\n" +
+  "    ) @fulltext(\n" +
+  '        name: "nullableStringsSearch"\n' +
+  "        language: en\n" +
+  "        algorithm: rank\n" +
+  "        include: [\n" +
+  "            {\n" +
+  '                entity: "NullableStrings",\n' +
+  "                fields: [\n" +
+  '                    { name: "name"},\n' +
+  '                    { name: "description"},\n' +
+  '                    { name: "test"},\n' +
+  "                ]\n" +
+  "            }\n" +
+  "        ]\n" +
+  "    )\n" +
+  "\n" +
+  "    type Thing @entity {\n" +
+  "        id: ID!\n" +
+  "        bigThing: Thing!\n" +
+  "    }\n" +
+  "\n" +
+  "    enum Color { yellow, red, BLUE }\n" +
+  "\n" +
+  "    type Scalar @entity {\n" +
+  "        id: ID,\n" +
+  "        bool: Boolean,\n" +
+  "        int: Int,\n" +
+  "        bigDecimal: BigDecimal,\n" +
+  "        bigDecimalArray: [BigDecimal!]!\n" +
+  "        string: String,\n" +
+  "        strings: [String!],\n" +
+  "        bytes: Bytes,\n" +
+  "        byteArray: [Bytes!],\n" +
+  "        bigInt: BigInt,\n" +
+  "        bigIntArray: [BigInt!]!\n" +
+  "        color: Color,\n" +
+  "    }\n" +
+  "\n" +
+  "    interface Pet {\n" +
+  "        id: ID!,\n" +
+  "        name: String!\n" +
+  "    }\n" +
+  "\n" +
+  "    type Cat implements Pet @entity {\n" +
+  "        id: ID!,\n" +
+  "        name: String!\n" +
+  "    }\n" +
+  "\n" +
+  "    type Dog implements Pet @entity {\n" +
+  "        id: ID!,\n" +
+  "        name: String!\n" +
+  "    }\n" +
+  "\n" +
+  "    type Ferret implements Pet @entity {\n" +
+  "        id: ID!,\n" +
+  "        name: String!\n" +
+  "    }\n" +
+  "\n" +
+  "    type User @entity {\n" +
+  "        id: ID!,\n" +
+  "        name: String!,\n" +
+  "        bin_name: Bytes!,\n" +
+  "        email: String!,\n" +
+  "        age: Int!,\n" +
+  "        seconds_age: BigInt!,\n" +
+  "        weight: BigDecimal!,\n" +
+  "        coffee: Boolean!,\n" +
+  "        favorite_color: Color,\n" +
+  "        drinks: [String!]\n" +
+  "    }\n" +
+  "\n" +
+  "    type NullableStrings @entity {\n" +
+  "        id: ID!,\n" +
+  "        name: String,\n" +
+  "        description: String,\n" +
+  "        test: String\n" +
+  "    }";

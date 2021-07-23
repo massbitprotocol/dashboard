@@ -1,5 +1,5 @@
-import Promise from './promise.js';
-import { $window } from './globals.js';
+import Promise from "./promise.js";
+import { $window } from "./globals.js";
 import {
   objectExtend,
   isString,
@@ -7,12 +7,12 @@ import {
   isFunction,
   joinUrl,
   decodeBase64,
-  getObjectProperty,
-} from './utils.js';
-import defaultOptions from './options.js';
-import StorageFactory from './storage.js';
-import OAuth1 from './oauth/oauth1.js';
-import OAuth2 from './oauth/oauth2.js';
+  getObjectProperty
+} from "./utils.js";
+import defaultOptions from "./options.js";
+import StorageFactory from "./storage.js";
+import OAuth1 from "./oauth/oauth1.js";
+import OAuth2 from "./oauth/oauth2.js";
 
 export default class VueAuthenticate {
   constructor($http, overrideOptions) {
@@ -24,30 +24,30 @@ export default class VueAuthenticate {
       $http: {
         get() {
           return $http;
-        },
+        }
       },
 
       options: {
         get() {
           return options;
-        },
+        }
       },
 
       storage: {
         get() {
           return storage;
-        },
+        }
       },
 
       tokenName: {
         get() {
           if (this.options.tokenPrefix) {
-            return [this.options.tokenPrefix, this.options.tokenName].join('_');
+            return [this.options.tokenPrefix, this.options.tokenName].join("_");
           } else {
             return this.options.tokenName;
           }
-        },
-      },
+        }
+      }
     });
 
     // Setup request interceptors
@@ -57,7 +57,7 @@ export default class VueAuthenticate {
     ) {
       this.options.bindRequestInterceptor.call(this, this);
     } else {
-      throw new Error('Request interceptor must be functions');
+      throw new Error("Request interceptor must be functions");
     }
   }
 
@@ -72,14 +72,14 @@ export default class VueAuthenticate {
 
     if (token) {
       // Token is present
-      if (token.split('.').length === 3) {
+      if (token.split(".").length === 3) {
         // Token with a valid JWT format XXX.YYY.ZZZ
         try {
           // Could be a valid JWT or an access token with the same format
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace('-', '+').replace('_', '/');
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace("-", "+").replace("_", "/");
           const exp = JSON.parse($window.atob(base64)).exp;
-          if (typeof exp === 'number') {
+          if (typeof exp === "number") {
             // JWT with an optonal expiration claims
             return Math.round(new Date().getTime() / 1000) < exp;
           }
@@ -105,13 +105,17 @@ export default class VueAuthenticate {
    * @param {String|Object} token
    */
   setToken(response, tokenPath) {
+    console.log("setToken");
+    console.log(response);
+    console.log(tokenPath);
     if (response[this.options.responseDataKey]) {
       response = response[this.options.responseDataKey];
     }
 
     const responseTokenPath = tokenPath || this.options.tokenPath;
     const token = getObjectProperty(response, responseTokenPath);
-
+    console.log('token');
+    console.log(token);
     if (token) {
       this.storage.setItem(this.tokenName, token);
     }
@@ -120,10 +124,10 @@ export default class VueAuthenticate {
   getPayload() {
     const token = this.storage.getItem(this.tokenName);
 
-    if (token && token.split('.').length === 3) {
+    if (token && token.split(".").length === 3) {
       try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
         return JSON.parse(decodeBase64(base64));
       } catch (e) {}
     }
@@ -142,7 +146,7 @@ export default class VueAuthenticate {
       : joinUrl(this.options.baseUrl, this.options.loginUrl);
     requestOptions[this.options.requestDataKey] =
       user || requestOptions[this.options.requestDataKey];
-    requestOptions.method = requestOptions.method || 'POST';
+    requestOptions.method = requestOptions.method || "POST";
     requestOptions.withCredentials =
       requestOptions.withCredentials || this.options.withCredentials;
 
@@ -165,7 +169,7 @@ export default class VueAuthenticate {
       : joinUrl(this.options.baseUrl, this.options.registerUrl);
     requestOptions[this.options.requestDataKey] =
       user || requestOptions[this.options.requestDataKey];
-    requestOptions.method = requestOptions.method || 'POST';
+    requestOptions.method = requestOptions.method || "POST";
     requestOptions.withCredentials =
       requestOptions.withCredentials || this.options.withCredentials;
 
@@ -183,7 +187,7 @@ export default class VueAuthenticate {
   logout(requestOptions) {
     if (!this.isAuthenticated()) {
       return Promise.reject(
-        new Error('There is no currently authenticated user')
+        new Error("There is no currently authenticated user")
       );
     }
 
@@ -193,7 +197,7 @@ export default class VueAuthenticate {
       requestOptions.url = requestOptions.url
         ? requestOptions.url
         : joinUrl(this.options.baseUrl, this.options.logoutUrl);
-      requestOptions.method = requestOptions.method || 'POST';
+      requestOptions.method = requestOptions.method || "POST";
       requestOptions[this.options.requestDataKey] =
         requestOptions[this.options.requestDataKey] || undefined;
       requestOptions.withCredentials =
@@ -220,12 +224,12 @@ export default class VueAuthenticate {
     return new Promise((resolve, reject) => {
       var providerConfig = this.options.providers[provider];
       if (!providerConfig) {
-        return reject(new Error('Unknown provider'));
+        return reject(new Error("Unknown provider"));
       }
 
       let providerInstance;
       switch (providerConfig.oauthType) {
-        case '1.0':
+        case "1.0":
           providerInstance = new OAuth1(
             this.$http,
             this.storage,
@@ -233,7 +237,7 @@ export default class VueAuthenticate {
             this.options
           );
           break;
-        case '2.0':
+        case "2.0":
           providerInstance = new OAuth2(
             this.$http,
             this.storage,
@@ -242,19 +246,19 @@ export default class VueAuthenticate {
           );
           break;
         default:
-          return reject(new Error('Invalid OAuth type'));
+          return reject(new Error("Invalid OAuth type"));
       }
 
       return providerInstance
         .init(userData)
         .then(response => {
           this.setToken(response, providerConfig.tokenPath);
-
-          if (this.isAuthenticated()) {
-            return resolve(response);
-          } else {
-            return reject(new Error('Authentication failed'));
-          }
+          // if (this.isAuthenticated()) {
+          //   return resolve(response);
+          // } else {
+          //   return reject(new Error("Authentication failed"));
+          // }
+          return resolve(response);
         })
         .catch(err => reject(err));
     });
@@ -271,12 +275,12 @@ export default class VueAuthenticate {
     return new Promise((resolve, reject) => {
       var providerConfig = this.options.providers[provider];
       if (!providerConfig) {
-        return reject(new Error('Unknown provider'));
+        return reject(new Error("Unknown provider"));
       }
 
       let providerInstance;
       switch (providerConfig.oauthType) {
-        case '1.0':
+        case "1.0":
           providerInstance = new OAuth1(
             this.$http,
             this.storage,
@@ -284,7 +288,7 @@ export default class VueAuthenticate {
             this.options
           );
           break;
-        case '2.0':
+        case "2.0":
           providerInstance = new OAuth2(
             this.$http,
             this.storage,
@@ -293,7 +297,7 @@ export default class VueAuthenticate {
           );
           break;
         default:
-          return reject(new Error('Invalid OAuth type'));
+          return reject(new Error("Invalid OAuth type"));
       }
 
       return providerInstance
