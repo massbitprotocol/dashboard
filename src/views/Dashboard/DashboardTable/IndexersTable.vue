@@ -111,23 +111,6 @@ export default {
       console.log(this.indexerName);
 
       this.$loading(true);
-
-      // await Request()
-      //   .get("/mock/indexer-list")
-      //   .then(res => {
-      //     var result = res.data.payload;
-      //     console.log(result);
-      //     if (result && result.length > 0) {
-
-      //       this.indexersList = result;
-      //       this.indexersList = this.indexersList.filter(
-      //         x =>
-      //           x.network.toString().toLowerCase() ==
-      //           this.indexerName.toLowerCase()
-      //       );
-      //     }
-      //     this.tbl_loading = false;
-      //   })
       await Request()
         .post(INDEX_MANAGER_URL, {
           jsonrpc: "2.0",

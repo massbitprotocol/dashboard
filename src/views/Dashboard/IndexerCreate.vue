@@ -13,7 +13,7 @@
         <b-col lg="6" cols="5" class="text-right">
           <base-button
             size="xl"
-            type="warning"
+            type="success"
             @click="authenticate('github')"
             class="mt-2"
             >Import Github</base-button
@@ -75,16 +75,16 @@
                 ></prism-editor>
               </div>
             </Tab>
-            <!-- <Tab ref="query" title="Query Example">
+            <Tab ref="schema" title="Schema">
               <div class="cover-editor mt-3">
                 <prism-editor
                   class="my-editor"
-                  v-model="query"
+                  v-model="schema"
                   :highlight="highlighter"
                   line-numbers
                 ></prism-editor>
               </div>
-            </Tab> -->
+            </Tab>
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
@@ -130,6 +130,11 @@
           <b-col cols="12" class="mt-2" v-if="chain == 'solana'">
             <base-button size="xl" type="warning" @click="loadLogsSOLTemp"
               >Load Log Message Template</base-button
+            >
+          </b-col>
+          <b-col cols="12" class="mt-2">
+            <base-button size="xl" type="info" @click="loadDefaultSchema()"
+              >Load Default Schema</base-button
             >
           </b-col>
           <b-col cols="12" class="mt-6">
@@ -185,7 +190,8 @@ import {
   SUB_TEMPLATE_EVENT,
   SOL_TEMPLATE_BLOCK,
   SOL_TEMPLATE_TRANS,
-  SOL_TEMPLATE_LOGS
+  SOL_TEMPLATE_LOGS,
+  DEFAULT_SCHEMA
 } from "../../util/Templates";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
@@ -221,7 +227,7 @@ export default {
       this.models = localStorage.getItem(LOCAL_STORE.MODELS);
       this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
       this.up = localStorage.getItem(LOCAL_STORE.UP);
-      this.query = localStorage.getItem(LOCAL_STORE.QUERY);
+      this.schema = localStorage.getItem(LOCAL_STORE.SCHEMA);
       this.table = localStorage.getItem(LOCAL_STORE.TABLE);
       this.compilation_id = localStorage.getItem(LOCAL_STORE.COMPILE);
     }
@@ -242,7 +248,7 @@ export default {
       compilation_id: "",
       mapping: "",
       models: "",
-      query: "",
+      schema: DEFAULT_SCHEMA,
       project: "",
       up: "",
       table: "",
@@ -252,8 +258,30 @@ export default {
   methods: {
     authenticate: async function(provider) {
       try {
-        await this.$auth.authenticate(provider).then(function(result) {
+        await this.$auth.authenticate(provider).then(async result => {
           console.log(result);
+          await this.$successAlert({ text: `Your code ${result.code}` });
+
+          //Block by CORS : https://stackoverflow.com/questions/42150075/cors-issue-on-github-oauth/42150336
+          // Request("https://github.com")
+          //   .post(
+          //     `/login/oauth/access_token`,
+          //     {
+          //       client_id: result.clientId,
+          //       client_secret: "18db239188c0b9911eaa53468afe0e824c4983fa ",
+          //       code: result.code,
+          //       redirect_uri: result.redirectUri
+          //     },
+          //     {
+          //       "Accept": "application/json",
+          //       "Content-Type": "application/x-www-form-urlencoded"
+          //     }
+          //   )
+          //   .then(async res => {
+          //     console.log("pop res");
+          //     console.log(res);
+          //     this.$successAlert({ text: `access token ${res.access_token}` });
+          //   });
         });
       } catch (error) {
         this.$failAlert({ text: error });
@@ -265,8 +293,12 @@ export default {
       this.up = "";
       this.table = "";
       this.project = "";
-      this.query = "";
+      this.schema = "";
       this.compilation_id = "";
+      this.schema = DEFAULT_SCHEMA;
+    },
+    loadDefaultSchema() {
+      this.schema = DEFAULT_SCHEMA;
     },
     loadBlockSOLTemp() {
       this.mapping = SOL_TEMPLATE_BLOCK.MAPPING;
@@ -274,7 +306,7 @@ export default {
       this.up = SOL_TEMPLATE_BLOCK.UP;
       this.table = SOL_TEMPLATE_BLOCK.TABLE;
       this.project = SOL_TEMPLATE_BLOCK.PROJECT;
-      this.query = SOL_TEMPLATE_BLOCK.QUERY;
+      // this.schema = SOL_TEMPLATE_BLOCK.SCHEMA;
       this.compilation_id = "";
     },
     loadTransSOLTemp() {
@@ -283,7 +315,7 @@ export default {
       this.up = SOL_TEMPLATE_TRANS.UP;
       this.table = SOL_TEMPLATE_TRANS.TABLE;
       this.project = SOL_TEMPLATE_TRANS.PROJECT;
-      this.query = SOL_TEMPLATE_TRANS.QUERY;
+      // this.schema = SOL_TEMPLATE_TRANS.SCHEMA;
       this.compilation_id = "";
     },
     loadLogsSOLTemp() {
@@ -292,7 +324,7 @@ export default {
       this.up = SOL_TEMPLATE_LOGS.UP;
       this.table = SOL_TEMPLATE_LOGS.TABLE;
       this.project = SOL_TEMPLATE_LOGS.PROJECT;
-      this.query = SOL_TEMPLATE_LOGS.QUERY;
+      // this.schema = SOL_TEMPLATE_LOGS.SCHEMA;
       this.compilation_id = "";
     },
     loadBlockTemp() {
@@ -301,7 +333,7 @@ export default {
       this.up = SUB_TEMPLATE_BLOCK.UP;
       this.table = SUB_TEMPLATE_BLOCK.TABLE;
       this.project = SUB_TEMPLATE_BLOCK.PROJECT;
-      this.query = SUB_TEMPLATE_BLOCK.QUERY;
+      // this.schema = SUB_TEMPLATE_BLOCK.SCHEMA;
       this.compilation_id = "";
     },
     loadExtrinsicTemp() {
@@ -310,7 +342,7 @@ export default {
       this.up = SUB_TEMPLATE_EXTRINSIC.UP;
       this.table = SUB_TEMPLATE_EXTRINSIC.TABLE;
       this.project = SUB_TEMPLATE_EXTRINSIC.PROJECT;
-      this.query = SUB_TEMPLATE_EXTRINSIC.QUERY;
+      // this.schema = SUB_TEMPLATE_EXTRINSIC.SCHEMA;
       this.compilation_id = "";
     },
     loadEventTemp() {
@@ -319,7 +351,7 @@ export default {
       this.up = SUB_TEMPLATE_EVENT.UP;
       this.table = SUB_TEMPLATE_EVENT.TABLE;
       this.project = SUB_TEMPLATE_EVENT.PROJECT;
-      this.query = SUB_TEMPLATE_EVENT.QUERY;
+      // this.schema = SUB_TEMPLATE_EVENT.SCHEMA;
       this.compilation_id = "";
     },
     catchData() {
@@ -329,7 +361,7 @@ export default {
       localStorage.setItem(LOCAL_STORE.UP, this.up);
       localStorage.setItem(LOCAL_STORE.TABLE, this.table);
       localStorage.setItem(LOCAL_STORE.COMPILE, this.compilation_id);
-      localStorage.setItem(LOCAL_STORE.QUERY, this.query);
+      localStorage.setItem(LOCAL_STORE.SCHEMA, this.schema);
     },
     isByteArray(array) {
       if (array && array.length > 0) return true;

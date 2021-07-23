@@ -1,11 +1,11 @@
-import OAuthPopup from './popup.js';
+import OAuthPopup from "./popup.js";
 import {
   camelCase,
   isFunction,
   isString,
   objectExtend,
-  joinUrl,
-} from '../utils.js';
+  joinUrl
+} from "../utils.js";
 
 /**
  * Default provider configuration
@@ -22,15 +22,15 @@ const defaultProviderConfig = {
   scopeDelimiter: null,
   state: null,
   requiredUrlParams: null,
-  defaultUrlParams: ['response_type', 'client_id', 'redirect_uri'],
-  responseType: 'code',
+  defaultUrlParams: ["response_type", "client_id", "redirect_uri"],
+  responseType: "code",
   responseParams: {
-    code: 'code',
-    clientId: 'clientId',
-    redirectUri: 'redirectUri',
+    code: "code",
+    clientId: "clientId",
+    redirectUri: "redirectUri"
   },
-  oauthType: '2.0',
-  popupOptions: {},
+  oauthType: "2.0",
+  popupOptions: {}
 };
 
 export default class OAuth2 {
@@ -43,7 +43,7 @@ export default class OAuth2 {
   }
 
   init(userData) {
-    let stateName = this.providerConfig.name + '_state';
+    let stateName = this.providerConfig.name + "_state";
     if (isFunction(this.providerConfig.state)) {
       this.storage.setItem(stateName, this.providerConfig.state());
     } else if (isString(this.providerConfig.state)) {
@@ -52,8 +52,8 @@ export default class OAuth2 {
 
     let url = [
       this.providerConfig.authorizationEndpoint,
-      this._stringifyRequestParams(),
-    ].join('?');
+      this._stringifyRequestParams()
+    ].join("?");
 
     this.oauthPopup = new OAuthPopup(
       url,
@@ -65,8 +65,10 @@ export default class OAuth2 {
       this.oauthPopup
         .open(this.providerConfig.redirectUri)
         .then(response => {
+          console.log("popupResponse");
+          console.log(response);
           if (
-            this.providerConfig.responseType === 'token' ||
+            this.providerConfig.responseType === "token" ||
             !this.providerConfig.url
           ) {
             return resolve(response);
@@ -78,7 +80,7 @@ export default class OAuth2 {
           ) {
             return reject(
               new Error(
-                'State parameter value does not match original OAuth request state value'
+                "State parameter value does not match original OAuth request state value"
               )
             );
           }
@@ -107,13 +109,13 @@ export default class OAuth2 {
       let value = this.providerConfig.responseParams[key];
 
       switch (key) {
-        case 'code':
+        case "code":
           payload[key] = oauth.code;
           break;
-        case 'clientId':
+        case "clientId":
           payload[key] = this.providerConfig.clientId;
           break;
-        case 'redirectUri':
+        case "redirectUri":
           payload[key] = this.providerConfig.redirectUri;
           break;
         default:
@@ -132,9 +134,11 @@ export default class OAuth2 {
       exchangeTokenUrl = this.providerConfig.url;
     }
 
-    return this.$http.post(exchangeTokenUrl, payload, {
-      withCredentials: this.options.withCredentials,
-    });
+    return payload;
+
+    // return this.$http.post(exchangeTokenUrl, payload, {
+    //   withCredentials: this.options.withCredentials,
+    // });
   }
 
   /**
@@ -147,9 +151,9 @@ export default class OAuth2 {
   _stringifyRequestParams() {
     let keyValuePairs = [];
     let paramCategories = [
-      'defaultUrlParams',
-      'requiredUrlParams',
-      'optionalUrlParams',
+      "defaultUrlParams",
+      "requiredUrlParams",
+      "optionalUrlParams"
     ];
 
     paramCategories.forEach(categoryName => {
@@ -162,13 +166,13 @@ export default class OAuth2 {
           ? this.providerConfig[paramName]()
           : this.providerConfig[camelCaseParamName];
 
-        if (paramName === 'redirect_uri' && !paramValue) return;
+        if (paramName === "redirect_uri" && !paramValue) return;
 
-        if (paramName === 'state') {
-          let stateName = this.providerConfig.name + '_state';
+        if (paramName === "state") {
+          let stateName = this.providerConfig.name + "_state";
           paramValue = encodeURIComponent(this.storage.getItem(stateName));
         }
-        if (paramName === 'scope' && Array.isArray(paramValue)) {
+        if (paramName === "scope" && Array.isArray(paramValue)) {
           paramValue = paramValue.join(this.providerConfig.scopeDelimiter);
           if (this.providerConfig.scopePrefix) {
             paramValue = [this.providerConfig.scopePrefix, paramValue].join(
@@ -183,8 +187,8 @@ export default class OAuth2 {
 
     return keyValuePairs
       .map(param => {
-        return param.join('=');
+        return param.join("=");
       })
-      .join('&');
+      .join("&");
   }
 }
