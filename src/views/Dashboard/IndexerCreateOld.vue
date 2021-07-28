@@ -23,7 +23,7 @@
     </base-header>
     <b-container fluid class="mt-6">
       <b-row>
-        <!-- <b-col cols="9">
+        <b-col cols="9">
           <base-input
             label="Indexer Name"
             rules="required"
@@ -32,7 +32,7 @@
             v-model="table"
           >
           </base-input>
-        </b-col> -->
+        </b-col>
         <b-col cols="9">
           <Tabs :centered="false">
             <Tab ref="project" title="project.yaml">
@@ -88,18 +88,55 @@
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
-          <b-col cols="12">
+          <b-col cols="12" v-if="chain == 'substrate'">
             <base-button
-              v-for="item in templates"
-              :key="item.name"
               size="xl"
               type="warning"
-              @click="loadTemplate(item.data)"
+              @click="loadBlockTemp"
               class="mt-2"
-              style="min-width:50%;"
-              >{{ item.name + " Templates" }}</base-button
+              >Load Block Template</base-button
+            >
+
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadExtrinsicTemp"
+              class="mt-2"
+              >Load Extrinsic Template</base-button
             >
           </b-col>
+          <b-col v-if="chain == 'solana'" cols="12">
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadBlockSOLTemp"
+              class="mt-2"
+              >Load Block Template</base-button
+            >
+
+            <base-button
+              size="xl"
+              type="warning"
+              @click="loadTransSOLTemp"
+              class="mt-2"
+              >Load Transaction Template</base-button
+            >
+          </b-col>
+          <b-col cols="12" class="mt-2" v-if="chain == 'substrate'">
+            <base-button size="xl" type="warning" @click="loadEventTemp"
+              >Load Event Template</base-button
+            >
+          </b-col>
+          <b-col cols="12" class="mt-2" v-if="chain == 'solana'">
+            <base-button size="xl" type="warning" @click="loadLogsSOLTemp"
+              >Load Log Message Template</base-button
+            >
+          </b-col>
+          <!-- <b-col cols="12" class="mt-2">
+            <base-button size="xl" type="info" @click="loadDefaultSchema()"
+              >Load Default Schema</base-button
+            >
+          </b-col> -->
           <b-col cols="12" class="mt-6">
             <base-button size="xl" type="success" @click="onProcess('compile')"
               >Compile code</base-button
@@ -189,13 +226,12 @@ export default {
       this.mapping = localStorage.getItem(LOCAL_STORE.MAPPING);
       this.models = localStorage.getItem(LOCAL_STORE.MODELS);
       this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
-      this.lib = localStorage.getItem(LOCAL_STORE.LIB);
+      this.lib = localStorage.getItem(LOCAL_STORE.UP);
       this.schema = localStorage.getItem(LOCAL_STORE.SCHEMA);
       this.table = localStorage.getItem(LOCAL_STORE.TABLE);
       this.compilation_id = localStorage.getItem(LOCAL_STORE.COMPILE);
     }
 
-    this.loadDefaultSchema();
     localStorage.setItem(LOCAL_STORE.CHAIN, this.chain);
   },
   beforeUpdate() {
@@ -208,7 +244,6 @@ export default {
     return {
       currentPage: 1,
       is: 1,
-      templates: [],
       compileLog: "",
       compilation_id: "",
       mapping: "",
@@ -263,54 +298,16 @@ export default {
       this.schema = DEFAULT_SCHEMA;
     },
     async loadDefaultSchema() {
-      this.$loading(true);
-      try {
-        this.templates = await Request(`https://raw.githubusercontent.com`)
-          .get(
-            `https://raw.githubusercontent.com/massbitprotocol/massbitprotocol/main/user-example/examples.json`
-          )
-          .then(res => {
-            var data = res.data[this.chain];
-            var result = [];
-            if (data) {
-              var listKey = Object.keys(data);
-              for (let index = 0; index < listKey.length; index++) {
-                const element = listKey[index];
-                result.push({ name: element, data: data[element] });
-              }
-            }
-            return result;
-          })
-          .catch(handleError);
-      } catch (error) {
-        this.$failAlert({
-          text: error
-        });
-      }
-
-      this.$loading(false);
-    },
-    async loadRawDataGit(url) {
-      if (url && url.length > 1) {
-        return await Request(`https://raw.githubusercontent.com`)
-          .get(url)
-          .then(res => {
-            return res.data || "";
-          })
-          .catch(handleError);
-      } else {
-        return "";
-      }
-    },
-    async loadTemplate(data) {
-      this.$loading(true);
-      this.mapping = await this.loadRawDataGit(data["mapping.rs"] || "");
-      this.models = await this.loadRawDataGit(data["models.rs"] || "");
-      this.lib = await this.loadRawDataGit(data["lib.rs"] || "");
-      this.project = await this.loadRawDataGit(data["project.yaml"] || "");
-      this.schema = await this.loadRawDataGit(data["schema.graphql"] || "");
-      this.compilation_id = "";
-      this.$loading(false);
+      // this.schema = DEFAULT_SCHEMA;
+      this.schema = await Request(`https://raw.githubusercontent.com`)
+        .get(
+          `https://raw.githubusercontent.com/massbitprotocol/massbitprotocol/main/user-example/examples.json`
+        )
+        .then(res => {
+          var data = res.data;
+          return data;
+        })
+        .catch(handleError);
     },
     loadBlockSOLTemp() {
       this.mapping = SOL_TEMPLATE_BLOCK.MAPPING;
@@ -370,7 +367,7 @@ export default {
       localStorage.setItem(LOCAL_STORE.MAPPING, this.mapping);
       localStorage.setItem(LOCAL_STORE.MODELS, this.models);
       localStorage.setItem(LOCAL_STORE.PROJECT, this.project);
-      localStorage.setItem(LOCAL_STORE.LIB, this.lib);
+      localStorage.setItem(LOCAL_STORE.UP, this.lib);
       localStorage.setItem(LOCAL_STORE.TABLE, this.table);
       localStorage.setItem(LOCAL_STORE.COMPILE, this.compilation_id);
       localStorage.setItem(LOCAL_STORE.SCHEMA, this.schema);
@@ -387,38 +384,33 @@ export default {
 
       this.isShowHasura = false;
 
-      try {
-        await Request()
-          .post(`/${action}`, {
-            "mapping.rs": this.covertToURL(this.mapping),
-            "models.rs": this.covertToURL(this.models),
-            "project.yaml": this.covertToURL(this.project),
-            "schema.graphql": this.covertToURL(this.schema),
-            "lib.rs": this.covertToURL(this.lib),
-            // table: this.table,
-            compilation_id: this.compilation_id
-            // network_type: this.chain
-          })
-          .then(async res => {
-            if (res.data.payload && res.data.payload.length > 0) {
-              this.compilation_id = res.data.payload;
-              await this.runGetProcess(true, res.data.payload, 100000, action);
-            } else if (res.data.status == "success") {
-              this.$successAlert({
-                text: "Deploy Success"
-              });
+      await Request()
+        .post(`/${action}`, {
+          "mapping.rs": this.covertToURL(this.mapping),
+          "models.rs": this.covertToURL(this.models),
+          "project.yaml": this.covertToURL(this.project),
+          "schema.graphql": this.covertToURL(this.schema),
+          "lib.rs": this.covertToURL(this.lib),
+          // table: this.table,
+          compilation_id: this.compilation_id
+          // network_type: this.chain
+        })
+        .then(async res => {
+          if (res.data.payload && res.data.payload.length > 0) {
+            this.compilation_id = res.data.payload;
+            await this.runGetProcess(true, res.data.payload, 100000, action);
+          } else if (res.data.status == "success") {
+            this.$successAlert({
+              text: "Deploy Success"
+            });
 
-              var _this = this;
-              setTimeout(function() {
-                _this.isShowHasura = true;
-              }, 2000);
-            }
-          })
-          .catch(handleError);
-      } catch (error) {
-        this.$failAlert({ text: error });
-        this.$loading(false);
-      }
+            var _this = this;
+            setTimeout(function() {
+              _this.isShowHasura = true;
+            }, 2000);
+          }
+        })
+        .catch(handleError);
       this.$loading(false);
     },
 
