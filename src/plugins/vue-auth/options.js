@@ -90,7 +90,6 @@ export default {
       oauthType: "2.0",
       popupOptions: { width: 452, height: 633 }
     },
-
     github: {
       name: "github",
       url: "/auth/github",
@@ -102,7 +101,6 @@ export default {
       oauthType: "2.0",
       popupOptions: { width: 1020, height: 618 }
     },
-
     instagram: {
       name: "instagram",
       url: "/auth/instagram",
