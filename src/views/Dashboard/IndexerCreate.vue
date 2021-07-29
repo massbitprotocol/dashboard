@@ -45,7 +45,7 @@
                 ></prism-editor>
               </div>
             </Tab>
-            <Tab ref="lib" title="lib.rs">
+            <!-- <Tab ref="lib" title="lib.rs">
               <div class="cover-editor mt-3">
                 <prism-editor
                   class="my-editor"
@@ -54,7 +54,7 @@
                   line-numbers
                 ></prism-editor>
               </div>
-            </Tab>
+            </Tab> -->
             <Tab ref="mapping" title="mapping.rs">
               <div class="cover-editor mt-3">
                 <prism-editor
@@ -65,7 +65,7 @@
                 ></prism-editor>
               </div>
             </Tab>
-            <Tab ref="models" title="models.rs">
+            <!-- <Tab ref="models" title="models.rs">
               <div class="cover-editor mt-3">
                 <prism-editor
                   class="my-editor"
@@ -74,7 +74,7 @@
                   line-numbers
                 ></prism-editor>
               </div>
-            </Tab>
+            </Tab> -->
             <Tab ref="schema" title="schema.graphql">
               <div class="cover-editor mt-3">
                 <prism-editor
@@ -147,15 +147,7 @@ import { handleError, Request } from "../../util/Request";
 import { PrismEditor } from "vue-prism-editor";
 
 import { LOCAL_STORE, HASURA_URL } from "../../util/Constants";
-import {
-  SUB_TEMPLATE_BLOCK,
-  SUB_TEMPLATE_EXTRINSIC,
-  SUB_TEMPLATE_EVENT,
-  SOL_TEMPLATE_BLOCK,
-  SOL_TEMPLATE_TRANS,
-  SOL_TEMPLATE_LOGS,
-  DEFAULT_SCHEMA
-} from "../../util/Templates";
+import { DEFAULT_SCHEMA } from "../../util/Templates";
 import "vue-prism-editor/dist/prismeditor.min.css"; // import the styles somewhere
 
 // import highlighting library (you can use any library you want just return html string)
@@ -312,60 +304,6 @@ export default {
       this.compilation_id = "";
       this.$loading(false);
     },
-    loadBlockSOLTemp() {
-      this.mapping = SOL_TEMPLATE_BLOCK.MAPPING;
-      this.models = SOL_TEMPLATE_BLOCK.MODELS;
-      this.lib = SOL_TEMPLATE_BLOCK.UP;
-      this.table = SOL_TEMPLATE_BLOCK.TABLE;
-      this.project = SOL_TEMPLATE_BLOCK.PROJECT;
-      // this.schema = SOL_TEMPLATE_BLOCK.SCHEMA;
-      this.compilation_id = "";
-    },
-    loadTransSOLTemp() {
-      this.mapping = SOL_TEMPLATE_TRANS.MAPPING;
-      this.models = SOL_TEMPLATE_TRANS.MODELS;
-      this.lib = SOL_TEMPLATE_TRANS.UP;
-      this.table = SOL_TEMPLATE_TRANS.TABLE;
-      this.project = SOL_TEMPLATE_TRANS.PROJECT;
-      // this.schema = SOL_TEMPLATE_TRANS.SCHEMA;
-      this.compilation_id = "";
-    },
-    loadLogsSOLTemp() {
-      this.mapping = SOL_TEMPLATE_LOGS.MAPPING;
-      this.models = SOL_TEMPLATE_LOGS.MODELS;
-      this.lib = SOL_TEMPLATE_LOGS.UP;
-      this.table = SOL_TEMPLATE_LOGS.TABLE;
-      this.project = SOL_TEMPLATE_LOGS.PROJECT;
-      // this.schema = SOL_TEMPLATE_LOGS.SCHEMA;
-      this.compilation_id = "";
-    },
-    loadBlockTemp() {
-      this.mapping = SUB_TEMPLATE_BLOCK.MAPPING;
-      this.models = SUB_TEMPLATE_BLOCK.MODELS;
-      this.lib = SUB_TEMPLATE_BLOCK.UP;
-      this.table = SUB_TEMPLATE_BLOCK.TABLE;
-      this.project = SUB_TEMPLATE_BLOCK.PROJECT;
-      // this.schema = SUB_TEMPLATE_BLOCK.SCHEMA;
-      this.compilation_id = "";
-    },
-    loadExtrinsicTemp() {
-      this.mapping = SUB_TEMPLATE_EXTRINSIC.MAPPING;
-      this.models = SUB_TEMPLATE_EXTRINSIC.MODELS;
-      this.lib = SUB_TEMPLATE_EXTRINSIC.UP;
-      this.table = SUB_TEMPLATE_EXTRINSIC.TABLE;
-      this.project = SUB_TEMPLATE_EXTRINSIC.PROJECT;
-      // this.schema = SUB_TEMPLATE_EXTRINSIC.SCHEMA;
-      this.compilation_id = "";
-    },
-    loadEventTemp() {
-      this.mapping = SUB_TEMPLATE_EVENT.MAPPING;
-      this.models = SUB_TEMPLATE_EVENT.MODELS;
-      this.lib = SUB_TEMPLATE_EVENT.UP;
-      this.table = SUB_TEMPLATE_EVENT.TABLE;
-      this.project = SUB_TEMPLATE_EVENT.PROJECT;
-      // this.schema = SUB_TEMPLATE_EVENT.SCHEMA;
-      this.compilation_id = "";
-    },
     catchData() {
       localStorage.setItem(LOCAL_STORE.MAPPING, this.mapping);
       localStorage.setItem(LOCAL_STORE.MODELS, this.models);
@@ -391,10 +329,10 @@ export default {
         await Request()
           .post(`/${action}`, {
             "mapping.rs": this.covertToURL(this.mapping),
-            "models.rs": this.covertToURL(this.models),
+            // "models.rs": this.covertToURL(this.models),
             "project.yaml": this.covertToURL(this.project),
             "schema.graphql": this.covertToURL(this.schema),
-            "lib.rs": this.covertToURL(this.lib),
+            // "lib.rs": this.covertToURL(this.lib),
             // table: this.table,
             compilation_id: this.compilation_id
             // network_type: this.chain
