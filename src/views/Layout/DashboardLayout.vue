@@ -68,6 +68,7 @@
             :link="{ name: 'Substrate', path: '/indexers/substrate' }"
           />
           <sidebar-item :link="{ name: 'Solana', path: '/indexers/solana' }" />
+          <sidebar-item :link="{ name: 'Matic', path: '/indexers/matic' }" />
         </sidebar-item>
 
         <sidebar-item

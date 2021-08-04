@@ -42,6 +42,7 @@
                   v-model="project"
                   :highlight="highlighter"
                   line-numbers
+                  :readonly="isOnCompile"
                 ></prism-editor>
               </div>
             </Tab>
@@ -62,6 +63,7 @@
                   v-model="mapping"
                   :highlight="highlighter"
                   line-numbers
+                  :readonly="isOnCompile"
                 ></prism-editor>
               </div>
             </Tab>
@@ -82,6 +84,7 @@
                   v-model="schema"
                   :highlight="highlighter"
                   line-numbers
+                  :readonly="isOnCompile"
                 ></prism-editor>
               </div>
             </Tab>
@@ -97,16 +100,25 @@
               @click="loadTemplate(item.data)"
               class="mt-2"
               style="min-width:50%;"
+              :disabled="isOnCompile"
               >{{ item.name + " Templates" }}</base-button
             >
           </b-col>
           <b-col cols="12" class="mt-6">
-            <base-button size="xl" type="success" @click="onProcess('compile')"
-              >Compile code</base-button
+            <base-button
+              size="xl"
+              type="success"
+              @click="onProcess('compile')"
+              :disabled="isOnCompile"
+              >{{ isOnCompile ? "On Compiling" : "Compile code" }}</base-button
             >
           </b-col>
           <b-col v-if="compilation_id" cols="12" class="mt-6">
-            <base-button size="xl" type="default" @click="onProcess('deploy')"
+            <base-button
+              size="xl"
+              type="default"
+              @click="onProcess('deploy')"
+              :disabled="isOnCompile"
               >Deploy Your Compile File</base-button
             >
           </b-col>
@@ -209,7 +221,8 @@ export default {
       project: "",
       lib: "",
       table: "",
-      isShowHasura: false
+      isShowHasura: false,
+      isOnCompile: false
     };
   },
   methods: {
@@ -321,7 +334,8 @@ export default {
       return highlight(code, languages.js); // languages.<insert language> to return html with markup
     },
     async onProcess(action) {
-      this.$loading(true);
+      // this.$loading(true);
+      this.isOnCompile = true;
 
       this.isShowHasura = false;
 
@@ -355,15 +369,18 @@ export default {
           .catch(handleError);
       } catch (error) {
         this.$failAlert({ text: error });
-        this.$loading(false);
+        // this.$loading(false);
+        this.isOnCompile = false;
       }
-      this.$loading(false);
+      // this.$loading(false);
+      this.isOnCompile = false;
     },
 
     runGetProcess(isRun, requestId, noEvolution, action) {
       var _this = this;
 
-      _this.$loading(true);
+      // _this.$loading(true);
+      _this.isOnCompile = true;
       console.log(requestId);
       if (!requestId) {
         _this.stopProcess();
@@ -401,7 +418,8 @@ export default {
         }, 2000);
       } else {
         _this.stopProcess();
-        _this.$loading(false);
+        // _this.$loading(false);
+        _this.isOnCompile = false;
       }
     },
     stopProcess() {
