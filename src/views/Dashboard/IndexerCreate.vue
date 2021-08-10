@@ -88,6 +88,17 @@
                 ></prism-editor>
               </div>
             </Tab>
+            <Tab ref="schema" title="mapping.ts">
+              <div class="cover-editor mt-3">
+                <prism-editor
+                  class="my-editor"
+                  v-model="mappingts"
+                  :highlight="highlighter"
+                  line-numbers
+                  :readonly="isOnCompile"
+                ></prism-editor>
+              </div>
+            </Tab>
           </Tabs>
         </b-col>
         <b-col cols="3" class="text-center" style="place-self: center;">
@@ -191,6 +202,7 @@ export default {
   mounted() {
     if (this.chain == localStorage.getItem(LOCAL_STORE.CHAIN)) {
       this.mapping = localStorage.getItem(LOCAL_STORE.MAPPING);
+      this.mappingts = localStorage.getItem(LOCAL_STORE.MAPPINGTS);
       this.models = localStorage.getItem(LOCAL_STORE.MODELS);
       this.project = localStorage.getItem(LOCAL_STORE.PROJECT);
       this.lib = localStorage.getItem(LOCAL_STORE.LIB);
@@ -310,6 +322,7 @@ export default {
     async loadTemplate(data) {
       this.$loading(true);
       this.mapping = await this.loadRawDataGit(data["mapping.rs"] || "");
+      this.mappingts = await this.loadRawDataGit(data["mapping.ts"] || "");
       this.models = await this.loadRawDataGit(data["models.rs"] || "");
       this.lib = await this.loadRawDataGit(data["lib.rs"] || "");
       this.project = await this.loadRawDataGit(data["project.yaml"] || "");
@@ -319,6 +332,7 @@ export default {
     },
     catchData() {
       localStorage.setItem(LOCAL_STORE.MAPPING, this.mapping);
+      localStorage.setItem(LOCAL_STORE.MAPPINGTS, this.mappingts);
       localStorage.setItem(LOCAL_STORE.MODELS, this.models);
       localStorage.setItem(LOCAL_STORE.PROJECT, this.project);
       localStorage.setItem(LOCAL_STORE.LIB, this.lib);
@@ -343,6 +357,7 @@ export default {
         await Request()
           .post(`/${action}`, {
             "mapping.rs": this.covertToURL(this.mapping),
+            "mapping.ts": this.covertToURL(this.mappingts),
             // "models.rs": this.covertToURL(this.models),
             "project.yaml": this.covertToURL(this.project),
             "schema.graphql": this.covertToURL(this.schema),

@@ -34,6 +34,7 @@ export const LOCAL_STORE = {
   LANG: "lang",
   TABLE: "table",
   MAPPING: "mapping",
+  MAPPINGTS: "mappingts",
   MODELS: "models",
   PROJECT: "project",
   UP: "up",
