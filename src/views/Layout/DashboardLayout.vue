@@ -69,9 +69,9 @@
           />
           <sidebar-item :link="{ name: 'Solana', path: '/indexers/solana' }" />
           <sidebar-item
-            :link="{ name: 'Solana', path: '/indexers/ethereum' }"
+            :link="{ name: 'Ethereum', path: '/indexers/ethereum' }"
           />
-          <sidebar-item :link="{ name: 'Solana', path: '/indexers/bsc' }" />
+          <sidebar-item :link="{ name: 'BSC', path: '/indexers/bsc' }" />
           <sidebar-item :link="{ name: 'Matic', path: '/indexers/matic' }" />
         </sidebar-item>
 
