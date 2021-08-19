@@ -122,10 +122,11 @@ export default {
           var result = res.data.result;
           if (result && result.length > 0) {
             this.indexersList = result;
-            this.indexersList = this.indexersList.filter(
-              x =>
-                x.network.toString().toLowerCase() ==
-                this.indexerName.toLowerCase()
+            this.indexersList = this.indexersList.filter(x =>
+              x.network
+                .toString()
+                .toLowerCase()
+                .includes(this.indexerName.toLowerCase())
             );
           }
 
