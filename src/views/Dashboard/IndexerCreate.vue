@@ -413,7 +413,6 @@ export default {
       }
     },
     async loadTemplate(data) {
-      console.log(data);
       this.$loading(true);
       if (data) {
         this.mappingsFiles = this.convertObjToArraString(data["src"]);
@@ -423,7 +422,7 @@ export default {
         // this.mappingsFiles = this.convertObjToArray(data["src"]);
         // this.configFiles = this.convertObjToArray(data["configs"]);
         // this.abisFiles = this.convertObjToArray(data["abis"]);
-        this.isWasmFile = data["isWasmFile"] ? data["isWasmFile"] : false;
+        this.isWasmFile = data["isWasmFile"] == "true" ? true : false;
       }
 
       // this.mapping = await this.loadRawDataGit(data["mapping.rs"] || "");
@@ -479,34 +478,31 @@ export default {
           compilation_id: this.compilation_id
         };
 
-        if (action == "compile") {
-          console.log(this.isWasmFile);
-          action = this.isWasmFile == true ? "compile/wasm" : "compile/so";
+        var path = this.isWasmFile ? "wasm" : "so";
 
-          console.log(action);
-          if (this.mappingsFiles) {
-            for (let index = 0; index < this.mappingsFiles.length; index++) {
-              const element = this.mappingsFiles[index];
-              requestObj.mappings[element.name] = element.data;
-            }
-          }
-
-          if (this.abisFiles) {
-            for (let index = 0; index < this.abisFiles.length; index++) {
-              const element = this.abisFiles[index];
-              requestObj.abis[element.name] = element.data;
-            }
-          }
-
-          if (this.configFiles) {
-            for (let index = 0; index < this.configFiles.length; index++) {
-              const element = this.configFiles[index];
-              requestObj.configs[element.name] = element.data;
-            }
+        if (this.mappingsFiles) {
+          for (let index = 0; index < this.mappingsFiles.length; index++) {
+            const element = this.mappingsFiles[index];
+            requestObj.mappings[element.name] = element.data;
           }
         }
+
+        if (this.abisFiles) {
+          for (let index = 0; index < this.abisFiles.length; index++) {
+            const element = this.abisFiles[index];
+            requestObj.abis[element.name] = element.data;
+          }
+        }
+
+        if (this.configFiles) {
+          for (let index = 0; index < this.configFiles.length; index++) {
+            const element = this.configFiles[index];
+            requestObj.configs[element.name] = element.data;
+          }
+        }
+
         await Request()
-          .post(`/${action}`, requestObj)
+          .post(`/${action}/${path}`, requestObj)
           .then(async res => {
             if (res.data.payload && res.data.payload.length > 0) {
               this.compilation_id = res.data.payload;
